@@ -21,8 +21,8 @@ export default function decorate(block) {
   const teaserHtml = `
     <div>
       <img src="${image}" alt="${altText}" />
-      <h1>${pretitle}</h1>
-      <h2>${title}</h2>
+      <h4>${pretitle}</h4>
+      <h5>${title}</h5>
       <p>${description}</p>
       <a href="${primaryCtaLink}">${primaryCtaText}</a>
     </div>
