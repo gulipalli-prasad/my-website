@@ -1,163 +1,201 @@
 export default function decorate(block) {
-  const searchContainer = document.createElement("div");
+  const [
+    titleEl,
+    placeholderTextEl,
+    goButtonTextEl,
+    loadmoreButtonTextEl,
+    byyearTextEl,
+  ] = block.children;
 
-  searchContainer.classList.add("search-container");
+  const title = titleEl?.textContent?.trim() || "";
+  const placeholderText = placeholderTextEl?.textContent?.trim() || "";
+  const goButtonText = goButtonTextEl?.textContent?.trim() || "";
+  const loadmoreButtonText = loadmoreButtonTextEl?.textContent?.trim() || "";
+  const byyearText = byyearTextEl?.textContent?.trim() || "";
 
-  const searchField = document.createElement("input");
-
-  searchField.type = "text";
-
-  searchField.placeholder = "Search your keyword";
-
-  searchField.classList.add("search-field");
-
-  const searchButton = document.createElement("button");
-
-  searchButton.textContent = "Go";
-
-  searchButton.classList.add("search-button");
-
-  searchContainer.appendChild(searchField);
-
-  searchContainer.appendChild(searchButton);
-
-  const articleListContainer = document.createElement("div");
-
-  articleListContainer.classList.add("article-list-container");
-
-  const loadMoreButton = document.createElement("button");
-
-  loadMoreButton.textContent = "Load More";
-
-  loadMoreButton.classList.add("load-more-button");
-
-  block.appendChild(searchContainer);
-
-  block.appendChild(articleListContainer);
-
-  block.appendChild(loadMoreButton);
-
-  // Function to render articles
-
-  function renderArticles(articles) {
-    articleListContainer.innerHTML = "";
-
-    let groupedArticles = {};
-
-    articles.forEach((article) => {
-      const year = new Date(article.date).getFullYear();
-
-      if (!groupedArticles[year]) {
-        groupedArticles[year] = [];
-      }
-
-      groupedArticles[year].push(article);
-    });
-
-    for (const year in groupedArticles) {
-      const yearGroup = document.createElement("div");
-
-      yearGroup.classList.add("year-group");
-
-      const yearTitle = document.createElement("h3");
-
-      yearTitle.textContent = year;
-
-      yearGroup.appendChild(yearTitle);
-
-      groupedArticles[year].forEach((article) => {
-        const articleItem = document.createElement("div");
-
-        articleItem.classList.add("article-item");
-
-        articleItem.innerHTML = `
-
-          <div class="article-date">${formatDate(article.date)}</div>
-
-          <div class="article-title">${article.title}</div>
-
-        `;
-
-        yearGroup.appendChild(articleItem);
-      });
-
-      articleListContainer.appendChild(yearGroup);
-    }
-  }
-
-  // Function to handle search
-
-  searchButton.addEventListener("click", () => {
-    const searchTerm = searchField.value.toLowerCase();
-
-    const filteredArticles = articles.filter((article) =>
-      article.title.toLowerCase().includes(searchTerm)
-    );
-
-    renderArticles(filteredArticles);
-  });
-
-  // Mock data for articles, replace with actual data retrieval
-
-  const articles = [
+  // Mock data
+  const mockArticles = [
     {
       date: "2024-08-13",
       title:
-        "Maruti Suzuki commences export of its award-winning SUV Fronx to Japan, a tribute to “Make in India” initiative",
+        "Maruti Suzuki commences export of its award-winning SUV Fronx to Japan, a tribute to 'Make in India' initiative",
     },
-
     {
       date: "2024-08-04",
       title: "Together: Progressing through shared value creation",
     },
-
-    { date: "2024-08-01", title: "Maruti Suzuki production volume: July 2024" },
-
-    { date: "2024-08-01", title: "Maruti Suzuki sales in July 2024" },
-
+    {
+      date: "2024-08-01",
+      title: "Maruti Suzuki production volume: July 2024",
+    },
+    {
+      date: "2024-08-01",
+      title: "Maruti Suzuki sales in July 2024",
+    },
     {
       date: "2024-07-31",
       title:
         "Maruti Suzuki Financial Results: Quarter 1 (April-June), FY 2024-25",
     },
-
     {
       date: "2024-07-29",
       title:
-        "Maruti Suzuki Grand Vitara continues to “RULE EVERY ROAD”; Clocks fastest 2 lakh unit sales in the mid-SUV space since launch",
+        "Maruti Suzuki Grand Vitara continues to 'RULE EVERY ROAD': Clocks fastest 2 lakh unit sales in the mid-SUV space since launch",
+    },
+    {
+      date: "2023-12-15",
+      title: "Sample article from 2023",
+    },
+    {
+      date: "2022-06-01",
+      title: "Sample article from 2022",
     },
   ];
 
-  // Initially render all articles
+  // Create HTML structure
+  block.innerHTML = `
+      <h1>${title}</h1>
+      <div class="content-wrapper">
+          <div class="main-content">
+              <div class="search-container">
+                  <input type="text" class="search-field" placeholder="${placeholderText}">
+                  <button class="search-button">${goButtonText}</button>
+              </div>
+              <div class="year-heading">2024</div>
+              <div class="article-list-container"></div>
+              <button class="load-more-button">${loadmoreButtonText}</button>
+          </div>
+          <div class="sidebar">
+              <h3>${byyearText}</h3>
+              <div class="year-filter-container"></div>
+          </div>
+      </div>
+  `;
 
-  renderArticles(articles);
+  const articleListContainer = block.querySelector(".article-list-container");
+  const yearFilterContainer = block.querySelector(".year-filter-container");
+  const searchField = block.querySelector(".search-field");
+  const searchButton = block.querySelector(".search-button");
+  const loadMoreButton = block.querySelector(".load-more-button");
+  const yearHeading = block.querySelector(".year-heading");
 
-  // Format date function
+  let filteredArticles = mockArticles;
+  let currentPage = 1;
+  const ARTICLES_PER_PAGE = 5;
+
+  function renderArticles() {
+    const start = (currentPage - 1) * ARTICLES_PER_PAGE;
+    const end = start + ARTICLES_PER_PAGE;
+    const articlesToRender = filteredArticles.slice(start, end);
+
+    articleListContainer.innerHTML = articlesToRender
+      .map(
+        (article) => `
+          <div class="article-item">
+              <span class="article-date">${formatDate(article.date)}</span>
+              <span class="article-title">${article.title}</span>
+          </div>
+      `
+      )
+      .join("");
+
+    loadMoreButton.style.display =
+      end < filteredArticles.length ? "block" : "none";
+  }
+
+  function renderYearFilter() {
+    const years = [
+      ...new Set(
+        mockArticles.map((article) => new Date(article.date).getFullYear())
+      ),
+    ].sort((a, b) => b - a);
+    yearFilterContainer.innerHTML = years
+      .map(
+        (year) => `
+          <div>
+              <button class="year-button" data-year="${year}">${year}</button>
+              <div class="month-container" id="months-${year}"></div>
+          </div>
+      `
+      )
+      .join("");
+
+    yearFilterContainer.addEventListener("click", handleYearFilter);
+  }
+
+  function handleYearFilter(event) {
+    if (event.target.classList.contains("year-button")) {
+      const year = parseInt(event.target.dataset.year);
+      const monthContainer = document.getElementById(`months-${year}`);
+
+      if (
+        monthContainer.style.display === "none" ||
+        monthContainer.style.display === ""
+      ) {
+        monthContainer.style.display = "block";
+        const months = getMonthsForYear(year);
+        monthContainer.innerHTML = months
+          .map(
+            (month) => `
+                  <button class="month-button" data-year="${year}" data-month="${month}">${month}</button>
+              `
+          )
+          .join("");
+      } else {
+        monthContainer.style.display = "none";
+      }
+    } else if (event.target.classList.contains("month-button")) {
+      const year = parseInt(event.target.dataset.year);
+      const month = event.target.dataset.month;
+      filteredArticles = mockArticles.filter((article) => {
+        const articleDate = new Date(article.date);
+        return (
+          articleDate.getFullYear() === year &&
+          articleDate.toLocaleString("default", { month: "long" }) === month
+        );
+      });
+      currentPage = 1;
+      yearHeading.textContent = `${month} ${year}`;
+      renderArticles();
+    }
+  }
+
+  function getMonthsForYear(year) {
+    const months = new Set();
+    mockArticles.forEach((article) => {
+      const articleDate = new Date(article.date);
+      if (articleDate.getFullYear() === year) {
+        months.add(articleDate.toLocaleString("default", { month: "long" }));
+      }
+    });
+    return Array.from(months);
+  }
 
   function formatDate(dateString) {
     const date = new Date(dateString);
-
-    const options = { month: "short", day: "numeric" };
-
-    return date.toLocaleDateString(undefined, options);
+    return date.toLocaleDateString("en-US", { month: "short", day: "2-digit" });
   }
 
-  // Load More functionality - In case you need pagination
-
-  let currentIndex = 0;
-
-  const articlesPerPage = 5;
-
-  function loadMoreArticles() {
-    currentIndex += articlesPerPage;
-
-    const moreArticles = articles.slice(
-      currentIndex,
-      currentIndex + articlesPerPage
+  function handleSearch() {
+    const searchTerm = searchField.value.toLowerCase();
+    filteredArticles = mockArticles.filter((article) =>
+      article.title.toLowerCase().includes(searchTerm)
     );
-
-    renderArticles(moreArticles);
+    currentPage = 1;
+    yearHeading.textContent = searchTerm ? "Search Results" : "2024";
+    renderArticles();
   }
 
-  loadMoreButton.addEventListener("click", loadMoreArticles);
+  function handleLoadMore() {
+    currentPage++;
+    renderArticles();
+  }
+
+  // Initial render
+  renderArticles();
+  renderYearFilter();
+
+  // Event listeners
+  searchButton.addEventListener("click", handleSearch);
+  loadMoreButton.addEventListener("click", handleLoadMore);
 }
