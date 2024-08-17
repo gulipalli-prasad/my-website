@@ -63,7 +63,7 @@ export default function decorate(block) {
         (article) => `
       <div class="article-item">
         <span class="article-date">${article.date}</span>
-        <a href="${article._path} @context='html' " class="article-title">${article.title}</a>
+        <a href="${article._path}.html" class="article-title">${article.title}</a>
 
       </div>
     `
