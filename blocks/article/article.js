@@ -46,13 +46,13 @@ export default function decorate(block) {
       "/graphql/execute.json/my-website/Articles-list"
     );
     const data = await response.json();
-    articles = data.articles; // Adjust based on your API response structure
+    articles = data.articleModelList;
     filteredArticles = articles;
     renderArticles();
     renderYearFilter();
   }
 
-  function renderArticles(filteredArticles) {
+  function renderArticles() {
     const start = (currentPage - 1) * ARTICLES_PER_PAGE;
     const end = start + ARTICLES_PER_PAGE;
     const articlesToRender = filteredArticles.slice(start, end);
