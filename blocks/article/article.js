@@ -46,9 +46,7 @@ export default function decorate(block) {
       "/graphql/execute.json/my-website/Articles-list"
     );
     const data = await response.json();
-    if (Array.isArray(data.articleModelList)) {
-      articles = data.articleModelList;
-    }
+    const articles = data.data.articleModelList.items;
     // articles = data.articleModelList;
     filteredArticles = articles;
     renderArticles();
