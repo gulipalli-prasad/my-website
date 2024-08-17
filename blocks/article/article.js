@@ -46,7 +46,10 @@ export default function decorate(block) {
       "/graphql/execute.json/my-website/Articles-list"
     );
     const data = await response.json();
-    articles = data.articleModelList;
+    for (let i = 0; i < data.articleModelList.length; i++) {
+      articles[i] = data.articleModelList[i];
+    }
+    // articles = data.articleModelList;
     filteredArticles = articles;
     renderArticles();
     renderYearFilter();
