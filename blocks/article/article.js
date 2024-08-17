@@ -52,7 +52,7 @@ export default function decorate(block) {
     renderYearFilter();
   }
 
-  function renderArticles() {
+  function renderArticles(filteredArticles) {
     const start = (currentPage - 1) * ARTICLES_PER_PAGE;
     const end = start + ARTICLES_PER_PAGE;
     const articlesToRender = filteredArticles.slice(0, end);
