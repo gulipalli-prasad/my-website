@@ -55,7 +55,7 @@ export default function decorate(block) {
   function renderArticles(filteredArticles) {
     const start = (currentPage - 1) * ARTICLES_PER_PAGE;
     const end = start + ARTICLES_PER_PAGE;
-    const articlesToRender = filteredArticles.slice(0, end);
+    const articlesToRender = filteredArticles.slice(start, end);
 
     articleListContainer.innerHTML = articlesToRender
       .map(
