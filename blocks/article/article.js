@@ -30,7 +30,7 @@ export default function decorate(block) {
   const loadMoreButton = block.querySelector(".load-more-button");
   const yearTitle = block.querySelector(".year-title");
 
-  let articles = mockArticles; // Replace with actual data fetching
+  let articles; // Replace with actual data fetching
   let selectedYear = 2024;
   let selectedMonth = null;
   let displayedArticles = 0;
@@ -254,11 +254,21 @@ export default function decorate(block) {
     return `${monthNames[date.getMonth()]} ${date.getDate()}`;
   }
 
-  function handleSearch() {
+  async function handleSearch() {
     const searchTerm = searchField.value.toLowerCase();
-    articles = mockArticles.filter((article) =>
-      article.title.toLowerCase().includes(searchTerm)
+    // articles = mockArticles.filter((article) =>
+    //   article.title.toLowerCase().includes(searchTerm)
+    // );
+    const response = await fetch(
+      "/graphql/execute.json/my-website/Articles-list"
     );
+    const data = await response.json();
+    const articles = data.data.articleModelList.items;
+    const filteredArticles = articles.filter(
+      (article) =>
+        article.title && article.title.toLowerCase().includes(searchTerm)
+    );
+    filteredArticles = filteredArticles;
     renderYearFilter();
     displayedArticles = 0;
     fetchArticles();
@@ -282,36 +292,36 @@ export default function decorate(block) {
 }
 
 // Mock data (replace with actual data fetching)
-const mockArticles = [
-  {
-    date: "2024-08-13",
-    title:
-      "Maruti Suzuki commences export of its award-winning SUV Fronx to Japan, a tribute to 'Make in India' initiative",
-  },
+// const mockArticles = [
+//   {
+//     date: "2024-08-13",
+//     title:
+//       "Maruti Suzuki commences export of its award-winning SUV Fronx to Japan, a tribute to 'Make in India' initiative",
+//   },
 
-  {
-    date: "2024-08-04",
-    title: "Together: Progressing through shared value creation",
-  },
+//   {
+//     date: "2024-08-04",
+//     title: "Together: Progressing through shared value creation",
+//   },
 
-  { date: "2024-08-01", title: "Maruti Suzuki production volume: July 2024" },
+//   { date: "2024-08-01", title: "Maruti Suzuki production volume: July 2024" },
 
-  { date: "2024-08-01", title: "Maruti Suzuki sales in July 2024" },
+//   { date: "2024-08-01", title: "Maruti Suzuki sales in July 2024" },
 
-  {
-    date: "2024-07-31",
-    title:
-      "Maruti Suzuki Financial Results: Quarter 1 (April-June), FY 2024-25",
-  },
+//   {
+//     date: "2024-07-31",
+//     title:
+//       "Maruti Suzuki Financial Results: Quarter 1 (April-June), FY 2024-25",
+//   },
 
-  {
-    date: "2024-07-29",
-    title:
-      "Maruti Suzuki Grand Vitara continues to 'RULE EVERY ROAD': Clocks fastest 2 lakh unit sales in the mid-SUV space since launch",
-  },
+//   {
+//     date: "2024-07-29",
+//     title:
+//       "Maruti Suzuki Grand Vitara continues to 'RULE EVERY ROAD': Clocks fastest 2 lakh unit sales in the mid-SUV space since launch",
+//   },
 
-  { date: "2023-12-15", title: "Sample article from 2023" },
+//   { date: "2023-12-15", title: "Sample article from 2023" },
 
-  { date: "2022-06-01", title: "Sample article from 2022" },
-  { date: "2022-07-10", title: "Sample article from JUNE 2022" },
-];
+//   { date: "2022-06-01", title: "Sample article from 2022" },
+//   { date: "2022-07-10", title: "Sample article from JUNE 2022" },
+// ];
