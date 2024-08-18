@@ -15,6 +15,11 @@ export default async function decorate(block) {
         <h3 class="year-title">2024</h3>
         <div class="article-list-container"></div>
         <button class="load-more-button">Load More</button>
+        <div class="article-description-container" style="display: none;">
+          <h3>Article Description</h3>
+          <div class="article-description"></div>
+          <button class="back-to-list-button">Back to List</button>
+        </div>
       </div>
       <div class="sidebar">
         <h3>By Year</h3>
@@ -29,7 +34,11 @@ export default async function decorate(block) {
   const searchButton = block.querySelector(".search-button");
   const loadMoreButton = block.querySelector(".load-more-button");
   const yearTitle = block.querySelector(".year-title");
-
+  const articleDescriptionContainer = block.querySelector(
+    ".article-description-container"
+  );
+  const articleDescription = block.querySelector(".article-description");
+  const backToListButton = block.querySelector(".back-to-list-button");
   // Fetching articles from the API
   let articles = [];
   try {
@@ -76,7 +85,9 @@ export default async function decorate(block) {
         (article) => `
           <div class="article-item">
             <div class="article-date">${formatDate(article.date)}</div>
-            <a href="${article.path}" class="article-title">${article.title}</a>
+            <a href="${article.path}" data-description="${encodeURIComponent(
+          article.description
+        )}"  class="article-title">${article.title}</a>
           </div>
         `
       )
@@ -252,6 +263,23 @@ export default async function decorate(block) {
     renderArticles();
   }
 
+  function handleArticleClick(e) {
+    e.preventDefault();
+    const articleLink = e.target.closest(".article-title");
+    if (articleLink) {
+      const path = articleLink.dataset.path;
+      const description = decodeURIComponent(articleLink.dataset.description);
+      articleDescription.innerHTML = description;
+      articleDescriptionContainer.style.display = "block";
+      articleListContainer.style.display = "none";
+    }
+  }
+
+  function handleBackToList() {
+    articleDescriptionContainer.style.display = "none";
+    articleListContainer.style.display = "block";
+  }
+
   // Initial render
   renderYearFilter();
   renderArticles();
@@ -259,4 +287,6 @@ export default async function decorate(block) {
   // Event listeners
   searchButton.addEventListener("click", handleSearch);
   loadMoreButton.addEventListener("click", handleLoadMore);
+  articleListContainer.addEventListener("click", handleArticleClick);
+  backToListButton.addEventListener("click", handleBackToList);
 }
