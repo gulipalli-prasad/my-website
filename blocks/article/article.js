@@ -14,7 +14,6 @@ export default async function decorate(block) {
         </div>
         <h3 class="year-title">2024</h3>
         <div class="article-list-container"></div>
-        <div class="no-results-message" style="display: none;">Sorry! No results found matching your search. Please try again with a different set of keywords.</div>
         <button class="load-more-button">Load More</button>
         <div class="article-description-container" style="display: none;">
           <div class="article-date"></div>
@@ -87,35 +86,36 @@ export default async function decorate(block) {
       displayedArticles + articlesPerLoad
     );
 
-    if (articlesToShow.length === 0) {
-      articleListContainer.innerHTML = "";
-      document.querySelector(".no-results-message").style.display = "block";
-      loadMoreButton.style.display = "none";
-    } else {
-      articleListContainer.innerHTML = articlesToShow
-        .map(
-          (article) => `
-            <div class="article-item">
-              <div class="article-date">${formatDate(article.date)}</div>
-              <a href="${article.path}" data-title="${encodeURIComponent(
-            article.title
-          )}" data-description="${encodeURIComponent(
-            article.description
-          )}" data-date="${encodeURIComponent(
-            article.date
-          )}" data-pdf="${encodeURIComponent(
-            article.pdf
-          )}" class="article-title">${article.title}</a>
-            </div>
-          `
-        )
-        .join("");
+    articleListContainer.innerHTML = articlesToShow
+      .map((article) => (
+        <div class="article-item">
+          <div class="article-date">${formatDate(article.date)}</div>
+          <a
+            href="${article.path}"
+            data-title="${encodeURIComponent(
+          article.title
+        )}"
+            data-description="${encodeURIComponent(
+          article.description
+        )}"
+            data-date="${encodeURIComponent(
+          article.date
+        )}"
+            data-pdf="${encodeURIComponent(
+          article.pdf
+        )}"
+            class="article-title"
+          >
+            ${article.title}
+          </a>
+        </div>
+      ))
+      .join("");
 
-      document.querySelector(".no-results-message").style.display = "none";
-      displayedArticles = articlesToShow.length;
-      loadMoreButton.style.display =
-        displayedArticles < filteredArticles.length ? "block" : "none";
-    }
+    displayedArticles = articlesToShow.length;
+
+    loadMoreButton.style.display =
+      displayedArticles < filteredArticles.length ? "block" : "none";
   }
 
   function renderYearFilter() {
@@ -126,14 +126,12 @@ export default async function decorate(block) {
     ].sort((a, b) => b - a);
 
     yearFilterContainer.innerHTML = years
-      .map(
-        (year) => `
-          <div class="year-item" data-year="${year}">
-            <button class="year-button">${year}</button>
-            <div class="month-list" style="display: none;"></div>
-          </div>
-        `
-      )
+      .map((year) => (
+        <div class="year-item" data-year="${year}">
+          <button class="year-button">${year}</button>
+          <div class="month-list" style="display: none;"></div>
+        </div>
+      ))
       .join("");
 
     yearFilterContainer.querySelectorAll(".year-button").forEach((btn) => {
@@ -196,14 +194,14 @@ export default async function decorate(block) {
     ];
 
     monthListElement.innerHTML = months
-      .map(
-        (month) => `
-          <div class="month-item">
-            <button class="month-button" data-month="${month}">${monthNames[month]}</button>
-            <div class="month-articles" style="display: none;"></div>
-          </div>
-        `
-      )
+      .map((month) => (
+        <div class="month-item">
+          <button class="month-button" data-month="${month}">
+            ${monthNames[month]}
+          </button>
+          <div class="month-articles" style="display: none;"></div>
+        </div>
+      ))
       .join("");
 
     monthListElement.querySelectorAll(".month-button").forEach((btn) => {
@@ -230,17 +228,19 @@ export default async function decorate(block) {
       );
 
       monthArticles.innerHTML = filteredArticles
-        .map(
-          (article) => `
-            <div class="article-item">
-              <a href="/content/my-website/index/article-content.html?title=${encodeURIComponent(
+        .map((article) => (
+          <div class="article-item">
+            <a
+              href="/content/my-website/index/article-content.html?title=${encodeURIComponent(
                 article.title
-              )}" 
-                 target="_blank" 
-                 class="article-title">${article.title}</a>
-            </div>
-          `
-        )
+              )}"
+              target="_blank"
+              class="article-title"
+            >
+              ${article.title}
+            </a>
+          </div>
+        ))
         .join("");
 
       monthArticles.style.display = "block";
@@ -298,7 +298,11 @@ export default async function decorate(block) {
       articleTitle.innerHTML = title;
       articleDescription.innerHTML = description;
       if (pdf) {
-        articlePdf.innerHTML = `<a href="${pdf}" target="_blank">Download PDF</a>`;
+        articlePdf.innerHTML = (
+          <a href="${pdf}" target="_blank">
+            Download PDF
+          </a>
+        );
       } else {
         articlePdf.innerHTML = "";
       }
