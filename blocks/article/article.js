@@ -97,6 +97,8 @@ export default async function decorate(block) {
           article.description
         )}" data-date="${encodeURIComponent(
           article.date
+        )}" data-pdf="${encodeURIComponent(
+          article.pdf
         )}"  class="article-title">${article.title}</a>
           </div>
         `
