@@ -36,6 +36,8 @@ export default function decorate(block) {
   let displayedArticles = 0;
   const articlesPerLoad = 2;
   let filteredArticles;
+  let currentPage = 1;
+  const ARTICLES_PER_PAGE = 5;
 
   // function renderArticles() {
   //   let filteredArticles = articles.filter(
