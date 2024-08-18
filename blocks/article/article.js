@@ -84,7 +84,7 @@ export default async function decorate(block) {
         (article) => `
           <div class="article-item">
             <div class="article-date">${formatDate(article.date)}</div>
-            <a href="#article-content?title=${encodeURIComponent(
+            <a href="/content/my-website/index/article-content.html?title=${encodeURIComponent(
               article.title
             )}" class="article-title">${article.title}</a>
           </div>
@@ -213,9 +213,9 @@ export default async function decorate(block) {
         .map(
           (article) => `
             <div class="article-item">
-              <a href="#article-content?title=${encodeURIComponent(
-                article.title
-              )}" class="article-title">${article.title}</a>
+            <a href="/content/my-website/index/article-content.html?title=${encodeURIComponent(
+              article.title
+            )}" class="article-title">${article.title}</a>
             </div>
           `
         )
