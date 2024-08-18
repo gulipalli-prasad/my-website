@@ -38,6 +38,7 @@ export default async function decorate(block) {
   );
   const articleDescription = block.querySelector(".article-description");
   const backToListButton = block.querySelector(".back-to-list-button");
+
   // Fetching articles from the API
   let articles = [];
   try {
@@ -82,14 +83,14 @@ export default async function decorate(block) {
     articleListContainer.innerHTML = articlesToShow
       .map(
         (article) => `
-            <div class="article-item">
-                <div class="article-date">${formatDate(article.date)}</div>
-                <a href="/content/my-website/index/article-content.html?title=${encodeURIComponent(
-                  article.title
-                )}" target="_blank" data-description="${encodeURIComponent(
+          <div class="article-item">
+            <div class="article-date">${formatDate(article.date)}</div>
+            <a href="/content/my-website/index/article-content.html?title=${encodeURIComponent(
+              article.title
+            )}" target="_blank" data-description="${encodeURIComponent(
           article.description
         )}" class="article-title">${article.title}</a>
-            </div>
+          </div>
         `
       )
       .join("");
@@ -215,9 +216,10 @@ export default async function decorate(block) {
         .map(
           (article) => `
             <div class="article-item">
-<a href="/content/my-website/index/article-content.html?title=${encodeURIComponent(
-            article.title
-          )}" class="article-title">${article.title}</a>            </div>
+              <a href="/content/my-website/index/article-content.html?title=${encodeURIComponent(
+                article.title
+              )}" target="_blank" class="article-title">${article.title}</a>
+            </div>
           `
         )
         .join("");
