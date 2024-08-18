@@ -1,4 +1,4 @@
-export default function decorate(block) {
+export default async function decorate(block) {
   const [titleEl, searchEl, goButtonEl] = block.children;
   const title = titleEl.textContent.trim();
   const searchPlaceholder = searchEl.textContent.trim();
@@ -30,79 +30,61 @@ export default function decorate(block) {
   const loadMoreButton = block.querySelector(".load-more-button");
   const yearTitle = block.querySelector(".year-title");
 
-  let articles; // Replace with actual data fetching
-  let selectedYear = 2024;
-  let selectedMonth = null;
-  let displayedArticles = 0;
-  const articlesPerLoad = 2;
-  let filteredArticles;
-  let currentPage = 1;
-  const ARTICLES_PER_PAGE = 5;
-
-  // function renderArticles() {
-  //   let filteredArticles = articles.filter(
-  //     (article) => new Date(article.date).getFullYear() === selectedYear
-  //   );
-
-  //   if (selectedMonth !== null) {
-  //     filteredArticles = filteredArticles.filter(
-  //       (article) => new Date(article.date).getMonth() === selectedMonth
-  //     );
-  //   }
-
-  //   const articlesToShow = filteredArticles.slice(
-  //     0,
-  //     displayedArticles + articlesPerLoad
-  //   );
-
-  //   articleListContainer.innerHTML = articlesToShow
-  //     .map(
-  //       (article) => `
-  //         <div class="article-item">
-  //           <div class="article-date">${formatDate(article.date)}</div>
-  //           <a href="#" class="article-title">${article.title}</a>
-  //         </div>
-  //       `
-  //     )
-  //     .join("");
-
-  //   displayedArticles = articlesToShow.length;
-
-  //   loadMoreButton.style.display =
-  //     displayedArticles < filteredArticles.length ? "block" : "none";
-  // }
-
-  async function fetchArticles() {
+  // Fetching articles from the API
+  let articles = [];
+  try {
     const response = await fetch(
       "/graphql/execute.json/my-website/Articles-list"
     );
     const data = await response.json();
-    const articles = data.data.articleModelList.items;
-    // articles = data.articleModelList;
-    filteredArticles = articles;
-    renderArticles();
-    renderYearFilter();
+    articles = data.data.articleModelList.items
+      .filter((item) => item.title && item.date) // Ensure title and date are not null
+      .map((item) => ({
+        date: item.date,
+        title: item.title,
+        description: item.description?.plaintext || "",
+        pdf: item.pdf?._path || "",
+      }));
+  } catch (error) {
+    console.error("Error fetching articles:", error);
   }
 
-  function renderArticles() {
-    const start = (currentPage - 1) * ARTICLES_PER_PAGE;
-    const end = start + ARTICLES_PER_PAGE;
-    const articlesToRender = filteredArticles.slice(start, end);
+  let selectedYear = 2024;
+  let selectedMonth = null;
+  let displayedArticles = 0;
+  const articlesPerLoad = 2;
 
-    articleListContainer.innerHTML = articlesToRender
+  function renderArticles() {
+    let filteredArticles = articles.filter(
+      (article) => new Date(article.date).getFullYear() === selectedYear
+    );
+
+    if (selectedMonth !== null) {
+      filteredArticles = filteredArticles.filter(
+        (article) => new Date(article.date).getMonth() === selectedMonth
+      );
+    }
+
+    const articlesToShow = filteredArticles.slice(
+      0,
+      displayedArticles + articlesPerLoad
+    );
+
+    articleListContainer.innerHTML = articlesToShow
       .map(
         (article) => `
-      <div class="article-item">
-        <span class="article-date">${article.date}</span>
-        <a href="${article._path}.html" class="article-title">${article.title}</a>
-
-      </div>
-    `
+          <div class="article-item">
+            <div class="article-date">${formatDate(article.date)}</div>
+            <a href="${article.pdf}" class="article-title">${article.title}</a>
+          </div>
+        `
       )
       .join("");
 
+    displayedArticles = articlesToShow.length;
+
     loadMoreButton.style.display =
-      end < filteredArticles.length ? "block" : "none";
+      displayedArticles < filteredArticles.length ? "block" : "none";
   }
 
   function renderYearFilter() {
@@ -111,6 +93,7 @@ export default function decorate(block) {
         articles.map((article) => new Date(article.date).getFullYear())
       ),
     ].sort((a, b) => b - a);
+
     yearFilterContainer.innerHTML = years
       .map(
         (year) => `
@@ -152,8 +135,7 @@ export default function decorate(block) {
       }
     });
 
-    // renderArticles();
-    fetchArticles();
+    renderArticles();
   }
 
   function renderMonths(monthListElement, year) {
@@ -220,7 +202,7 @@ export default function decorate(block) {
         .map(
           (article) => `
             <div class="article-item">
-              <a href="#" class="article-title">${article.title}</a>
+              <a href="${article.pdf}" class="article-title">${article.title}</a>
             </div>
           `
         )
@@ -231,8 +213,7 @@ export default function decorate(block) {
       monthArticles.style.display = "none";
     }
 
-    // renderArticles();
-    fetchArticles();
+    renderArticles();
   }
 
   function formatDate(dateString) {
@@ -254,74 +235,27 @@ export default function decorate(block) {
     return `${monthNames[date.getMonth()]} ${date.getDate()}`;
   }
 
-  async function handleSearch() {
+  function handleSearch() {
     const searchTerm = searchField.value.toLowerCase();
-    // articles = mockArticles.filter((article) =>
-    //   article.title.toLowerCase().includes(searchTerm)
-    // );
-    const response = await fetch(
-      "/graphql/execute.json/my-website/Articles-list"
+    const filteredArticles = articles.filter((article) =>
+      article.title.toLowerCase().includes(searchTerm)
     );
-    const data = await response.json();
-    const articles = data.data.articleModelList.items;
-    const filteredArticles = articles.filter(
-      (article) =>
-        article.title && article.title.toLowerCase().includes(searchTerm)
-    );
-    filteredArticles = filteredArticles;
+    articles = filteredArticles;
     renderYearFilter();
     displayedArticles = 0;
-    fetchArticles();
-    // renderArticles();
+    renderArticles();
   }
 
   function handleLoadMore() {
     displayedArticles += articlesPerLoad;
-    // renderArticles();
-    fetchArticles();
+    renderArticles();
   }
 
   // Initial render
   renderYearFilter();
-  fetchArticles();
-  // renderArticles();
+  renderArticles();
 
   // Event listeners
   searchButton.addEventListener("click", handleSearch);
   loadMoreButton.addEventListener("click", handleLoadMore);
 }
-
-// Mock data (replace with actual data fetching)
-// const mockArticles = [
-//   {
-//     date: "2024-08-13",
-//     title:
-//       "Maruti Suzuki commences export of its award-winning SUV Fronx to Japan, a tribute to 'Make in India' initiative",
-//   },
-
-//   {
-//     date: "2024-08-04",
-//     title: "Together: Progressing through shared value creation",
-//   },
-
-//   { date: "2024-08-01", title: "Maruti Suzuki production volume: July 2024" },
-
-//   { date: "2024-08-01", title: "Maruti Suzuki sales in July 2024" },
-
-//   {
-//     date: "2024-07-31",
-//     title:
-//       "Maruti Suzuki Financial Results: Quarter 1 (April-June), FY 2024-25",
-//   },
-
-//   {
-//     date: "2024-07-29",
-//     title:
-//       "Maruti Suzuki Grand Vitara continues to 'RULE EVERY ROAD': Clocks fastest 2 lakh unit sales in the mid-SUV space since launch",
-//   },
-
-//   { date: "2023-12-15", title: "Sample article from 2023" },
-
-//   { date: "2022-06-01", title: "Sample article from 2022" },
-//   { date: "2022-07-10", title: "Sample article from JUNE 2022" },
-// ];
