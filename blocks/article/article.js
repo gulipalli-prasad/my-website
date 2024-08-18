@@ -53,7 +53,7 @@ export default async function decorate(block) {
       "/graphql/execute.json/my-website/Articles-list"
     );
     const data = await response.json();
-    originalArticles = data.data.articleModelList.items
+    articles = data.data.articleModelList.items
       .filter((item) => item.title && item.date) // Ensure title and date are not null
       .map((item) => ({
         date: item.date,
@@ -62,11 +62,10 @@ export default async function decorate(block) {
         pdf: item.pdf?._path || "",
         path: item._path,
       }));
-    articles = [...originalArticles];
   } catch (error) {
     console.error("Error fetching articles:", error);
   }
-  let originalArticles = [];
+
   let selectedYear = 2024;
   let selectedMonth = null;
   let displayedArticles = 0;
@@ -273,7 +272,7 @@ export default async function decorate(block) {
 
   function handleSearch() {
     const searchTerm = searchField.value.toLowerCase();
-    const filteredArticles = originalArticles.filter((article) =>
+    const filteredArticles = articles.filter((article) =>
       article.title.toLowerCase().includes(searchTerm)
     );
     articles = filteredArticles;
