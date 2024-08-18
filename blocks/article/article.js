@@ -84,11 +84,9 @@ export default async function decorate(block) {
         (article) => `
           <div class="article-item">
             <div class="article-date">${formatDate(article.date)}</div>
-                        <a href="${
-                          article.path
-                        }" data-description="${encodeURIComponent(
-          article.description
-        )}"  class="article-title">${article.title}</a>
+                        <a href="/content/my-website/index/article-content.html" data-description="${encodeURIComponent(
+                          article.description
+                        )}"  class="article-title">${article.title}</a>
           </div>
         `
       )
