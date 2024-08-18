@@ -82,12 +82,14 @@ export default async function decorate(block) {
     articleListContainer.innerHTML = articlesToShow
       .map(
         (article) => `
-          <div class="article-item">
-            <div class="article-date">${formatDate(article.date)}</div>
-                        <a href="/content/my-website/index/article-content.html" data-description="${encodeURIComponent(
-                          article.description
-                        )}"  class="article-title">${article.title}</a>
-          </div>
+            <div class="article-item">
+                <div class="article-date">${formatDate(article.date)}</div>
+                <a href="/content/my-website/index/article-content.html?title=${encodeURIComponent(
+                  article.title
+                )}" target="_blank" data-description="${encodeURIComponent(
+          article.description
+        )}" class="article-title">${article.title}</a>
+            </div>
         `
       )
       .join("");
