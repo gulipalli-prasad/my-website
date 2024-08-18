@@ -46,7 +46,7 @@ export default async function decorate(block) {
     );
     const data = await response.json();
     articles = data.data.articleModelList.items
-      .filter((item) => item.title && item.date) // Ensure title and date are not null
+      .filter((item) => item.title && item.date && item._path) // Ensure title, date, and path are not null
       .map((item) => ({
         date: item.date,
         title: item.title,
@@ -84,9 +84,7 @@ export default async function decorate(block) {
         (article) => `
           <div class="article-item">
             <div class="article-date">${formatDate(article.date)}</div>
-            <a href="?article=${encodeURIComponent(
-              article.title
-            )}&description=${encodeURIComponent(
+            <a href="${article.path}?description=${encodeURIComponent(
           article.description
         )}" class="article-title">${article.title}</a>
           </div>
@@ -215,9 +213,7 @@ export default async function decorate(block) {
         .map(
           (article) => `
             <div class="article-item">
-              <a href="?article=${encodeURIComponent(
-                article.title
-              )}&description=${encodeURIComponent(
+              <a href="${article.path}?description=${encodeURIComponent(
             article.description
           )}" class="article-title">${article.title}</a>
             </div>
@@ -274,11 +270,8 @@ export default async function decorate(block) {
     if (articleLink) {
       const path = articleLink.href;
       const description =
-        articles.find(
-          (article) =>
-            article.title ===
-            decodeURIComponent(new URL(path).searchParams.get("article"))
-        )?.description || "";
+        articles.find((article) => article.path === new URL(path).pathname)
+          ?.description || "";
       articleDescription.innerHTML = description;
       articleDescriptionContainer.style.display = "block";
       articleListContainer.style.display = "none";
@@ -292,12 +285,11 @@ export default async function decorate(block) {
 
   function getArticleFromUrl() {
     const params = new URLSearchParams(window.location.search);
-    const articleTitle = params.get("article");
-    const articleDescription = params.get("description");
+    const description = params.get("description");
 
-    if (articleTitle && articleDescription) {
+    if (description) {
       articleDescriptionContainer.style.display = "block";
-      articleDescription.innerHTML = decodeURIComponent(articleDescription);
+      articleDescription.innerHTML = decodeURIComponent(description);
       articleListContainer.style.display = "none";
     }
   }
