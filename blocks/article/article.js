@@ -44,6 +44,7 @@ export default async function decorate(block) {
         title: item.title,
         description: item.description?.plaintext || "",
         pdf: item.pdf?._path || "",
+        path: item._path,
       }));
   } catch (error) {
     console.error("Error fetching articles:", error);
@@ -75,9 +76,7 @@ export default async function decorate(block) {
         (article) => `
           <div class="article-item">
             <div class="article-date">${formatDate(article.date)}</div>
-            <a href="${article._path}" class="article-title">${
-          article.title
-        }</a>
+            <a href="${article.pdf}" class="article-title">${article.title}</a>
           </div>
         `
       )
