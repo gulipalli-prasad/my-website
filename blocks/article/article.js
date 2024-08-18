@@ -81,7 +81,7 @@ export default function decorate(block) {
     // articles = data.articleModelList;
     filteredArticles = articles;
     renderArticles();
-    // renderYearFilter();
+    renderYearFilter();
   }
 
   function renderArticles() {
@@ -259,7 +259,7 @@ export default function decorate(block) {
     articles = mockArticles.filter((article) =>
       article.title.toLowerCase().includes(searchTerm)
     );
-    // renderYearFilter();
+    renderYearFilter();
     displayedArticles = 0;
     fetchArticles();
     // renderArticles();
@@ -272,7 +272,7 @@ export default function decorate(block) {
   }
 
   // Initial render
-  // renderYearFilter();
+  renderYearFilter();
   fetchArticles();
   // renderArticles();
 
@@ -282,36 +282,36 @@ export default function decorate(block) {
 }
 
 // Mock data (replace with actual data fetching)
-const mockArticles = [
-  {
-    date: "2024-08-13",
-    title:
-      "Maruti Suzuki commences export of its award-winning SUV Fronx to Japan, a tribute to 'Make in India' initiative",
-  },
+// const mockArticles = [
+//   {
+//     date: "2024-08-13",
+//     title:
+//       "Maruti Suzuki commences export of its award-winning SUV Fronx to Japan, a tribute to 'Make in India' initiative",
+//   },
 
-  {
-    date: "2024-08-04",
-    title: "Together: Progressing through shared value creation",
-  },
+//   {
+//     date: "2024-08-04",
+//     title: "Together: Progressing through shared value creation",
+//   },
 
-  { date: "2024-08-01", title: "Maruti Suzuki production volume: July 2024" },
+//   { date: "2024-08-01", title: "Maruti Suzuki production volume: July 2024" },
 
-  { date: "2024-08-01", title: "Maruti Suzuki sales in July 2024" },
+//   { date: "2024-08-01", title: "Maruti Suzuki sales in July 2024" },
 
-  {
-    date: "2024-07-31",
-    title:
-      "Maruti Suzuki Financial Results: Quarter 1 (April-June), FY 2024-25",
-  },
+//   {
+//     date: "2024-07-31",
+//     title:
+//       "Maruti Suzuki Financial Results: Quarter 1 (April-June), FY 2024-25",
+//   },
 
-  {
-    date: "2024-07-29",
-    title:
-      "Maruti Suzuki Grand Vitara continues to 'RULE EVERY ROAD': Clocks fastest 2 lakh unit sales in the mid-SUV space since launch",
-  },
+//   {
+//     date: "2024-07-29",
+//     title:
+//       "Maruti Suzuki Grand Vitara continues to 'RULE EVERY ROAD': Clocks fastest 2 lakh unit sales in the mid-SUV space since launch",
+//   },
 
-  { date: "2023-12-15", title: "Sample article from 2023" },
+//   { date: "2023-12-15", title: "Sample article from 2023" },
 
-  { date: "2022-06-01", title: "Sample article from 2022" },
-  { date: "2022-07-10", title: "Sample article from JUNE 2022" },
-];
+//   { date: "2022-06-01", title: "Sample article from 2022" },
+//   { date: "2022-07-10", title: "Sample article from JUNE 2022" },
+// ];
