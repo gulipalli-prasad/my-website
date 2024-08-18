@@ -38,7 +38,7 @@ export default async function decorate(block) {
   );
   const articleDescription = block.querySelector(".article-description");
   const backToListButton = block.querySelector(".back-to-list-button");
-  // Fetching articles from the API
+
   let articles = [];
   try {
     const response = await fetch(
@@ -46,7 +46,7 @@ export default async function decorate(block) {
     );
     const data = await response.json();
     articles = data.data.articleModelList.items
-      .filter((item) => item.title && item.date) // Ensure title and date are not null
+      .filter((item) => item.title && item.date)
       .map((item) => ({
         date: item.date,
         title: item.title,
@@ -84,9 +84,9 @@ export default async function decorate(block) {
         (article) => `
           <div class="article-item">
             <div class="article-date">${formatDate(article.date)}</div>
-            <a href="${article.path}" data-description="${encodeURIComponent(
-          article.description
-        )}"  class="article-title">${article.title}</a>
+            <a href="#article-content?title=${encodeURIComponent(
+              article.title
+            )}" class="article-title">${article.title}</a>
           </div>
         `
       )
@@ -213,7 +213,9 @@ export default async function decorate(block) {
         .map(
           (article) => `
             <div class="article-item">
-              <a href="${article.path}" class="article-title">${article.title}</a>
+              <a href="#article-content?title=${encodeURIComponent(
+                article.title
+              )}" class="article-title">${article.title}</a>
             </div>
           `
         )
@@ -279,6 +281,28 @@ export default async function decorate(block) {
     articleListContainer.style.display = "block";
   }
 
+  function handleHashChange() {
+    const hash = window.location.hash;
+    if (hash.startsWith("#article-content")) {
+      const urlParams = new URLSearchParams(hash.substring(1));
+      const title = urlParams.get("title");
+
+      if (title) {
+        const article = articles.find(
+          (article) => article.title === decodeURIComponent(title)
+        );
+        if (article) {
+          articleDescription.innerHTML = article.description;
+          articleDescriptionContainer.style.display = "block";
+          articleListContainer.style.display = "none";
+          yearFilterContainer.style.display = "none";
+        } else {
+          articleDescription.innerHTML = "Article Not Found";
+        }
+      }
+    }
+  }
+
   // Initial render
   renderYearFilter();
   renderArticles();
@@ -288,4 +312,6 @@ export default async function decorate(block) {
   loadMoreButton.addEventListener("click", handleLoadMore);
   articleListContainer.addEventListener("click", handleArticleClick);
   backToListButton.addEventListener("click", handleBackToList);
+  window.addEventListener("hashchange", handleHashChange);
+  handleHashChange(); // Check hash on page load
 }
