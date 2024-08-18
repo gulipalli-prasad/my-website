@@ -180,7 +180,7 @@ export default async function decorate(block) {
       ...new Set(
         yearArticles.map((article) => new Date(article.date).getMonth())
       ),
-    ].sort((a, b) => a - b);
+    ].sort((a, b) => b - a);
 
     const monthNames = [
       "January",
