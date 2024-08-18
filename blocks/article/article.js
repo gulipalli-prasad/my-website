@@ -254,11 +254,22 @@ export default function decorate(block) {
     return `${monthNames[date.getMonth()]} ${date.getDate()}`;
   }
 
-  function handleSearch() {
+  async function handleSearch() {
     const searchTerm = searchField.value.toLowerCase();
-    articles = mockArticles.filter((article) =>
-      article.title.toLowerCase().includes(searchTerm)
+    const response = await fetch(
+      "/graphql/execute.json/my-website/Articles-list"
     );
+    const data = await response.json();
+    const articles = data.data.articleModelList.items;
+
+    const filteredArticles = articles.filter(
+      (article) =>
+        article.title && article.title.toLowerCase().includes(searchTerm)
+    );
+    filteredArticles = filteredArticles;
+    // articles = mockArticles.filter((article) =>
+    //   article.title.toLowerCase().includes(searchTerm)
+    // );
     renderYearFilter();
     displayedArticles = 0;
     fetchArticles();
