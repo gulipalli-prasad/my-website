@@ -84,9 +84,9 @@ export default async function decorate(block) {
         (article) => `
           <div class="article-item">
             <div class="article-date">${formatDate(article.date)}</div>
-            <a href="#" data-path="${article.path}" class="article-title">${
-          article.title
-        }</a>
+            <a href="${article.path}?description=${encodeURIComponent(
+          article.description
+        )}" class="article-title">${article.title}</a>
           </div>
         `
       )
@@ -213,7 +213,9 @@ export default async function decorate(block) {
         .map(
           (article) => `
             <div class="article-item">
-              <a href="#" data-path="${article.path}" class="article-title">${article.title}</a>
+              <a href="${article.path}?description=${encodeURIComponent(
+            article.description
+          )}" class="article-title">${article.title}</a>
             </div>
           `
         )
@@ -246,38 +248,55 @@ export default async function decorate(block) {
     return `${monthNames[date.getMonth()]} ${date.getDate()}`;
   }
 
-  async function handleArticleClick(e) {
+  function handleSearch() {
+    const searchTerm = searchField.value.toLowerCase();
+    const filteredArticles = articles.filter((article) =>
+      article.title.toLowerCase().includes(searchTerm)
+    );
+    articles = filteredArticles;
+    renderYearFilter();
+    displayedArticles = 0;
+    renderArticles();
+  }
+
+  function handleLoadMore() {
+    displayedArticles += articlesPerLoad;
+    renderArticles();
+  }
+
+  function handleArticleClick(e) {
     e.preventDefault();
     const articleLink = e.target.closest(".article-title");
     if (articleLink) {
-      const path = articleLink.dataset.path;
-      if (path) {
-        await fetchContentFragment(path);
-      }
+      const path = new URL(articleLink.href).pathname;
+      fetchContentFragment(path);
     }
   }
 
-  async function fetchContentFragment(path) {
-    try {
-      // Fetch the content from the appropriate endpoint
-      const response = await fetch(
-        `/content/dam/my-website/content-fragments?path=${encodeURIComponent(
-          path
-        )}`
-      );
-      const data = await response.json();
-
-      if (data && data.description) {
-        articleDescription.innerHTML = data.description;
-        articleDescriptionContainer.style.display = "block";
-        articleListContainer.style.display = "none";
-      } else {
-        articleDescription.innerHTML = "No content available.";
-      }
-    } catch (error) {
-      console.error("Error loading content:", error);
-      articleDescription.innerHTML = "Error loading content.";
-    }
+  function fetchContentFragment(path) {
+    fetch(path + ".json") // Assumes that appending `.json` provides the JSON representation of the content fragment
+      .then((response) => response.json())
+      .then((data) => {
+        if (data) {
+          articleDescription.innerHTML = `
+            <h3>${data.title}</h3>
+            <div class="article-date">${formatDate(data.date)}</div>
+            <div class="article-description">${data.description}</div>
+            ${
+              data.pdf
+                ? `<a href="${data.pdf}" target="_blank">Download PDF</a>`
+                : ""
+            }
+          `;
+          articleDescriptionContainer.style.display = "block";
+          articleListContainer.style.display = "none";
+        } else {
+          articleDescription.innerHTML = "Content not available.";
+        }
+      })
+      .catch(() => {
+        articleDescription.innerHTML = "Error loading content.";
+      });
   }
 
   function handleBackToList() {
