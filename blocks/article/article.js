@@ -203,7 +203,7 @@ export default async function decorate(block) {
         .map(
           (article) => `
             <div class="article-item">
-              <a href="${article._path}" class="article-title">${article.title}</a>
+              <a href="${article.path}" class="article-title">${article.title}</a>
             </div>
           `
         )
