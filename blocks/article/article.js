@@ -75,7 +75,9 @@ export default async function decorate(block) {
         (article) => `
           <div class="article-item">
             <div class="article-date">${formatDate(article.date)}</div>
-            <a href="${article.pdf}" class="article-title">${article.title}</a>
+            <a href="${article._path}" class="article-title">${
+          article.title
+        }</a>
           </div>
         `
       )
