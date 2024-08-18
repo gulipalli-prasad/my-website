@@ -216,11 +216,9 @@ export default async function decorate(block) {
         .map(
           (article) => `
             <div class="article-item">
-              <a href="/content/my-website/index/article-content.html?title=${encodeURIComponent(
-                article.title
-              )}" 
-                 target="_blank" 
-                 class="article-title">${article.title}</a>
+              <a href="${article.path}" data-description="${encodeURIComponent(
+            article.description
+          )}"  class="article-title">${article.title}</a>
             </div>
           `
         )
