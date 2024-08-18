@@ -291,7 +291,7 @@ export default async function decorate(block) {
       articleTitle.innerHTML = title;
       articleDescription.innerHTML = description;
       if (pdf) {
-        articlePdf.innerHTML = `<a href="${pdf}" target="_blank" download>Download PDF</a>`;
+        articlePdf.innerHTML = `<a href="${pdf}" target="_blank">Download PDF</a>`;
       } else {
         articlePdf.innerHTML = "";
       }
