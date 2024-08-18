@@ -16,7 +16,6 @@ export default async function decorate(block) {
         <div class="article-list-container"></div>
         <button class="load-more-button">Load More</button>
         <div class="article-description-container" style="display: none;">
-          <h3>Article Description</h3>
           <div class="article-description"></div>
           <button class="back-to-list-button">Back to List</button>
         </div>
@@ -39,7 +38,7 @@ export default async function decorate(block) {
   );
   const articleDescription = block.querySelector(".article-description");
   const backToListButton = block.querySelector(".back-to-list-button");
-  // Fetching articles from the API
+
   let articles = [];
   try {
     const response = await fetch(
@@ -85,9 +84,11 @@ export default async function decorate(block) {
         (article) => `
           <div class="article-item">
             <div class="article-date">${formatDate(article.date)}</div>
-            <a href="${article.path}" data-description="${encodeURIComponent(
+            <a href="?article=${encodeURIComponent(
+              article.title
+            )}&description=${encodeURIComponent(
           article.description
-        )}"  class="article-title">${article.title}</a>
+        )}" class="article-title">${article.title}</a>
           </div>
         `
       )
@@ -214,7 +215,11 @@ export default async function decorate(block) {
         .map(
           (article) => `
             <div class="article-item">
-              <a href="${article.path}" class="article-title">${article.title}</a>
+              <a href="?article=${encodeURIComponent(
+                article.title
+              )}&description=${encodeURIComponent(
+            article.description
+          )}" class="article-title">${article.title}</a>
             </div>
           `
         )
@@ -267,8 +272,13 @@ export default async function decorate(block) {
     e.preventDefault();
     const articleLink = e.target.closest(".article-title");
     if (articleLink) {
-      const path = articleLink.dataset.path;
-      const description = decodeURIComponent(articleLink.dataset.description);
+      const path = articleLink.href;
+      const description =
+        articles.find(
+          (article) =>
+            article.title ===
+            decodeURIComponent(new URL(path).searchParams.get("article"))
+        )?.description || "";
       articleDescription.innerHTML = description;
       articleDescriptionContainer.style.display = "block";
       articleListContainer.style.display = "none";
@@ -280,9 +290,22 @@ export default async function decorate(block) {
     articleListContainer.style.display = "block";
   }
 
+  function getArticleFromUrl() {
+    const params = new URLSearchParams(window.location.search);
+    const articleTitle = params.get("article");
+    const articleDescription = params.get("description");
+
+    if (articleTitle && articleDescription) {
+      articleDescriptionContainer.style.display = "block";
+      articleDescription.innerHTML = decodeURIComponent(articleDescription);
+      articleListContainer.style.display = "none";
+    }
+  }
+
   // Initial render
   renderYearFilter();
   renderArticles();
+  getArticleFromUrl();
 
   // Event listeners
   searchButton.addEventListener("click", handleSearch);
