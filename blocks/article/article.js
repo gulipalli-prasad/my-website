@@ -19,7 +19,7 @@ export default async function decorate(block) {
           <div class="article-date"></div>
           <div class="article-title"></div>
           <div class="article-description"></div>
-          <div class="article-pdf"></div>
+          <div class="article-pdf">Download PDF</div>
           <button class="back-to-list-button">Back to List</button>
         </div>
       </div>
@@ -288,7 +288,11 @@ export default async function decorate(block) {
       articleDate.innerHTML = date;
       articleTitle.innerHTML = title;
       articleDescription.innerHTML = description;
-      articlePdf.innerHTML = pdf;
+      if (pdf) {
+        articlePdf.innerHTML = `<a href="${pdf}" target="_blank" download>Download PDF</a>`;
+      } else {
+        articlePdf.innerHTML = "";
+      }
       articleDescriptionContainer.style.display = "block";
       articleListContainer.style.display = "none";
     }
