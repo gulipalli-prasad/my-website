@@ -87,29 +87,22 @@ export default async function decorate(block) {
     );
 
     articleListContainer.innerHTML = articlesToShow
-      .map((article) => (
-        <div class="article-item">
-          <div class="article-date">${formatDate(article.date)}</div>
-          <a
-            href="${article.path}"
-            data-title="${encodeURIComponent(
+      .map(
+        (article) => `
+          <div class="article-item">
+            <div class="article-date">${formatDate(article.date)}</div>
+           <a href="${article.path}" data-title="${encodeURIComponent(
           article.title
-        )}"
-            data-description="${encodeURIComponent(
+        )}" data-description="${encodeURIComponent(
           article.description
-        )}"
-            data-date="${encodeURIComponent(
+        )}" data-date="${encodeURIComponent(
           article.date
-        )}"
-            data-pdf="${encodeURIComponent(
+        )}" data-pdf="${encodeURIComponent(
           article.pdf
-        )}"
-            class="article-title"
-          >
-            ${article.title}
-          </a>
-        </div>
-      ))
+        )}"  class="article-title">${article.title}</a>
+          </div>
+        `
+      )
       .join("");
 
     displayedArticles = articlesToShow.length;
@@ -126,12 +119,14 @@ export default async function decorate(block) {
     ].sort((a, b) => b - a);
 
     yearFilterContainer.innerHTML = years
-      .map((year) => (
-        <div class="year-item" data-year="${year}">
-          <button class="year-button">${year}</button>
-          <div class="month-list" style="display: none;"></div>
-        </div>
-      ))
+      .map(
+        (year) => `
+          <div class="year-item" data-year="${year}">
+            <button class="year-button">${year}</button>
+            <div class="month-list" style="display: none;"></div>
+          </div>
+        `
+      )
       .join("");
 
     yearFilterContainer.querySelectorAll(".year-button").forEach((btn) => {
@@ -194,14 +189,14 @@ export default async function decorate(block) {
     ];
 
     monthListElement.innerHTML = months
-      .map((month) => (
-        <div class="month-item">
-          <button class="month-button" data-month="${month}">
-            ${monthNames[month]}
-          </button>
-          <div class="month-articles" style="display: none;"></div>
-        </div>
-      ))
+      .map(
+        (month) => `
+          <div class="month-item">
+            <button class="month-button" data-month="${month}">${monthNames[month]}</button>
+            <div class="month-articles" style="display: none;"></div>
+          </div>
+        `
+      )
       .join("");
 
     monthListElement.querySelectorAll(".month-button").forEach((btn) => {
@@ -228,19 +223,17 @@ export default async function decorate(block) {
       );
 
       monthArticles.innerHTML = filteredArticles
-        .map((article) => (
-          <div class="article-item">
-            <a
-              href="/content/my-website/index/article-content.html?title=${encodeURIComponent(
+        .map(
+          (article) => `
+            <div class="article-item">
+              <a href="/content/my-website/index/article-content.html?title=${encodeURIComponent(
                 article.title
-              )}"
-              target="_blank"
-              class="article-title"
-            >
-              ${article.title}
-            </a>
-          </div>
-        ))
+              )}" 
+                 target="_blank" 
+                 class="article-title">${article.title}</a>
+            </div>
+          `
+        )
         .join("");
 
       monthArticles.style.display = "block";
@@ -298,11 +291,7 @@ export default async function decorate(block) {
       articleTitle.innerHTML = title;
       articleDescription.innerHTML = description;
       if (pdf) {
-        articlePdf.innerHTML = (
-          <a href="${pdf}" target="_blank">
-            Download PDF
-          </a>
-        );
+        articlePdf.innerHTML = `<a href="${pdf}" target="_blank">Download PDF</a>`;
       } else {
         articlePdf.innerHTML = "";
       }
