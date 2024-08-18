@@ -38,7 +38,7 @@ export default async function decorate(block) {
   );
   const articleDescription = block.querySelector(".article-description");
   const backToListButton = block.querySelector(".back-to-list-button");
-
+  // Fetching articles from the API
   let articles = [];
   try {
     const response = await fetch(
@@ -46,7 +46,7 @@ export default async function decorate(block) {
     );
     const data = await response.json();
     articles = data.data.articleModelList.items
-      .filter((item) => item.title && item.date && item._path) // Ensure title, date, and path are not null
+      .filter((item) => item.title && item.date) // Ensure title and date are not null
       .map((item) => ({
         date: item.date,
         title: item.title,
@@ -84,9 +84,9 @@ export default async function decorate(block) {
         (article) => `
           <div class="article-item">
             <div class="article-date">${formatDate(article.date)}</div>
-            <a href="${article.path}?description=${encodeURIComponent(
+            <a href="${article.path}" data-description="${encodeURIComponent(
           article.description
-        )}" class="article-title">${article.title}</a>
+        )}"  class="article-title">${article.title}</a>
           </div>
         `
       )
@@ -213,9 +213,7 @@ export default async function decorate(block) {
         .map(
           (article) => `
             <div class="article-item">
-              <a href="${article.path}?description=${encodeURIComponent(
-            article.description
-          )}" class="article-title">${article.title}</a>
+              <a href="${article.path}" class="article-title">${article.title}</a>
             </div>
           `
         )
@@ -268,35 +266,12 @@ export default async function decorate(block) {
     e.preventDefault();
     const articleLink = e.target.closest(".article-title");
     if (articleLink) {
-      const path = new URL(articleLink.href).pathname;
-      fetchContentFragment(path);
+      const path = articleLink.dataset._path;
+      const description = decodeURIComponent(articleLink.dataset.description);
+      articleDescription.innerHTML = description;
+      articleDescriptionContainer.style.display = "block";
+      articleListContainer.style.display = "none";
     }
-  }
-
-  function fetchContentFragment(path) {
-    fetch(path + ".json") // Assumes that appending `.json` provides the JSON representation of the content fragment
-      .then((response) => response.json())
-      .then((data) => {
-        if (data) {
-          articleDescription.innerHTML = `
-            <h3>${data.title}</h3>
-            <div class="article-date">${formatDate(data.date)}</div>
-            <div class="article-description">${data.description}</div>
-            ${
-              data.pdf
-                ? `<a href="${data.pdf}" target="_blank">Download PDF</a>`
-                : ""
-            }
-          `;
-          articleDescriptionContainer.style.display = "block";
-          articleListContainer.style.display = "none";
-        } else {
-          articleDescription.innerHTML = "Content not available.";
-        }
-      })
-      .catch(() => {
-        articleDescription.innerHTML = "Error loading content.";
-      });
   }
 
   function handleBackToList() {
@@ -304,21 +279,9 @@ export default async function decorate(block) {
     articleListContainer.style.display = "block";
   }
 
-  function getArticleFromUrl() {
-    const params = new URLSearchParams(window.location.search);
-    const description = params.get("description");
-
-    if (description) {
-      articleDescriptionContainer.style.display = "block";
-      articleDescription.innerHTML = decodeURIComponent(description);
-      articleListContainer.style.display = "none";
-    }
-  }
-
   // Initial render
   renderYearFilter();
   renderArticles();
-  getArticleFromUrl();
 
   // Event listeners
   searchButton.addEventListener("click", handleSearch);
