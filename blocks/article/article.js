@@ -16,6 +16,8 @@ export default async function decorate(block) {
         <div class="article-list-container"></div>
         <button class="load-more-button">Load More</button>
         <div class="article-description-container" style="display: none;">
+          <div class="article-date"></div>
+          <div class="article-title"></div>
           <div class="article-description"></div>
           <button class="back-to-list-button">Back to List</button>
         </div>
@@ -36,6 +38,8 @@ export default async function decorate(block) {
   const articleDescriptionContainer = block.querySelector(
     ".article-description-container"
   );
+  const articleDate = block.querySelector(".article-date");
+  const articleTitle = block.querySelector(".article-title");
   const articleDescription = block.querySelector(".article-description");
   const backToListButton = block.querySelector(".back-to-list-button");
 
@@ -85,8 +89,12 @@ export default async function decorate(block) {
         (article) => `
           <div class="article-item">
             <div class="article-date">${formatDate(article.date)}</div>
-           <a href="${article.path}" data-description="${encodeURIComponent(
+           <a href="${article.path}" data-title="${encodeURIComponent(
+          article.title
+        )}" data-description="${encodeURIComponent(
           article.description
+        )}" data-date="${encodeURIComponent(
+          article.date
         )}"  class="article-title">${article.title}</a>
           </div>
         `
@@ -271,7 +279,11 @@ export default async function decorate(block) {
     e.preventDefault();
     const articleLink = e.target.closest(".article-title");
     if (articleLink) {
+      const date = decodeURIComponent(articleLink.dataset.date);
+      const title = decodeURIComponent(articleLink.dataset.title);
       const description = decodeURIComponent(articleLink.dataset.description);
+      articleDate.innerHTML = date;
+      articleTitle.innerHTML = title;
       articleDescription.innerHTML = description;
       articleDescriptionContainer.style.display = "block";
       articleListContainer.style.display = "none";
