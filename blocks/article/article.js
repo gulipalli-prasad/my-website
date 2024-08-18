@@ -46,14 +46,8 @@ export default async function decorate(block) {
   const articlePdf = block.querySelector(".article-pdf");
   const backToListButton = block.querySelector(".back-to-list-button");
 
-  let originalArticles = [];
-  let articles = [];
-  let selectedYear = 2024;
-  let selectedMonth = null;
-  let displayedArticles = 0;
-  const articlesPerLoad = 2;
-
   // Fetching articles from the API
+  let articles = [];
   try {
     const response = await fetch(
       "/graphql/execute.json/my-website/Articles-list"
@@ -68,10 +62,15 @@ export default async function decorate(block) {
         pdf: item.pdf?._path || "",
         path: item._path,
       }));
-    articles = [...originalArticles]; // Set articles to the full list initially
+    articles = [...originalArticles];
   } catch (error) {
     console.error("Error fetching articles:", error);
   }
+  let originalArticles = [];
+  let selectedYear = 2024;
+  let selectedMonth = null;
+  let displayedArticles = 0;
+  const articlesPerLoad = 2;
 
   function renderArticles() {
     let filteredArticles = articles.filter(
@@ -120,11 +119,165 @@ export default async function decorate(block) {
     }
   }
 
+  function renderYearFilter() {
+    const years = [
+      ...new Set(
+        articles.map((article) => new Date(article.date).getFullYear())
+      ),
+    ].sort((a, b) => b - a);
+
+    yearFilterContainer.innerHTML = years
+      .map(
+        (year) => `
+          <div class="year-item" data-year="${year}">
+            <button class="year-button">${year}</button>
+            <div class="month-list" style="display: none;"></div>
+          </div>
+        `
+      )
+      .join("");
+
+    yearFilterContainer.querySelectorAll(".year-button").forEach((btn) => {
+      btn.addEventListener("click", (e) => {
+        const yearItem = e.target.closest(".year-item");
+        const year = parseInt(yearItem.dataset.year);
+        toggleYear(year);
+      });
+    });
+  }
+
+  function toggleYear(year) {
+    selectedYear = year;
+    selectedMonth = null;
+    displayedArticles = 0;
+    yearTitle.textContent = year;
+
+    const yearItems = yearFilterContainer.querySelectorAll(".year-item");
+
+    yearItems.forEach((item) => {
+      const isClickedYear = parseInt(item.dataset.year) === year;
+      const monthList = item.querySelector(".month-list");
+
+      if (isClickedYear) {
+        monthList.style.display = "block";
+        renderMonths(monthList, year);
+      } else {
+        monthList.style.display = "none";
+        monthList.innerHTML = "";
+      }
+    });
+
+    renderArticles();
+  }
+
+  function renderMonths(monthListElement, year) {
+    const yearArticles = articles.filter(
+      (article) => new Date(article.date).getFullYear() === year
+    );
+
+    const months = [
+      ...new Set(
+        yearArticles.map((article) => new Date(article.date).getMonth())
+      ),
+    ].sort((a, b) => a - b);
+
+    const monthNames = [
+      "January",
+      "February",
+      "March",
+      "April",
+      "May",
+      "June",
+      "July",
+      "August",
+      "September",
+      "October",
+      "November",
+      "December",
+    ];
+
+    monthListElement.innerHTML = months
+      .map(
+        (month) => `
+          <div class="month-item">
+            <button class="month-button" data-month="${month}">${monthNames[month]}</button>
+            <div class="month-articles" style="display: none;"></div>
+          </div>
+        `
+      )
+      .join("");
+
+    monthListElement.querySelectorAll(".month-button").forEach((btn) => {
+      btn.addEventListener("click", (e) => {
+        e.stopPropagation();
+        const month = parseInt(btn.dataset.month);
+        toggleMonth(month, btn);
+      });
+    });
+  }
+
+  function toggleMonth(month, btn) {
+    selectedMonth = month;
+    displayedArticles = 0;
+
+    const monthArticles = btn.nextElementSibling;
+    const isExpanded = monthArticles.style.display !== "none";
+
+    if (!isExpanded) {
+      const filteredArticles = articles.filter(
+        (article) =>
+          new Date(article.date).getFullYear() === selectedYear &&
+          new Date(article.date).getMonth() === month
+      );
+
+      monthArticles.innerHTML = filteredArticles
+        .map(
+          (article) => `
+            <div class="article-item">
+              <a href="/content/my-website/index/article-content.html?title=${encodeURIComponent(
+                article.title
+              )}" 
+                 target="_blank" 
+                 class="article-title">${article.title}</a>
+            </div>
+          `
+        )
+        .join("");
+
+      monthArticles.style.display = "block";
+    } else {
+      monthArticles.style.display = "none";
+    }
+
+    renderArticles();
+  }
+
+  function formatDate(dateString) {
+    const date = new Date(dateString);
+    const monthNames = [
+      "Jan",
+      "Feb",
+      "Mar",
+      "Apr",
+      "May",
+      "Jun",
+      "Jul",
+      "Aug",
+      "Sep",
+      "Oct",
+      "Nov",
+      "Dec",
+    ];
+    return `${monthNames[date.getMonth()]} ${date.getDate()}`;
+  }
+
   function handleSearch() {
     const searchTerm = searchField.value.toLowerCase();
-    articles = originalArticles.filter((article) =>
+    const filteredArticles = originalArticles.filter((article) =>
       article.title.toLowerCase().includes(searchTerm)
     );
+    articles = filteredArticles;
+    // renderYearFilter();
     displayedArticles = 0;
     renderArticles();
   }
@@ -158,25 +311,6 @@ export default async function decorate(block) {
   function handleBackToList() {
     articleDescriptionContainer.style.display = "none";
     articleListContainer.style.display = "block";
-  }
-
-  function formatDate(dateString) {
-    const date = new Date(dateString);
-    const monthNames = [
-      "Jan",
-      "Feb",
-      "Mar",
-      "Apr",
-      "May",
-      "Jun",
-      "Jul",
-      "Aug",
-      "Sep",
-      "Oct",
-      "Nov",
-      "Dec",
-    ];
-    return `${monthNames[date.getMonth()]} ${date.getDate()}`;
   }
 
   // Initial render
