@@ -160,11 +160,16 @@ export default async function decorate(block) {
       const monthList = item.querySelector(".month-list");
 
       if (isClickedYear) {
-        monthList.style.display = "block";
-        renderMonths(monthList, year);
+        const isVisible = monthList.style.display === "block";
+        monthList.style.display = isVisible ? "none" : "block";
+        if (!isVisible) {
+          renderMonths(monthList, year);
+        } else {
+          monthList.innerHTML = "";
+        }
       } else {
-        monthList.style.display = "none";
-        monthList.innerHTML = "";
+        item.querySelector(".month-list").style.display = "none";
+        item.querySelector(".month-list").innerHTML = "";
       }
     });
 
@@ -180,7 +185,7 @@ export default async function decorate(block) {
       ...new Set(
         yearArticles.map((article) => new Date(article.date).getMonth())
       ),
-    ].sort((a, b) => b - a);
+    ].sort((a, b) => b - a); // Sort months in reverse order
 
     const monthNames = [
       "January",
@@ -237,9 +242,7 @@ export default async function decorate(block) {
             <div class="article-item">
               <a href="/content/my-website/index/article-content.html?title=${encodeURIComponent(
                 article.title
-              )}" 
-                 target="_blank" 
-                 class="article-title">${article.title}</a>
+              )}" target="_blank" class="article-title">${article.title}</a>
             </div>
           `
         )
@@ -278,7 +281,7 @@ export default async function decorate(block) {
       article.title.toLowerCase().includes(searchTerm)
     );
     articles = filteredArticles;
-    // renderYearFilter();
+    // renderYearFilter(); // Optional: Uncomment if you want to re-render year filter on search
     displayedArticles = 0;
     renderArticles();
   }
