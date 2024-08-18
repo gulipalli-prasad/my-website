@@ -1,12 +1,9 @@
 export default function decorate(block) {
-  const [titleEl, searchEl, goButtonEl, loadMoreEl] = block.children;
-
+  const [titleEl, searchEl, goButtonEl] = block.children;
   const title = titleEl.textContent.trim();
   const searchPlaceholder = searchEl.textContent.trim();
   const goButtonText = goButtonEl.textContent.trim();
-  const loadMoreText = loadMoreEl.textContent.trim();
 
-  // Create HTML structure
   block.innerHTML = `
     <h2>${title}</h2>
     <div class="content-wrapper">
@@ -15,9 +12,9 @@ export default function decorate(block) {
           <input type="text" class="search-field" placeholder="${searchPlaceholder}">
           <button class="search-button">${goButtonText}</button>
         </div>
-        <div class="year-display"></div>
+        <h3 class="year-title">2024</h3>
         <div class="article-list-container"></div>
-        <button class="load-more-button">${loadMoreText}</button>
+        <button class="load-more-button">Load More</button>
       </div>
       <div class="sidebar">
         <h3>By Year</h3>
@@ -28,20 +25,51 @@ export default function decorate(block) {
 
   const articleListContainer = block.querySelector(".article-list-container");
   const yearFilterContainer = block.querySelector(".year-filter-container");
-  const yearDisplay = block.querySelector(".year-display");
   const searchField = block.querySelector(".search-field");
   const searchButton = block.querySelector(".search-button");
   const loadMoreButton = block.querySelector(".load-more-button");
+  const yearTitle = block.querySelector(".year-title");
 
-  let articles = [];
-  let filteredArticles = [];
-  let currentPage = 1;
-  let selectedYear = new Date().getFullYear();
+  let articles = mockArticles; // Replace with actual data fetching
+  let selectedYear = 2024;
   let selectedMonth = null;
-  const ARTICLES_PER_PAGE = 5;
+  let displayedArticles = 0;
+  const articlesPerLoad = 2;
+
+  // function renderArticles() {
+  //   let filteredArticles = articles.filter(
+  //     (article) => new Date(article.date).getFullYear() === selectedYear
+  //   );
+
+  //   if (selectedMonth !== null) {
+  //     filteredArticles = filteredArticles.filter(
+  //       (article) => new Date(article.date).getMonth() === selectedMonth
+  //     );
+  //   }
+
+  //   const articlesToShow = filteredArticles.slice(
+  //     0,
+  //     displayedArticles + articlesPerLoad
+  //   );
+
+  //   articleListContainer.innerHTML = articlesToShow
+  //     .map(
+  //       (article) => `
+  //         <div class="article-item">
+  //           <div class="article-date">${formatDate(article.date)}</div>
+  //           <a href="#" class="article-title">${article.title}</a>
+  //         </div>
+  //       `
+  //     )
+  //     .join("");
+
+  //   displayedArticles = articlesToShow.length;
+
+  //   loadMoreButton.style.display =
+  //     displayedArticles < filteredArticles.length ? "block" : "none";
+  // }
 
   async function fetchArticles() {
-    // Replace this with your actual API endpoint
     const response = await fetch(
       "/graphql/execute.json/my-website/Articles-list"
     );
@@ -83,43 +111,59 @@ export default function decorate(block) {
     yearFilterContainer.innerHTML = years
       .map(
         (year) => `
-      <button class="year-button ${
-        year === selectedYear ? "active" : ""
-      }" data-year="${year}">${year}</button>
-    `
+          <div class="year-item" data-year="${year}">
+            <button class="year-button">${year}</button>
+            <div class="month-list" style="display: none;"></div>
+          </div>
+        `
       )
       .join("");
 
-    yearFilterContainer.addEventListener("click", handleYearFilter);
-    updateYearDisplay();
+    yearFilterContainer.querySelectorAll(".year-button").forEach((btn) => {
+      btn.addEventListener("click", (e) => {
+        const yearItem = e.target.closest(".year-item");
+        const year = parseInt(yearItem.dataset.year);
+        toggleYear(year);
+      });
+    });
   }
 
-  function handleYearFilter(event) {
-    if (event.target.classList.contains("year-button")) {
-      selectedYear = parseInt(event.target.dataset.year);
-      selectedMonth = null;
-      yearFilterContainer
-        .querySelectorAll(".year-button")
-        .forEach((btn) => btn.classList.remove("active"));
-      event.target.classList.add("active");
-      renderMonths();
-      filterArticles();
-      updateYearDisplay();
-    } else if (event.target.classList.contains("month-button")) {
-      selectedMonth = parseInt(event.target.dataset.month);
-      yearFilterContainer
-        .querySelectorAll(".month-button")
-        .forEach((btn) => btn.classList.remove("active"));
-      event.target.classList.add("active");
-      filterArticles();
-    }
+  function toggleYear(year) {
+    selectedYear = year;
+    selectedMonth = null;
+    displayedArticles = 0;
+    yearTitle.textContent = year;
+
+    const yearItems = yearFilterContainer.querySelectorAll(".year-item");
+
+    yearItems.forEach((item) => {
+      const isClickedYear = parseInt(item.dataset.year) === year;
+      const monthList = item.querySelector(".month-list");
+
+      if (isClickedYear) {
+        monthList.style.display = "block";
+        renderMonths(monthList, year);
+      } else {
+        monthList.style.display = "none";
+        monthList.innerHTML = "";
+      }
+    });
+
+    // renderArticles();
+    fetchArticles();
   }
 
-  function updateYearDisplay() {
-    yearDisplay.textContent = selectedYear;
-  }
+  function renderMonths(monthListElement, year) {
+    const yearArticles = articles.filter(
+      (article) => new Date(article.date).getFullYear() === year
+    );
 
-  function renderMonths() {
+    const months = [
+      ...new Set(
+        yearArticles.map((article) => new Date(article.date).getMonth())
+      ),
+    ].sort((a, b) => a - b);
+
     const monthNames = [
       "January",
       "February",
@@ -135,95 +179,136 @@ export default function decorate(block) {
       "December",
     ];
 
-    const yearButton = yearFilterContainer.querySelector(
-      `.year-button[data-year="${selectedYear}"]`
-    );
-
-    // **Check if the selected year is already open**
-    if (
-      yearButton.nextElementSibling &&
-      yearButton.nextElementSibling.classList.contains("month-list")
-    ) {
-      yearButton.nextElementSibling.remove(); // **Close the current year if it's already open**
-      return;
-    }
-
-    // **Close any previously opened year**
-    const previousMonthList = yearFilterContainer.querySelector(".month-list");
-    if (previousMonthList) {
-      previousMonthList.remove();
-    }
-
-    const monthList = document.createElement("div");
-    monthList.className = "month-list";
-
-    const currentYear = new Date().getFullYear();
-    const currentMonth = new Date().getMonth();
-    const months =
-      selectedYear === currentYear
-        ? monthNames.slice(0, currentMonth + 1).reverse()
-        : monthNames.slice().reverse();
-
-    monthList.innerHTML = months
+    monthListElement.innerHTML = months
       .map(
-        (month, index) => `
-        <button class="month-button" data-month="${
-          11 - index
-        }">${month}</button>
-    `
+        (month) => `
+          <div class="month-item">
+            <button class="month-button" data-month="${month}">${monthNames[month]}</button>
+            <div class="month-articles" style="display: none;"></div>
+          </div>
+        `
       )
       .join("");
 
-    yearButton.insertAdjacentElement("afterend", monthList);
+    monthListElement.querySelectorAll(".month-button").forEach((btn) => {
+      btn.addEventListener("click", (e) => {
+        e.stopPropagation();
+        const month = parseInt(btn.dataset.month);
+        toggleMonth(month, btn);
+      });
+    });
   }
 
-  function filterArticles() {
-    filteredArticles = articles.filter((article) => {
-      const articleDate = new Date(article.date);
-      return (
-        articleDate.getFullYear() === selectedYear &&
-        (selectedMonth === null || articleDate.getMonth() === selectedMonth)
+  function toggleMonth(month, btn) {
+    selectedMonth = month;
+    displayedArticles = 0;
+
+    const monthArticles = btn.nextElementSibling;
+    const isExpanded = monthArticles.style.display !== "none";
+
+    if (!isExpanded) {
+      const filteredArticles = articles.filter(
+        (article) =>
+          new Date(article.date).getFullYear() === selectedYear &&
+          new Date(article.date).getMonth() === month
       );
-    });
-    currentPage = 1;
-    renderArticles();
+
+      monthArticles.innerHTML = filteredArticles
+        .map(
+          (article) => `
+            <div class="article-item">
+              <a href="#" class="article-title">${article.title}</a>
+            </div>
+          `
+        )
+        .join("");
+
+      monthArticles.style.display = "block";
+    } else {
+      monthArticles.style.display = "none";
+    }
+
+    // renderArticles();
+    fetchArticles();
   }
 
   function formatDate(dateString) {
     const date = new Date(dateString);
-    return date.toLocaleDateString("en-US", { month: "short", day: "2-digit" });
+    const monthNames = [
+      "Jan",
+      "Feb",
+      "Mar",
+      "Apr",
+      "May",
+      "Jun",
+      "Jul",
+      "Aug",
+      "Sep",
+      "Oct",
+      "Nov",
+      "Dec",
+    ];
+    return `${monthNames[date.getMonth()]} ${date.getDate()}`;
   }
 
   function handleSearch() {
     const searchTerm = searchField.value.toLowerCase();
-    filteredArticles = articles.filter(
-      (article) =>
-        article.title.toLowerCase().includes(searchTerm) &&
-        new Date(article.date).getFullYear() === selectedYear &&
-        (selectedMonth === null ||
-          new Date(article.date).getMonth() === selectedMonth)
+    articles = mockArticles.filter((article) =>
+      article.title.toLowerCase().includes(searchTerm)
     );
-    currentPage = 1;
-    renderArticles();
+    renderYearFilter();
+    displayedArticles = 0;
+    fetchArticles();
+    // renderArticles();
   }
 
   function handleLoadMore() {
-    currentPage++;
-    renderArticles();
+    displayedArticles += articlesPerLoad;
+    // renderArticles();
+    fetchArticles();
   }
 
   // Initial render
   renderYearFilter();
   fetchArticles();
+  // renderArticles();
 
   // Event listeners
   searchButton.addEventListener("click", handleSearch);
   loadMoreButton.addEventListener("click", handleLoadMore);
-  articleListContainer.addEventListener("click", (event) => {
-    if (event.target.classList.contains("article-title")) {
-      event.preventDefault();
-      // Implement redirection logic here
-      console.log("Redirect to article:", event.target.textContent);
-    }
-  });
 }
+
+// Mock data (replace with actual data fetching)
+const mockArticles = [
+  {
+    date: "2024-08-13",
+    title:
+      "Maruti Suzuki commences export of its award-winning SUV Fronx to Japan, a tribute to 'Make in India' initiative",
+  },
+
+  {
+    date: "2024-08-04",
+    title: "Together: Progressing through shared value creation",
+  },
+
+  { date: "2024-08-01", title: "Maruti Suzuki production volume: July 2024" },
+
+  { date: "2024-08-01", title: "Maruti Suzuki sales in July 2024" },
+
+  {
+    date: "2024-07-31",
+    title:
+      "Maruti Suzuki Financial Results: Quarter 1 (April-June), FY 2024-25",
+  },
+
+  {
+    date: "2024-07-29",
+    title:
+      "Maruti Suzuki Grand Vitara continues to 'RULE EVERY ROAD': Clocks fastest 2 lakh unit sales in the mid-SUV space since launch",
+  },
+
+  { date: "2023-12-15", title: "Sample article from 2023" },
+
+  { date: "2022-06-01", title: "Sample article from 2022" },
+  { date: "2022-07-10", title: "Sample article from JUNE 2022" },
+];
