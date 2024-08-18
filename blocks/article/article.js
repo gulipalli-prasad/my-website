@@ -4,7 +4,6 @@ export default async function decorate(block) {
   const searchPlaceholder = searchEl.textContent.trim();
   const goButtonText = goButtonEl.textContent.trim();
 
-  // Set up initial HTML structure for the block
   block.innerHTML = `
     <h2>${title}</h2>
     <div class="content-wrapper">
@@ -42,7 +41,6 @@ export default async function decorate(block) {
 
   let articles = [];
   try {
-    // Fetch articles from the GraphQL endpoint
     const response = await fetch(
       "/graphql/execute.json/my-website/Articles-list"
     );
@@ -86,9 +84,9 @@ export default async function decorate(block) {
         (article) => `
           <div class="article-item">
             <div class="article-date">${formatDate(article.date)}</div>
-            <a href="?path=${encodeURIComponent(
-              article.path
-            )}" class="article-title">${article.title}</a>
+            <a href="#" data-path="${article.path}" class="article-title">${
+          article.title
+        }</a>
           </div>
         `
       )
@@ -215,9 +213,7 @@ export default async function decorate(block) {
         .map(
           (article) => `
             <div class="article-item">
-              <a href="?path=${encodeURIComponent(
-                article.path
-              )}" class="article-title">${article.title}</a>
+              <a href="#" data-path="${article.path}" class="article-title">${article.title}</a>
             </div>
           `
         )
@@ -250,73 +246,38 @@ export default async function decorate(block) {
     return `${monthNames[date.getMonth()]} ${date.getDate()}`;
   }
 
-  function handleSearch() {
-    const searchTerm = searchField.value.toLowerCase();
-    const filteredArticles = articles.filter((article) =>
-      article.title.toLowerCase().includes(searchTerm)
-    );
-    articles = filteredArticles;
-    renderYearFilter();
-    displayedArticles = 0;
-    renderArticles();
-  }
-
-  function handleLoadMore() {
-    displayedArticles += articlesPerLoad;
-    renderArticles();
-  }
-
-  function handleArticleClick(e) {
+  async function handleArticleClick(e) {
     e.preventDefault();
     const articleLink = e.target.closest(".article-title");
     if (articleLink) {
-      const path = articleLink.href.split("?path=")[1];
+      const path = articleLink.dataset.path;
       if (path) {
-        fetchContentFragment(path);
+        await fetchContentFragment(path);
       }
     }
   }
 
-  function fetchContentFragment(path) {
-    fetch(
-      `/graphql/execute.json/my-website/Content-fragment?path=${encodeURIComponent(
-        path
-      )}`
-    )
-      .then((response) => response.json())
-      .then((data) => {
-        const content = data.data.contentFragment;
-        if (content) {
-          articleDescription.innerHTML = `
-            <h1>${content.title || "No Title"}</h1>
-            <div class="article-date">${
-              content.date
-                ? new Date(content.date).toLocaleDateString()
-                : "No Date"
-            }</div>
-            <div class="article-description">${
-              content.description?.plaintext || "No Description"
-            }</div>
-            ${
-              content.pdf
-                ? `<a class="article-pdf" href="${content.pdf._path}" target="_blank">Download PDF</a>`
-                : ""
-            }
-          `;
-          articleDescriptionContainer.style.display = "block";
-          articleListContainer.style.display = "none";
-        } else {
-          articleDescription.innerHTML = "Content not found.";
-          articleDescriptionContainer.style.display = "block";
-          articleListContainer.style.display = "none";
-        }
-      })
-      .catch((error) => {
-        console.error("Error fetching content fragment:", error);
-        articleDescription.innerHTML = "Error loading content.";
+  async function fetchContentFragment(path) {
+    try {
+      // Fetch the content from the appropriate endpoint
+      const response = await fetch(
+        `/content/dam/my-website/content-fragments?path=${encodeURIComponent(
+          path
+        )}`
+      );
+      const data = await response.json();
+
+      if (data && data.description) {
+        articleDescription.innerHTML = data.description;
         articleDescriptionContainer.style.display = "block";
         articleListContainer.style.display = "none";
-      });
+      } else {
+        articleDescription.innerHTML = "No content available.";
+      }
+    } catch (error) {
+      console.error("Error loading content:", error);
+      articleDescription.innerHTML = "Error loading content.";
+    }
   }
 
   function handleBackToList() {
@@ -326,9 +287,12 @@ export default async function decorate(block) {
 
   function getArticleFromUrl() {
     const params = new URLSearchParams(window.location.search);
-    const path = params.get("path");
-    if (path) {
-      fetchContentFragment(path);
+    const description = params.get("description");
+
+    if (description) {
+      articleDescriptionContainer.style.display = "block";
+      articleDescription.innerHTML = decodeURIComponent(description);
+      articleListContainer.style.display = "none";
     }
   }
 
