@@ -4,6 +4,7 @@ export default async function decorate(block) {
   const searchPlaceholder = searchEl.textContent.trim();
   const goButtonText = goButtonEl.textContent.trim();
 
+  // Set up initial HTML structure for the block
   block.innerHTML = `
     <h2>${title}</h2>
     <div class="content-wrapper">
@@ -41,6 +42,7 @@ export default async function decorate(block) {
 
   let articles = [];
   try {
+    // Fetch articles from the GraphQL endpoint
     const response = await fetch(
       "/graphql/execute.json/my-website/Articles-list"
     );
@@ -84,9 +86,9 @@ export default async function decorate(block) {
         (article) => `
           <div class="article-item">
             <div class="article-date">${formatDate(article.date)}</div>
-            <a href="${article.path}?description=${encodeURIComponent(
-          article.description
-        )}" class="article-title">${article.title}</a>
+            <a href="?path=${encodeURIComponent(
+              article.path
+            )}" class="article-title">${article.title}</a>
           </div>
         `
       )
@@ -213,9 +215,9 @@ export default async function decorate(block) {
         .map(
           (article) => `
             <div class="article-item">
-              <a href="${article.path}?description=${encodeURIComponent(
-            article.description
-          )}" class="article-title">${article.title}</a>
+              <a href="?path=${encodeURIComponent(
+                article.path
+              )}" class="article-title">${article.title}</a>
             </div>
           `
         )
@@ -268,14 +270,53 @@ export default async function decorate(block) {
     e.preventDefault();
     const articleLink = e.target.closest(".article-title");
     if (articleLink) {
-      const path = articleLink.href;
-      const description =
-        articles.find((article) => article.path === new URL(path).pathname)
-          ?.description || "";
-      articleDescription.innerHTML = description;
-      articleDescriptionContainer.style.display = "block";
-      articleListContainer.style.display = "none";
+      const path = articleLink.href.split("?path=")[1];
+      if (path) {
+        fetchContentFragment(path);
+      }
     }
+  }
+
+  function fetchContentFragment(path) {
+    fetch(
+      `/graphql/execute.json/my-website/Content-fragment?path=${encodeURIComponent(
+        path
+      )}`
+    )
+      .then((response) => response.json())
+      .then((data) => {
+        const content = data.data.contentFragment;
+        if (content) {
+          articleDescription.innerHTML = `
+            <h1>${content.title || "No Title"}</h1>
+            <div class="article-date">${
+              content.date
+                ? new Date(content.date).toLocaleDateString()
+                : "No Date"
+            }</div>
+            <div class="article-description">${
+              content.description?.plaintext || "No Description"
+            }</div>
+            ${
+              content.pdf
+                ? `<a class="article-pdf" href="${content.pdf._path}" target="_blank">Download PDF</a>`
+                : ""
+            }
+          `;
+          articleDescriptionContainer.style.display = "block";
+          articleListContainer.style.display = "none";
+        } else {
+          articleDescription.innerHTML = "Content not found.";
+          articleDescriptionContainer.style.display = "block";
+          articleListContainer.style.display = "none";
+        }
+      })
+      .catch((error) => {
+        console.error("Error fetching content fragment:", error);
+        articleDescription.innerHTML = "Error loading content.";
+        articleDescriptionContainer.style.display = "block";
+        articleListContainer.style.display = "none";
+      });
   }
 
   function handleBackToList() {
@@ -285,12 +326,9 @@ export default async function decorate(block) {
 
   function getArticleFromUrl() {
     const params = new URLSearchParams(window.location.search);
-    const description = params.get("description");
-
-    if (description) {
-      articleDescriptionContainer.style.display = "block";
-      articleDescription.innerHTML = decodeURIComponent(description);
-      articleListContainer.style.display = "none";
+    const path = params.get("path");
+    if (path) {
+      fetchContentFragment(path);
     }
   }
 
