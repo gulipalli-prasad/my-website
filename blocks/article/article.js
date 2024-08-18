@@ -19,6 +19,7 @@ export default async function decorate(block) {
           <div class="article-date"></div>
           <div class="article-title"></div>
           <div class="article-description"></div>
+          <div class="article-pdf"></div>
           <button class="back-to-list-button">Back to List</button>
         </div>
       </div>
@@ -41,6 +42,7 @@ export default async function decorate(block) {
   const articleDate = block.querySelector(".article-date");
   const articleTitle = block.querySelector(".article-title");
   const articleDescription = block.querySelector(".article-description");
+  const articlePdf = block.querySelector(".article-pdf");
   const backToListButton = block.querySelector(".back-to-list-button");
 
   // Fetching articles from the API
@@ -282,9 +284,11 @@ export default async function decorate(block) {
       const date = decodeURIComponent(articleLink.dataset.date);
       const title = decodeURIComponent(articleLink.dataset.title);
       const description = decodeURIComponent(articleLink.dataset.description);
+      const pdf = decodeURIComponent(articleLink.dataset.pdf);
       articleDate.innerHTML = date;
       articleTitle.innerHTML = title;
       articleDescription.innerHTML = description;
+      articlePdf.innerHTML = pdf;
       articleDescriptionContainer.style.display = "block";
       articleListContainer.style.display = "none";
     }
