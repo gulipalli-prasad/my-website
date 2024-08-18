@@ -35,6 +35,7 @@ export default function decorate(block) {
   let selectedMonth = null;
   let displayedArticles = 0;
   const articlesPerLoad = 2;
+  let filteredArticles;
 
   // function renderArticles() {
   //   let filteredArticles = articles.filter(
