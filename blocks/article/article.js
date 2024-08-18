@@ -81,7 +81,7 @@ export default function decorate(block) {
     // articles = data.articleModelList;
     filteredArticles = articles;
     renderArticles();
-    renderYearFilter();
+    // renderYearFilter();
   }
 
   function renderArticles() {
@@ -259,7 +259,7 @@ export default function decorate(block) {
     articles = mockArticles.filter((article) =>
       article.title.toLowerCase().includes(searchTerm)
     );
-    renderYearFilter();
+    // renderYearFilter();
     displayedArticles = 0;
     fetchArticles();
     // renderArticles();
@@ -272,7 +272,7 @@ export default function decorate(block) {
   }
 
   // Initial render
-  renderYearFilter();
+  // renderYearFilter();
   fetchArticles();
   // renderArticles();
 
