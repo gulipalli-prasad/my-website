@@ -30,7 +30,7 @@ export default function decorate(block) {
   const loadMoreButton = block.querySelector(".load-more-button");
   const yearTitle = block.querySelector(".year-title");
 
-  let articles = mockArticles; // Replace with actual data fetching
+  let articles; // Replace with actual data fetching
   let selectedYear = 2024;
   let selectedMonth = null;
   let displayedArticles = 0;
