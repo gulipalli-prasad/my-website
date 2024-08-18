@@ -86,7 +86,9 @@ export default async function decorate(block) {
             <div class="article-date">${formatDate(article.date)}</div>
             <a href="/content/my-website/index/article-content.html?title=${encodeURIComponent(
               article.title
-            )}" class="article-title">${article.title}</a>
+            )}" 
+               target="_blank" 
+               class="article-title">${article.title}</a>
           </div>
         `
       )
