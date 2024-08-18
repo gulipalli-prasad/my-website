@@ -85,9 +85,11 @@ export default async function decorate(block) {
         (article) => `
           <div class="article-item">
             <div class="article-date">${formatDate(article.date)}</div>
-             <a href="/content/my-website/index/article-content.html?title=${encodeURIComponent(
-               article.title
-             )}" target="_blank" class="article-title">${article.title}</a>
+            <a href="/content/my-website/index/article-content.html?title=${encodeURIComponent(
+              article.title
+            )}" 
+               target="_blank" 
+               class="article-title">${article.title}</a>
           </div>
         `
       )
@@ -216,7 +218,9 @@ export default async function decorate(block) {
             <div class="article-item">
               <a href="/content/my-website/index/article-content.html?title=${encodeURIComponent(
                 article.title
-              )}" target="_blank" class="article-title">${article.title}</a>
+              )}" 
+                 target="_blank" 
+                 class="article-title">${article.title}</a>
             </div>
           `
         )
@@ -269,7 +273,6 @@ export default async function decorate(block) {
     e.preventDefault();
     const articleLink = e.target.closest(".article-title");
     if (articleLink) {
-      const path = articleLink.dataset._path;
       const description = decodeURIComponent(articleLink.dataset.description);
       articleDescription.innerHTML = description;
       articleDescriptionContainer.style.display = "block";
@@ -292,3 +295,25 @@ export default async function decorate(block) {
   articleListContainer.addEventListener("click", handleArticleClick);
   backToListButton.addEventListener("click", handleBackToList);
 }
+
+// Additional script to handle title display on the article content page
+document.addEventListener("DOMContentLoaded", () => {
+  function getQueryParam(name) {
+    const urlParams = new URLSearchParams(window.location.search);
+    return urlParams.get(name);
+  }
+
+  const title = getQueryParam("title");
+
+  if (title) {
+    const contentWrapper = document.querySelector(".default-content-wrapper");
+
+    if (contentWrapper) {
+      const textComponent = contentWrapper.querySelector("[data-aue-resource]");
+
+      if (textComponent) {
+        textComponent.innerHTML = `<p>${title}</p>`;
+      }
+    }
+  }
+});
