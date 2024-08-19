@@ -53,7 +53,9 @@ export default async function decorate(block) {
       .filter((item) => item.title && item.date) // Ensure title and date are not null
       .map((item) => ({
         date: item.date,
+        pdf: item.pdf?._path || "",
         title: item.title,
+        description: item.description?.plaintext || "",
       }));
     articles = [...originalArticles];
   } catch (error) {
