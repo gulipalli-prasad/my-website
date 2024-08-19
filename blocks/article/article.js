@@ -150,7 +150,7 @@ export default async function decorate(block) {
   function toggleYear(year) {
     selectedYear = year;
     selectedMonth = null;
-    displayedArticles = 0;
+    displayedArticles = articlesPerLoad;
     yearTitle.textContent = year;
 
     const yearItems = yearFilterContainer.querySelectorAll(".year-item");
@@ -219,7 +219,7 @@ export default async function decorate(block) {
 
   function toggleMonth(month, btn) {
     selectedMonth = month;
-    displayedArticles = 0;
+    displayedArticles = articlesPerLoad;
 
     const monthArticles = btn.nextElementSibling;
     const isExpanded = monthArticles.style.display !== "none";
@@ -279,7 +279,7 @@ export default async function decorate(block) {
     );
     articles = filteredArticles;
     // renderYearFilter();
-    displayedArticles = 0;
+    displayedArticles = articlesPerLoad;
     renderArticles();
   }
 
