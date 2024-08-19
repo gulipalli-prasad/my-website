@@ -84,7 +84,7 @@ export default async function decorate(block) {
       );
     }
 
-    // filteredArticles.sort((a, b) => new Date(b.date) - new Date(a.date));
+    filteredArticles.sort((a, b) => new Date(b.date) - new Date(a.date));
     const articlesToShow = filteredArticles.slice(
       0,
       displayedArticles + articlesPerLoad
@@ -167,6 +167,18 @@ export default async function decorate(block) {
         monthList.style.display = "none";
         monthList.innerHTML = "";
       }
+      // if (isClickedYear) {
+      //   const isVisible = monthList.style.display === "block";
+      //   monthList.style.display = isVisible ? "none" : "block";
+      //   if (!isVisible) {
+      //     renderMonths(monthList, year);
+      //   } else {
+      //     monthList.innerHTML = "";
+      //   }
+      // } else {
+      //   item.querySelector(".month-list").style.display = "none";
+      //   item.querySelector(".month-list").innerHTML = "";
+      // }
     });
 
     renderArticles();
