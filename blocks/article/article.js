@@ -71,7 +71,7 @@ export default async function decorate(block) {
   let selectedYear = 2024;
   let selectedMonth = null;
   const articlesPerLoad = 2;
-  let displayedArticles = articlesPerLoad;
+  let displayedArticles = 0;
 
   function renderArticles() {
     let filteredArticles = articles.filter(
@@ -285,8 +285,7 @@ export default async function decorate(block) {
       article.title.toLowerCase().includes(searchTerm)
     );
     articles = filteredArticles;
-    // renderYearFilter(); // Optional: Uncomment if you want to re-render year filter on search
-    displayedArticles = 0;
+    displayedArticles = articlesPerLoad; // Reset to show default number of articles
     renderArticles();
   }
 
