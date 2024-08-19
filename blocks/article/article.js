@@ -88,10 +88,11 @@ export default async function decorate(block) {
     filteredArticles.sort((a, b) => new Date(b.date) - new Date(a.date));
 
     // Ensure displayedArticles doesn't exceed the number of filtered articles
-    const articlesToShow = filteredArticles.slice(
-      0,
-      displayedArticles + articlesPerLoad
+    const maxArticlesToShow = Math.min(
+      displayedArticles,
+      filteredArticles.length
     );
+    const articlesToShow = filteredArticles.slice(0, maxArticlesToShow);
 
     if (articlesToShow.length === 0) {
       articleListContainer.innerHTML = "";
