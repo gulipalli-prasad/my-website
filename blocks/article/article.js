@@ -57,22 +57,23 @@ export default async function decorate(block) {
   const articlesPerLoad = 2;
   let displayedArticles = articlesPerLoad;
 
+  const monthNames = [
+    'Jan',
+    'Feb',
+    'Mar',
+    'Apr',
+    'May',
+    'Jun',
+    'Jul',
+    'Aug',
+    'Sep',
+    'Oct',
+    'Nov',
+    'Dec',
+  ];
+
   function formatDate(dateString) {
     const date = new Date(dateString);
-    const monthNames = [
-      'Jan',
-      'Feb',
-      'Mar',
-      'Apr',
-      'May',
-      'Jun',
-      'Jul',
-      'Aug',
-      'Sep',
-      'Oct',
-      'Nov',
-      'Dec',
-    ];
     return `${monthNames[date.getMonth()]} ${date.getDate()}`;
   }
 
@@ -159,21 +160,6 @@ export default async function decorate(block) {
         yearArticles.map((article) => new Date(article.date).getMonth()),
       ),
     ].sort((a, b) => b - a);
-
-    const monthNames = [
-      'January',
-      'February',
-      'March',
-      'April',
-      'May',
-      'June',
-      'July',
-      'August',
-      'September',
-      'October',
-      'November',
-      'December',
-    ];
 
     monthListElement.innerHTML = months
       .map(
