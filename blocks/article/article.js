@@ -84,10 +84,7 @@ export default async function decorate(block) {
       );
     }
 
-    const articlesToShow = filteredArticles.slice(
-      0,
-      displayedArticles + articlesPerLoad
-    );
+    const articlesToShow = filteredArticles.slice(0, displayedArticles);
 
     if (articlesToShow.length === 0) {
       articleListContainer.innerHTML = "";
@@ -114,7 +111,6 @@ export default async function decorate(block) {
         .join("");
 
       document.querySelector(".no-results-message").style.display = "none";
-      displayedArticles = articlesToShow.length;
       loadMoreButton.style.display =
         displayedArticles < filteredArticles.length ? "block" : "none";
     }
@@ -281,49 +277,49 @@ export default async function decorate(block) {
       article.title.toLowerCase().includes(searchTerm)
     );
     articles = filteredArticles;
-    // renderYearFilter(); // Optional: Uncomment if you want to re-render year filter on search
-    displayedArticles = 0;
+    // renderYearFilter(); // Optionally refresh year filter
     renderArticles();
   }
 
   function handleLoadMore() {
-    displayedArticles += articlesPerLoad;
-    renderArticles();
+    displayedArticles += articlesPerLoad; // Increment the count by 2 each time
+    renderArticles(); // Re-render the articles
   }
 
-  function handleArticleClick(e) {
-    e.preventDefault();
-    const articleLink = e.target.closest(".article-title");
-    if (articleLink) {
-      const date = decodeURIComponent(articleLink.dataset.date);
-      const title = decodeURIComponent(articleLink.dataset.title);
-      const description = decodeURIComponent(articleLink.dataset.description);
-      const pdf = decodeURIComponent(articleLink.dataset.pdf);
-      articleDate.innerHTML = date;
-      articleTitle.innerHTML = title;
-      articleDescription.innerHTML = description;
-      if (pdf) {
-        articlePdf.innerHTML = `<a href="${pdf}" target="_blank">Download PDF</a>`;
-      } else {
-        articlePdf.innerHTML = "";
-      }
-      articleDescriptionContainer.style.display = "block";
-      articleListContainer.style.display = "none";
-    }
-  }
-
-  function handleBackToList() {
-    articleDescriptionContainer.style.display = "none";
-    articleListContainer.style.display = "block";
-  }
-
-  // Initial render
   renderYearFilter();
   renderArticles();
 
-  // Event listeners
   searchButton.addEventListener("click", handleSearch);
   loadMoreButton.addEventListener("click", handleLoadMore);
-  articleListContainer.addEventListener("click", handleArticleClick);
-  backToListButton.addEventListener("click", handleBackToList);
+  searchField.addEventListener("keydown", (e) => {
+    if (e.key === "Enter") {
+      handleSearch();
+    }
+  });
+
+  articleListContainer.addEventListener("click", (e) => {
+    const articleTitleLink = e.target.closest(".article-title");
+    if (articleTitleLink) {
+      e.preventDefault();
+
+      articleDate.textContent = articleTitleLink.dataset.date;
+      articleTitle.textContent = decodeURIComponent(
+        articleTitleLink.dataset.title
+      );
+      articleDescription.textContent = decodeURIComponent(
+        articleTitleLink.dataset.description
+      );
+      articlePdf.innerHTML = `<a href="${articleTitleLink.dataset.pdf}" target="_blank">Download PDF</a>`;
+
+      articleListContainer.style.display = "none";
+      loadMoreButton.style.display = "none";
+      articleDescriptionContainer.style.display = "block";
+    }
+  });
+
+  backToListButton.addEventListener("click", () => {
+    articleListContainer.style.display = "block";
+    loadMoreButton.style.display = "block";
+    articleDescriptionContainer.style.display = "none";
+  });
 }
