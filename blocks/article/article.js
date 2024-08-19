@@ -70,8 +70,8 @@ export default async function decorate(block) {
 
   let selectedYear = 2024;
   let selectedMonth = null;
-  let displayedArticles = articlesPerLoad;
   const articlesPerLoad = 2;
+  let displayedArticles = articlesPerLoad;
 
   function renderArticles() {
     let filteredArticles = articles.filter(
