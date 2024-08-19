@@ -228,7 +228,11 @@ export default async function decorate(block) {
 
     const monthArticles = btn.nextElementSibling;
     const isExpanded = monthArticles.style.display !== "none";
-
+    const allMonthArticles =
+      yearFilterContainer.querySelectorAll(".month-articles");
+    allMonthArticles.forEach((articleContainer) => {
+      articleContainer.style.display = "none";
+    });
     if (!isExpanded) {
       const filteredArticles = articles.filter(
         (article) =>
