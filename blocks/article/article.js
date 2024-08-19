@@ -70,8 +70,10 @@ export default async function decorate(block) {
 
   let selectedYear = 2024;
   let selectedMonth = null;
-  let displayedArticles = 0;
+  // let displayedArticles = 0;
+  // const articlesPerLoad = 2;
   const articlesPerLoad = 2;
+  let displayedArticles = articlesPerLoad;
 
   function renderArticles() {
     let filteredArticles = articles.filter(
@@ -167,18 +169,6 @@ export default async function decorate(block) {
         monthList.style.display = "none";
         monthList.innerHTML = "";
       }
-      // if (isClickedYear) {
-      //   const isVisible = monthList.style.display === "block";
-      //   monthList.style.display = isVisible ? "none" : "block";
-      //   if (!isVisible) {
-      //     renderMonths(monthList, year);
-      //   } else {
-      //     monthList.innerHTML = "";
-      //   }
-      // } else {
-      //   item.querySelector(".month-list").style.display = "none";
-      //   item.querySelector(".month-list").innerHTML = "";
-      // }
     });
 
     renderArticles();
