@@ -87,10 +87,7 @@ export default async function decorate(block) {
     }
 
     filteredArticles.sort((a, b) => new Date(b.date) - new Date(a.date));
-    const articlesToShow = filteredArticles.slice(
-      0,
-      displayedArticles + articlesPerLoad
-    );
+    const articlesToShow = filteredArticles.slice(0, displayedArticles);
 
     if (articlesToShow.length === 0) {
       articleListContainer.innerHTML = "";
