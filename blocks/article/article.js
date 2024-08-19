@@ -160,8 +160,13 @@ export default async function decorate(block) {
       const monthList = item.querySelector(".month-list");
 
       if (isClickedYear) {
-        monthList.style.display = "block";
-        renderMonths(monthList, year);
+        monthList.style.display =
+          monthList.style.display === "block" ? "none" : "block";
+        if (monthList.style.display === "block") {
+          renderMonths(monthList, year);
+        } else {
+          monthList.innerHTML = "";
+        }
       } else {
         monthList.style.display = "none";
         monthList.innerHTML = "";
@@ -222,6 +227,11 @@ export default async function decorate(block) {
     displayedArticles = articlesPerLoad;
 
     const monthArticles = btn.nextElementSibling;
+    const allMonthArticles =
+      monthListElement.querySelectorAll(".month-articles");
+    allMonthArticles.forEach((item) => {
+      item.style.display = "none";
+    });
     const isExpanded = monthArticles.style.display !== "none";
 
     if (!isExpanded) {
