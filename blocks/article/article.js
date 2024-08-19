@@ -239,8 +239,8 @@ export default async function decorate(block) {
   function formatDate(dateStr) {
     const date = new Date(dateStr);
     const options = {
-      weekday: "long",
-      year: "numeric",
+      // weekday: 'long',
+      // year: 'numeric',
       month: "long",
       day: "numeric",
     };
