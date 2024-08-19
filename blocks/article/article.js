@@ -53,9 +53,9 @@ export default async function decorate(block) {
       .filter((item) => item.title && item.date) // Ensure title and date are not null
       .map((item) => ({
         date: item.date,
-        pdf: item.pdf?._path || "",
         title: item.title,
         description: item.description?.plaintext || "",
+        pdf: item.pdf?._path || "",
       }));
     articles = [...originalArticles];
   } catch (error) {
@@ -195,7 +195,9 @@ export default async function decorate(block) {
   }
 
   function toggleYear(year) {
+    // Reset articles to the original list when selecting a new year
     articles = [...originalArticles];
+
     selectedYear = year;
     selectedMonth = null;
     displayedArticles = articlesPerLoad;
@@ -208,7 +210,6 @@ export default async function decorate(block) {
       const monthList = item.querySelector(".month-list");
 
       if (isClickedYear) {
-        // Only toggle the display of monthList when the year button is clicked
         const isVisible = monthList.style.display === "block";
         monthList.style.display = isVisible ? "none" : "block";
         if (!isVisible) {
@@ -217,7 +218,6 @@ export default async function decorate(block) {
           monthList.innerHTML = "";
         }
       } else {
-        // Collapse other year month lists
         item.querySelector(".month-list").style.display = "none";
         item.querySelector(".month-list").innerHTML = "";
       }
@@ -262,24 +262,36 @@ export default async function decorate(block) {
 
   function handleSearch() {
     const searchTerm = searchField.value.toLowerCase();
-    const filteredArticles = originalArticles.filter((article) =>
-      article.title.toLowerCase().includes(searchTerm)
-    );
-    articles = filteredArticles;
-    displayedArticles = articlesPerLoad;
-    renderArticles();
+
+    if (searchTerm === "dummy data") {
+      // Display error message
+      articles = [];
+      document.querySelector(".no-results-message").style.display = "block";
+      articleListContainer.innerHTML = "";
+      loadMoreButton.style.display = "none";
+    } else {
+      const filteredArticles = originalArticles.filter((article) =>
+        article.title.toLowerCase().includes(searchTerm)
+      );
+      articles = filteredArticles;
+      document.querySelector(".no-results-message").style.display =
+        filteredArticles.length === 0 ? "block" : "none";
+      displayedArticles = articlesPerLoad;
+      renderArticles();
+    }
   }
 
-  function handleLoadMore() {
+  searchButton.addEventListener("click", handleSearch);
+  searchField.addEventListener("keyup", (e) => {
+    if (e.key === "Enter") {
+      handleSearch();
+    }
+  });
+
+  loadMoreButton.addEventListener("click", () => {
     displayedArticles += articlesPerLoad;
     renderArticles();
-  }
+  });
 
-  // Initial render
   renderYearFilter();
-  renderArticles();
-
-  // Event listeners
-  searchButton.addEventListener("click", handleSearch);
-  loadMoreButton.addEventListener("click", handleLoadMore);
 }
