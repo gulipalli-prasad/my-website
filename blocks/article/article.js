@@ -52,8 +52,8 @@ export default async function decorate(block) {
     originalArticles = data.data.articleModelList.items
       .filter((item) => item.title && item.date) // Ensure title and date are not null
       .map((item) => ({
-        date: item.date,
-        title: item.title,
+        // date: item.date,
+        // title: item.title,
       }));
     articles = [...originalArticles];
   } catch (error) {
