@@ -84,12 +84,8 @@ export default async function decorate(block) {
       );
     }
 
-    // Sort articles in descending order by month
-    filteredArticles.sort((a, b) => {
-      const monthA = new Date(a.date).getMonth();
-      const monthB = new Date(b.date).getMonth();
-      return monthB - monthA; // Descending order
-    });
+    // Sort articles in descending order by full date
+    filteredArticles.sort((a, b) => new Date(b.date) - new Date(a.date));
 
     const articlesToShow = filteredArticles.slice(
       0,
@@ -126,7 +122,6 @@ export default async function decorate(block) {
         displayedArticles < filteredArticles.length ? "block" : "none";
     }
   }
-
   function renderYearFilter() {
     const years = [
       ...new Set(
