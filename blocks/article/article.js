@@ -24,19 +24,19 @@ export default async function decorate(block) {
     </div>
   `;
 
-  const articleListContainer = block.querySelector(".article-list-container");
-  const yearFilterContainer = block.querySelector(".year-filter-container");
-  const searchField = block.querySelector(".search-field");
-  const searchButton = block.querySelector(".search-button");
-  const loadMoreButton = block.querySelector(".load-more-button");
-  const yearTitle = block.querySelector(".year-title");
+  const articleListContainer = block.querySelector('.article-list-container');
+  const yearFilterContainer = block.querySelector('.year-filter-container');
+  const searchField = block.querySelector('.search-field');
+  const searchButton = block.querySelector('.search-button');
+  const loadMoreButton = block.querySelector('.load-more-button');
+  const yearTitle = block.querySelector('.year-title');
 
   // Fetching articles from the API
   let articles = [];
   let originalArticles = [];
   try {
     const response = await fetch(
-      "/graphql/execute.json/my-website/Articles-list"
+      '/graphql/execute.json/my-website/Articles-list',
     );
     const data = await response.json();
     originalArticles = data.data.articleModelList.items
@@ -44,30 +44,47 @@ export default async function decorate(block) {
       .map((item) => ({
         date: item.date,
         title: item.title,
-        description: item.description?.plaintext || "",
-        pdf: item.pdf?._path || "",
+        description: item.description?.plaintext || '',
+        pdf: item.pdf?._path || '',
         path: item._path,
       }));
     articles = [...originalArticles];
   } catch (error) {
-    console.error("Error fetching articles:", error);
+    // console.log('Error fetching articles:', error);
   }
 
   let selectedYear = 2024;
   let selectedMonth = null;
-  // let displayedArticles = 0;
-  // const articlesPerLoad = 2;
   const articlesPerLoad = 2;
   let displayedArticles = articlesPerLoad;
 
+  function formatDate(dateString) {
+    const date = new Date(dateString);
+    const monthNames = [
+      'Jan',
+      'Feb',
+      'Mar',
+      'Apr',
+      'May',
+      'Jun',
+      'Jul',
+      'Aug',
+      'Sep',
+      'Oct',
+      'Nov',
+      'Dec',
+    ];
+    return `${monthNames[date.getMonth()]} ${date.getDate()}`;
+  }
+
   function renderArticles() {
     let filteredArticles = articles.filter(
-      (article) => new Date(article.date).getFullYear() === selectedYear
+      (article) => new Date(article.date).getFullYear() === selectedYear,
     );
 
     if (selectedMonth !== null) {
       filteredArticles = filteredArticles.filter(
-        (article) => new Date(article.date).getMonth() === selectedMonth
+        (article) => new Date(article.date).getMonth() === selectedMonth,
       );
     }
 
@@ -75,9 +92,9 @@ export default async function decorate(block) {
     const articlesToShow = filteredArticles.slice(0, displayedArticles);
 
     if (articlesToShow.length === 0) {
-      articleListContainer.innerHTML = "";
-      document.querySelector(".no-results-message").style.display = "block";
-      loadMoreButton.style.display = "none";
+      articleListContainer.innerHTML = '';
+      document.querySelector('.no-results-message').style.display = 'block';
+      loadMoreButton.style.display = 'none';
     } else {
       articleListContainer.innerHTML = articlesToShow
         .map(
@@ -85,120 +102,16 @@ export default async function decorate(block) {
             <div class="article-item">
               <div class="article-date">${formatDate(article.date)}</div>
               <a href="#" target="_blank" class="article-title">${
-                article.title
-              }</a>
+  article.title
+}</a>
             </div>
-          `
+          `,
         )
-        .join("");
+        .join('');
 
-      document.querySelector(".no-results-message").style.display = "none";
-      displayedArticles = articlesToShow.length;
-      loadMoreButton.style.display =
-        displayedArticles < filteredArticles.length ? "block" : "none";
+      document.querySelector('.no-results-message').style.display = 'none';
+      loadMoreButton.style.display = displayedArticles < filteredArticles.length ? 'block' : 'none';
     }
-  }
-
-  function renderYearFilter() {
-    const years = [
-      ...new Set(
-        articles.map((article) => new Date(article.date).getFullYear())
-      ),
-    ].sort((a, b) => b - a);
-
-    yearFilterContainer.innerHTML = years
-      .map(
-        (year) => `
-          <div class="year-item" data-year="${year}">
-            <button class="year-button">${year}</button>
-            <div class="month-list" style="display: none;"></div>
-          </div>
-        `
-      )
-      .join("");
-
-    yearFilterContainer.querySelectorAll(".year-button").forEach((btn) => {
-      btn.addEventListener("click", (e) => {
-        const yearItem = e.target.closest(".year-item");
-        const year = parseInt(yearItem.dataset.year);
-        toggleYear(year);
-      });
-    });
-  }
-
-  function toggleYear(year) {
-    selectedYear = year;
-    selectedMonth = null;
-    displayedArticles = articlesPerLoad;
-    yearTitle.textContent = year;
-
-    const yearItems = yearFilterContainer.querySelectorAll(".year-item");
-
-    yearItems.forEach((item) => {
-      const isClickedYear = parseInt(item.dataset.year) === year;
-      const monthList = item.querySelector(".month-list");
-
-      if (isClickedYear) {
-        const isVisible = monthList.style.display === "block";
-        monthList.style.display = isVisible ? "none" : "block";
-        if (!isVisible) {
-          renderMonths(monthList, year);
-        } else {
-          monthList.innerHTML = "";
-        }
-      } else {
-        item.querySelector(".month-list").style.display = "none";
-        item.querySelector(".month-list").innerHTML = "";
-      }
-    });
-
-    renderArticles();
-  }
-
-  function renderMonths(monthListElement, year) {
-    const yearArticles = articles.filter(
-      (article) => new Date(article.date).getFullYear() === year
-    );
-
-    const months = [
-      ...new Set(
-        yearArticles.map((article) => new Date(article.date).getMonth())
-      ),
-    ].sort((a, b) => b - a);
-
-    const monthNames = [
-      "January",
-      "February",
-      "March",
-      "April",
-      "May",
-      "June",
-      "July",
-      "August",
-      "September",
-      "October",
-      "November",
-      "December",
-    ];
-
-    monthListElement.innerHTML = months
-      .map(
-        (month) => `
-          <div class="month-item">
-            <button class="month-button" data-month="${month}">${monthNames[month]}</button>
-            <div class="month-articles" style="display: none;"></div>
-          </div>
-        `
-      )
-      .join("");
-
-    monthListElement.querySelectorAll(".month-button").forEach((btn) => {
-      btn.addEventListener("click", (e) => {
-        e.stopPropagation();
-        const month = parseInt(btn.dataset.month);
-        toggleMonth(month, btn);
-      });
-    });
   }
 
   function toggleMonth(month, btn) {
@@ -206,19 +119,17 @@ export default async function decorate(block) {
     displayedArticles = articlesPerLoad;
 
     const monthArticles = btn.nextElementSibling;
-    const isExpanded = monthArticles.style.display !== "none";
-    const allMonthArticles =
-      yearFilterContainer.querySelectorAll(".month-articles");
+    const isExpanded = monthArticles.style.display !== 'none';
+    const allMonthArticles = yearFilterContainer.querySelectorAll('.month-articles');
 
     allMonthArticles.forEach((articleContainer) => {
-      articleContainer.style.display = "none";
+      articleContainer.style.display = 'none';
     });
 
     if (!isExpanded) {
-      let filteredArticles = articles.filter(
-        (article) =>
-          new Date(article.date).getFullYear() === selectedYear &&
-          new Date(article.date).getMonth() === month
+      const filteredArticles = articles.filter(
+        (article) => new Date(article.date).getFullYear() === selectedYear
+          && new Date(article.date).getMonth() === month,
       );
 
       filteredArticles.sort((a, b) => new Date(b.date) - new Date(a.date));
@@ -229,44 +140,124 @@ export default async function decorate(block) {
               <div class="article-item">
                 <a href="#" target="_blank" class="article-title">${article.title}</a>
               </div>
-            `
+            `,
         )
-        .join("");
+        .join('');
 
-      monthArticles.style.display = "block";
+      monthArticles.style.display = 'block';
     } else {
-      monthArticles.style.display = "none";
+      monthArticles.style.display = 'none';
     }
 
     renderArticles();
   }
 
-  function formatDate(dateString) {
-    const date = new Date(dateString);
+  function renderMonths(monthListElement, year) {
+    const yearArticles = articles.filter(
+      (article) => new Date(article.date).getFullYear() === year,
+    );
+
+    const months = [
+      ...new Set(
+        yearArticles.map((article) => new Date(article.date).getMonth()),
+      ),
+    ].sort((a, b) => b - a);
+
     const monthNames = [
-      "Jan",
-      "Feb",
-      "Mar",
-      "Apr",
-      "May",
-      "Jun",
-      "Jul",
-      "Aug",
-      "Sep",
-      "Oct",
-      "Nov",
-      "Dec",
+      'January',
+      'February',
+      'March',
+      'April',
+      'May',
+      'June',
+      'July',
+      'August',
+      'September',
+      'October',
+      'November',
+      'December',
     ];
-    return `${monthNames[date.getMonth()]} ${date.getDate()}`;
+
+    monthListElement.innerHTML = months
+      .map(
+        (month) => `
+          <div class="month-item">
+            <button class="month-button" data-month="${month}">${monthNames[month]}</button>
+            <div class="month-articles" style="display: none;"></div>
+          </div>
+        `,
+      )
+      .join('');
+
+    monthListElement.querySelectorAll('.month-button').forEach((btn) => {
+      btn.addEventListener('click', (e) => {
+        e.stopPropagation();
+        const month = parseInt(btn.dataset.month, 10);
+        toggleMonth(month, btn);
+      });
+    });
+  }
+
+  function toggleYear(year) {
+    selectedYear = year;
+    selectedMonth = null;
+    displayedArticles = articlesPerLoad;
+    yearTitle.textContent = year;
+
+    const yearItems = yearFilterContainer.querySelectorAll('.year-item');
+
+    yearItems.forEach((item) => {
+      const isClickedYear = parseInt(item.dataset.year, 10) === year;
+      const monthList = item.querySelector('.month-list');
+
+      if (isClickedYear) {
+        const isVisible = monthList.style.display === 'block';
+        monthList.style.display = isVisible ? 'none' : 'block';
+        if (!isVisible) {
+          renderMonths(monthList, year);
+        } else {
+          monthList.innerHTML = '';
+        }
+      } else {
+        item.querySelector('.month-list').style.display = 'none';
+        item.querySelector('.month-list').innerHTML = '';
+      }
+    });
+
+    renderArticles();
+  }
+
+  function renderYearFilter() {
+    const years = [
+      ...new Set(
+        articles.map((article) => new Date(article.date).getFullYear()),
+      ),
+    ].sort((a, b) => b - a);
+
+    yearFilterContainer.innerHTML = years
+      .map(
+        (year) => `
+          <div class="year-item" data-year="${year}">
+            <button class="year-button">${year}</button>
+            <div class="month-list" style="display: none;"></div>
+          </div>
+        `,
+      )
+      .join('');
+
+    yearFilterContainer.querySelectorAll('.year-button').forEach((btn) => {
+      btn.addEventListener('click', (e) => {
+        const yearItem = e.target.closest('.year-item');
+        const year = parseInt(yearItem.dataset.year, 10);
+        toggleYear(year);
+      });
+    });
   }
 
   function handleSearch() {
     const searchTerm = searchField.value.toLowerCase();
-    const filteredArticles = originalArticles.filter((article) =>
-      article.title.toLowerCase().includes(searchTerm)
-    );
+    const filteredArticles = originalArticles.filter((article) => article.title.toLowerCase().includes(searchTerm));
     articles = filteredArticles;
-    // renderYearFilter();
     displayedArticles = articlesPerLoad;
     renderArticles();
   }
@@ -281,6 +272,6 @@ export default async function decorate(block) {
   renderArticles();
 
   // Event listeners
-  searchButton.addEventListener("click", handleSearch);
-  loadMoreButton.addEventListener("click", handleLoadMore);
+  searchButton.addEventListener('click', handleSearch);
+  loadMoreButton.addEventListener('click', handleLoadMore);
 }
