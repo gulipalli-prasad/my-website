@@ -209,23 +209,27 @@ export default async function decorate(block) {
     const isExpanded = monthArticles.style.display !== "none";
     const allMonthArticles =
       yearFilterContainer.querySelectorAll(".month-articles");
+
     allMonthArticles.forEach((articleContainer) => {
       articleContainer.style.display = "none";
     });
+
     if (!isExpanded) {
-      const filteredArticles = articles.filter(
+      let filteredArticles = articles.filter(
         (article) =>
           new Date(article.date).getFullYear() === selectedYear &&
           new Date(article.date).getMonth() === month
       );
 
+      filteredArticles.sort((a, b) => new Date(b.date) - new Date(a.date));
+
       monthArticles.innerHTML = filteredArticles
         .map(
           (article) => `
-            <div class="article-item">
-              <a href="#" target="_blank" class="article-title">${article.title}</a>
-            </div>
-          `
+              <div class="article-item">
+                <a href="#" target="_blank" class="article-title">${article.title}</a>
+              </div>
+            `
         )
         .join("");
 
