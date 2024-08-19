@@ -151,7 +151,36 @@ export default async function decorate(block) {
     });
   }
 
-  function renderMonthList(year) {
+  function toggleYear(year) {
+    selectedYear = year;
+    selectedMonth = null;
+    displayedArticles = 0;
+    yearTitle.textContent = year;
+
+    const yearItems = yearFilterContainer.querySelectorAll(".year-item");
+
+    yearItems.forEach((item) => {
+      const isClickedYear = parseInt(item.dataset.year) === year;
+      const monthList = item.querySelector(".month-list");
+
+      if (isClickedYear) {
+        const isVisible = monthList.style.display === "block";
+        monthList.style.display = isVisible ? "none" : "block";
+        if (!isVisible) {
+          renderMonths(monthList, year);
+        } else {
+          monthList.innerHTML = "";
+        }
+      } else {
+        item.querySelector(".month-list").style.display = "none";
+        item.querySelector(".month-list").innerHTML = "";
+      }
+    });
+
+    renderArticles();
+  }
+
+  function renderMonths(monthListElement, year) {
     const yearArticles = articles.filter(
       (article) => new Date(article.date).getFullYear() === year
     );
@@ -177,7 +206,7 @@ export default async function decorate(block) {
       "December",
     ];
 
-    return months
+    monthListElement.innerHTML = months
       .map(
         (month) => `
           <div class="month-item">
@@ -187,64 +216,67 @@ export default async function decorate(block) {
         `
       )
       .join("");
-  }
 
-  function toggleYear(year) {
-    selectedYear = year;
-    selectedMonth = null;
-    displayedArticles = articlesPerLoad; // Reset to show default number of articles
-    yearTitle.textContent = year;
-
-    const yearItems = yearFilterContainer.querySelectorAll(".year-item");
-
-    yearItems.forEach((item) => {
-      const isClickedYear = parseInt(item.dataset.year) === year;
-      const monthList = item.querySelector(".month-list");
-
-      if (isClickedYear) {
-        const isVisible = monthList.style.display === "block";
-        monthList.style.display = isVisible ? "none" : "block";
-        if (!isVisible) {
-          monthList.innerHTML = renderMonthList(year);
-          // Add event listeners for month buttons
-          monthList.querySelectorAll(".month-button").forEach((btn) => {
-            btn.addEventListener("click", (e) => {
-              const month = parseInt(e.target.dataset.month);
-              toggleMonth(month, btn.nextElementSibling);
-            });
-          });
-        } else {
-          monthList.innerHTML = "";
-        }
-      } else {
-        item.querySelector(".month-list").style.display = "none";
-        item.querySelector(".month-list").innerHTML = "";
-      }
+    monthListElement.querySelectorAll(".month-button").forEach((btn) => {
+      btn.addEventListener("click", (e) => {
+        e.stopPropagation();
+        const month = parseInt(btn.dataset.month);
+        toggleMonth(month, btn);
+      });
     });
+  }
 
-    // Render articles for the selected year
-    articles = originalArticles.filter(
-      (article) => new Date(article.date).getFullYear() === selectedYear
-    );
+  function toggleMonth(month, btn) {
+    selectedMonth = month;
+    displayedArticles = 0;
+
+    const monthArticles = btn.nextElementSibling;
+    const isExpanded = monthArticles.style.display !== "none";
+
+    if (!isExpanded) {
+      const filteredArticles = articles.filter(
+        (article) =>
+          new Date(article.date).getFullYear() === selectedYear &&
+          new Date(article.date).getMonth() === month
+      );
+
+      monthArticles.innerHTML = filteredArticles
+        .map(
+          (article) => `
+            <div class="article-item">
+              <a href="/content/my-website/index/article-content.html?title=${encodeURIComponent(
+                article.title
+              )}" target="_blank" class="article-title">${article.title}</a>
+            </div>
+          `
+        )
+        .join("");
+
+      monthArticles.style.display = "block";
+    } else {
+      monthArticles.style.display = "none";
+    }
+
     renderArticles();
   }
 
-  function toggleMonth(month, monthArticlesContainer) {
-    selectedMonth = selectedMonth === month ? null : month;
-    monthArticlesContainer.style.display =
-      monthArticlesContainer.style.display === "block" ? "none" : "block";
-    renderArticles();
-  }
-
-  function formatDate(dateStr) {
-    const date = new Date(dateStr);
-    const options = {
-      // weekday: 'long',
-      // year: 'numeric',
-      month: "long",
-      day: "numeric",
-    };
-    return date.toLocaleDateString(undefined, options);
+  function formatDate(dateString) {
+    const date = new Date(dateString);
+    const monthNames = [
+      "Jan",
+      "Feb",
+      "Mar",
+      "Apr",
+      "May",
+      "Jun",
+      "Jul",
+      "Aug",
+      "Sep",
+      "Oct",
+      "Nov",
+      "Dec",
+    ];
+    return `${monthNames[date.getMonth()]} ${date.getDate()}`;
   }
 
   function handleLoadMore() {
