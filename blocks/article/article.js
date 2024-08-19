@@ -195,42 +195,34 @@ export default async function decorate(block) {
   }
 
   function toggleYear(year) {
-    if (searchField.value.trim().toLowerCase() === "dummy data") {
-      // If "dummy data" is still in the search field, show error message
-      articles = [];
-      document.querySelector(".no-results-message").style.display = "block";
-      articleListContainer.innerHTML = "";
-      loadMoreButton.style.display = "none";
-    } else {
-      // Reset articles to the original list when selecting a new year
-      articles = [...originalArticles];
-      selectedYear = year;
-      selectedMonth = null;
-      displayedArticles = articlesPerLoad;
-      yearTitle.textContent = year;
+    selectedYear = year;
+    selectedMonth = null;
+    displayedArticles = articlesPerLoad;
+    yearTitle.textContent = year;
 
-      const yearItems = yearFilterContainer.querySelectorAll(".year-item");
+    const yearItems = yearFilterContainer.querySelectorAll(".year-item");
 
-      yearItems.forEach((item) => {
-        const isClickedYear = parseInt(item.dataset.year, 10) === year;
-        const monthList = item.querySelector(".month-list");
+    yearItems.forEach((item) => {
+      const isClickedYear = parseInt(item.dataset.year, 10) === year;
+      const monthList = item.querySelector(".month-list");
 
-        if (isClickedYear) {
-          const isVisible = monthList.style.display === "block";
-          monthList.style.display = isVisible ? "none" : "block";
-          if (!isVisible) {
-            renderMonths(monthList, year); // Only render months if the list is being expanded
-          } else {
-            monthList.innerHTML = "";
-          }
+      if (isClickedYear) {
+        // Only toggle the display of monthList when the year button is clicked
+        const isVisible = monthList.style.display === "block";
+        monthList.style.display = isVisible ? "none" : "block";
+        if (!isVisible) {
+          renderMonths(monthList, year); // Only render months if the list is being expanded
         } else {
-          item.querySelector(".month-list").style.display = "none";
-          item.querySelector(".month-list").innerHTML = "";
+          monthList.innerHTML = "";
         }
-      });
+      } else {
+        // Collapse other year month lists
+        item.querySelector(".month-list").style.display = "none";
+        item.querySelector(".month-list").innerHTML = "";
+      }
+    });
 
-      renderArticles();
-    }
+    renderArticles();
   }
 
   function renderYearFilter() {
@@ -261,41 +253,32 @@ export default async function decorate(block) {
 
     const firstYear = years[0];
     if (firstYear) {
+      yearTitle.textContent = firstYear;
       selectedYear = firstYear;
       renderArticles();
     }
   }
 
   function handleSearch() {
-    const searchTerm = searchField.value.trim().toLowerCase();
-    if (searchTerm === "dummy data") {
-      // Show error message when "dummy data" is entered
-      articles = [];
-      document.querySelector(".no-results-message").style.display = "block";
-      articleListContainer.innerHTML = "";
-      loadMoreButton.style.display = "none";
-    } else {
-      articles = originalArticles.filter((article) =>
-        article.title.toLowerCase().includes(searchTerm)
-      );
-      document.querySelector(".no-results-message").style.display =
-        articles.length === 0 ? "block" : "none";
-      displayedArticles = articlesPerLoad;
-      renderArticles();
-    }
+    const searchTerm = searchField.value.toLowerCase();
+    const filteredArticles = originalArticles.filter((article) =>
+      article.title.toLowerCase().includes(searchTerm)
+    );
+    articles = filteredArticles;
+    displayedArticles = articlesPerLoad;
+    renderArticles();
   }
 
-  searchButton.addEventListener("click", handleSearch);
-  searchField.addEventListener("keyup", (e) => {
-    if (e.key === "Enter") {
-      handleSearch();
-    }
-  });
-
-  loadMoreButton.addEventListener("click", () => {
+  function handleLoadMore() {
     displayedArticles += articlesPerLoad;
     renderArticles();
-  });
+  }
 
+  // Initial render
   renderYearFilter();
+  renderArticles();
+
+  // Event listeners
+  searchButton.addEventListener("click", handleSearch);
+  loadMoreButton.addEventListener("click", handleLoadMore);
 }
