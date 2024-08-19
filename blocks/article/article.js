@@ -70,7 +70,7 @@ export default async function decorate(block) {
 
   let selectedYear = 2024;
   let selectedMonth = null;
-  let displayedArticles = 0;
+  let displayedArticles = articlesPerLoad;
   const articlesPerLoad = 2;
 
   function renderArticles() {
@@ -87,8 +87,12 @@ export default async function decorate(block) {
     // Sort articles in descending order by full date
     filteredArticles.sort((a, b) => new Date(b.date) - new Date(a.date));
 
-    // Calculate the number of articles to show
-    const articlesToShow = filteredArticles.slice(0, displayedArticles);
+    // Ensure displayedArticles doesn't exceed the number of filtered articles
+    const maxArticlesToShow = Math.min(
+      displayedArticles,
+      filteredArticles.length
+    );
+    const articlesToShow = filteredArticles.slice(0, maxArticlesToShow);
 
     if (articlesToShow.length === 0) {
       articleListContainer.innerHTML = "";
@@ -115,7 +119,6 @@ export default async function decorate(block) {
         .join("");
 
       document.querySelector(".no-results-message").style.display = "none";
-
       loadMoreButton.style.display =
         displayedArticles < filteredArticles.length ? "block" : "none";
     }
