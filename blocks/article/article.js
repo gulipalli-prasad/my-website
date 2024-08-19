@@ -205,14 +205,16 @@ export default async function decorate(block) {
       const monthList = item.querySelector(".month-list");
 
       if (isClickedYear) {
+        // Only toggle the display of monthList when the year button is clicked
         const isVisible = monthList.style.display === "block";
         monthList.style.display = isVisible ? "none" : "block";
         if (!isVisible) {
-          renderMonths(monthList, year);
+          renderMonths(monthList, year); // Only render months if the list is being expanded
         } else {
           monthList.innerHTML = "";
         }
       } else {
+        // Collapse other year month lists
         item.querySelector(".month-list").style.display = "none";
         item.querySelector(".month-list").innerHTML = "";
       }
@@ -249,7 +251,9 @@ export default async function decorate(block) {
 
     const firstYear = years[0];
     if (firstYear) {
-      toggleYear(firstYear);
+      yearTitle.textContent = firstYear;
+      selectedYear = firstYear;
+      renderArticles();
     }
   }
 
