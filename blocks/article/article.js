@@ -84,6 +84,13 @@ export default async function decorate(block) {
       );
     }
 
+    // Sort articles in descending order by month
+    filteredArticles.sort((a, b) => {
+      const monthA = new Date(a.date).getMonth();
+      const monthB = new Date(b.date).getMonth();
+      return monthB - monthA; // Descending order
+    });
+
     const articlesToShow = filteredArticles.slice(
       0,
       displayedArticles + articlesPerLoad
