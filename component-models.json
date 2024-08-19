@@ -287,6 +287,13 @@
         "name": "byyearText",
         "label": "Byyear Text",
         "value": ""
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "noresultText",
+        "label": "Noresult Text",
+        "value": ""
       }
     ]
   }
