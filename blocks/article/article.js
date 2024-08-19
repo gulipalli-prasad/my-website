@@ -22,7 +22,7 @@ export default async function decorate(block) {
           <input type="text" class="search-field" placeholder="${searchPlaceholder}">
           <button class="search-button">${goButtonText}</button>
         </div>
-        <h3 class="year-title">2024</h3>
+        <h3 class="year-title"></h3>
         <div class="article-list-container"></div>
         <div class="no-results-message" style="display: none;">${noresultText}</div>
         <button class="load-more-button">${loadmoreButtonText}</button>
@@ -60,7 +60,7 @@ export default async function decorate(block) {
     // console.log('Error fetching articles:', error);
   }
 
-  let selectedYear = 2024;
+  let selectedYear = null;
   let selectedMonth = null;
   const articlesPerLoad = 2;
   let displayedArticles = articlesPerLoad;
@@ -246,6 +246,11 @@ export default async function decorate(block) {
         toggleYear(year);
       });
     });
+
+    const firstYear = years[0];
+    if (firstYear) {
+      toggleYear(firstYear);
+    }
   }
 
   function handleSearch() {
