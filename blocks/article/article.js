@@ -16,13 +16,6 @@ export default async function decorate(block) {
         <div class="article-list-container"></div>
         <div class="no-results-message" style="display: none;">Sorry! No results found matching your search. Please try again with a different set of keywords.</div>
         <button class="load-more-button">Load More</button>
-        <div class="article-description-container" style="display: none;">
-          <div class="article-date"></div>
-          <div class="article-title"></div>
-          <div class="article-description"></div>
-          <div class="article-pdf">Download PDF</div>
-          <button class="back-to-list-button">Back to List</button>
-        </div>
       </div>
       <div class="sidebar">
         <h3>By Year</h3>
@@ -37,14 +30,6 @@ export default async function decorate(block) {
   const searchButton = block.querySelector(".search-button");
   const loadMoreButton = block.querySelector(".load-more-button");
   const yearTitle = block.querySelector(".year-title");
-  const articleDescriptionContainer = block.querySelector(
-    ".article-description-container"
-  );
-  const articleDate = block.querySelector(".article-date");
-  const articleTitle = block.querySelector(".article-title");
-  const articleDescription = block.querySelector(".article-description");
-  const articlePdf = block.querySelector(".article-pdf");
-  const backToListButton = block.querySelector(".back-to-list-button");
 
   // Fetching articles from the API
   let articles = [];
@@ -99,15 +84,9 @@ export default async function decorate(block) {
           (article) => `
             <div class="article-item">
               <div class="article-date">${formatDate(article.date)}</div>
-              <a href="${article.path}" data-title="${encodeURIComponent(
-            article.title
-          )}" data-description="${encodeURIComponent(
-            article.description
-          )}" data-date="${encodeURIComponent(
-            article.date
-          )}" data-pdf="${encodeURIComponent(
-            article.pdf
-          )}" class="article-title">${article.title}</a>
+              <a href="#" target="_blank" class="article-title">${
+                article.title
+              }</a>
             </div>
           `
         )
@@ -244,11 +223,7 @@ export default async function decorate(block) {
         .map(
           (article) => `
             <div class="article-item">
-              <a href="/content/my-website/index/article-content.html?title=${encodeURIComponent(
-                article.title
-              )}" 
-                 target="_blank" 
-                 class="article-title">${article.title}</a>
+              <a href="#" target="_blank" class="article-title">${article.title}</a>
             </div>
           `
         )
@@ -297,32 +272,6 @@ export default async function decorate(block) {
     renderArticles();
   }
 
-  function handleArticleClick(e) {
-    e.preventDefault();
-    const articleLink = e.target.closest(".article-title");
-    if (articleLink) {
-      const date = decodeURIComponent(articleLink.dataset.date);
-      const title = decodeURIComponent(articleLink.dataset.title);
-      const description = decodeURIComponent(articleLink.dataset.description);
-      const pdf = decodeURIComponent(articleLink.dataset.pdf);
-      articleDate.innerHTML = date;
-      articleTitle.innerHTML = title;
-      articleDescription.innerHTML = description;
-      if (pdf) {
-        articlePdf.innerHTML = `<a href="${pdf}" target="_blank">Download PDF</a>`;
-      } else {
-        articlePdf.innerHTML = "";
-      }
-      articleDescriptionContainer.style.display = "block";
-      articleListContainer.style.display = "none";
-    }
-  }
-
-  function handleBackToList() {
-    articleDescriptionContainer.style.display = "none";
-    articleListContainer.style.display = "block";
-  }
-
   // Initial render
   renderYearFilter();
   renderArticles();
@@ -330,6 +279,4 @@ export default async function decorate(block) {
   // Event listeners
   searchButton.addEventListener("click", handleSearch);
   loadMoreButton.addEventListener("click", handleLoadMore);
-  articleListContainer.addEventListener("click", handleArticleClick);
-  backToListButton.addEventListener("click", handleBackToList);
 }
