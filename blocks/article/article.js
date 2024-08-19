@@ -1,8 +1,11 @@
 export default async function decorate(block) {
-  const [titleEl, searchEl, goButtonEl] = block.children;
+  const [titleEl, searchEl, goButtonEl, loadmoreButtonTextEl, byyearTextEl] =
+    block.children;
   const title = titleEl.textContent.trim();
   const searchPlaceholder = searchEl.textContent.trim();
   const goButtonText = goButtonEl.textContent.trim();
+  const loadmoreButtonText = loadmoreButtonTextEl.textContent.trim();
+  const byyearText = byyearTextEl.textContent.trim();
 
   block.innerHTML = `
     <h2>${title}</h2>
@@ -15,10 +18,10 @@ export default async function decorate(block) {
         <h3 class="year-title">2024</h3>
         <div class="article-list-container"></div>
         <div class="no-results-message" style="display: none;">Sorry! No results found matching your search. Please try again with a different set of keywords.</div>
-        <button class="load-more-button">Load More</button>
+        <button class="load-more-button">${loadmoreButtonText}</button>
       </div>
       <div class="sidebar">
-        <h3>By Year</h3>
+        <h3>${byyearText}</h3>
         <div class="year-filter-container"></div>
       </div>
     </div>
