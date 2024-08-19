@@ -87,10 +87,8 @@ export default async function decorate(block) {
     // Sort articles in descending order by full date
     filteredArticles.sort((a, b) => new Date(b.date) - new Date(a.date));
 
-    const articlesToShow = filteredArticles.slice(
-      0,
-      displayedArticles + articlesPerLoad
-    );
+    // Calculate the number of articles to show
+    const articlesToShow = filteredArticles.slice(0, displayedArticles);
 
     if (articlesToShow.length === 0) {
       articleListContainer.innerHTML = "";
@@ -117,11 +115,12 @@ export default async function decorate(block) {
         .join("");
 
       document.querySelector(".no-results-message").style.display = "none";
-      displayedArticles = articlesToShow.length;
+
       loadMoreButton.style.display =
         displayedArticles < filteredArticles.length ? "block" : "none";
     }
   }
+
   function renderYearFilter() {
     const years = [
       ...new Set(
