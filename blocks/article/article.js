@@ -40,6 +40,7 @@ export default async function decorate(block) {
   const searchButton = block.querySelector(".search-button");
   const loadMoreButton = block.querySelector(".load-more-button");
   const yearTitle = block.querySelector(".year-title");
+  const noResultsMessage = block.querySelector(".no-results-message");
 
   // Fetching articles from the API
   let articles = [];
@@ -103,7 +104,7 @@ export default async function decorate(block) {
 
     if (articlesToShow.length === 0) {
       articleListContainer.innerHTML = "";
-      document.querySelector(".no-results-message").style.display = "block";
+      noResultsMessage.style.display = "block";
       loadMoreButton.style.display = "none";
     } else {
       articleListContainer.innerHTML = articlesToShow
@@ -117,7 +118,7 @@ export default async function decorate(block) {
         )
         .join("");
 
-      document.querySelector(".no-results-message").style.display = "none";
+      noResultsMessage.style.display = "none";
       loadMoreButton.style.display =
         displayedArticles < filteredArticles.length ? "block" : "none";
     }
@@ -267,6 +268,12 @@ export default async function decorate(block) {
     articles = filteredArticles;
     displayedArticles = articlesPerLoad;
     renderArticles();
+
+    if (filteredArticles.length === 0) {
+      noResultsMessage.style.display = "block";
+    } else {
+      noResultsMessage.style.display = "none";
+    }
   }
 
   function handleLoadMore() {
@@ -274,11 +281,17 @@ export default async function decorate(block) {
     renderArticles();
   }
 
-  // Initial render
-  renderYearFilter();
-  renderArticles();
+  // Event listener to clear search and re-render articles
+  searchField.addEventListener("input", () => {
+    if (searchField.value.trim() === "") {
+      articles = [...originalArticles];
+      displayedArticles = articlesPerLoad;
+      renderArticles();
+    }
+  });
 
-  // Event listeners
   searchButton.addEventListener("click", handleSearch);
   loadMoreButton.addEventListener("click", handleLoadMore);
+
+  renderYearFilter();
 }
