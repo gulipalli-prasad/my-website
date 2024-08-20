@@ -196,6 +196,9 @@ export default async function decorate(block) {
   }
 
   function toggleYear(year) {
+    // Reset the search input and articles list when a year is clicked
+    searchField.value = "";
+    articles = [...originalArticles];
     selectedYear = year;
     selectedMonth = null;
     displayedArticles = articlesPerLoad;
@@ -208,16 +211,14 @@ export default async function decorate(block) {
       const monthList = item.querySelector(".month-list");
 
       if (isClickedYear) {
-        // Only toggle the display of monthList when the year button is clicked
         const isVisible = monthList.style.display === "block";
         monthList.style.display = isVisible ? "none" : "block";
         if (!isVisible) {
-          renderMonths(monthList, year); // Only render months if the list is being expanded
+          renderMonths(monthList, year);
         } else {
           monthList.innerHTML = "";
         }
       } else {
-        // Collapse other year month lists
         item.querySelector(".month-list").style.display = "none";
         item.querySelector(".month-list").innerHTML = "";
       }
@@ -280,15 +281,6 @@ export default async function decorate(block) {
     displayedArticles += articlesPerLoad;
     renderArticles();
   }
-
-  // Event listener to clear search and re-render articles
-  searchField.addEventListener("input", () => {
-    if (searchField.value.trim() === "") {
-      articles = [...originalArticles];
-      displayedArticles = articlesPerLoad;
-      renderArticles();
-    }
-  });
 
   searchButton.addEventListener("click", handleSearch);
   loadMoreButton.addEventListener("click", handleLoadMore);
