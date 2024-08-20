@@ -40,7 +40,6 @@ export default async function decorate(block) {
   const searchButton = block.querySelector(".search-button");
   const loadMoreButton = block.querySelector(".load-more-button");
   const yearTitle = block.querySelector(".year-title");
-  const noResultsMessage = block.querySelector(".no-results-message");
 
   // Fetching articles from the API
   let articles = [];
@@ -104,7 +103,7 @@ export default async function decorate(block) {
 
     if (articlesToShow.length === 0) {
       articleListContainer.innerHTML = "";
-      noResultsMessage.style.display = "block";
+      document.querySelector(".no-results-message").style.display = "block";
       loadMoreButton.style.display = "none";
     } else {
       articleListContainer.innerHTML = articlesToShow
@@ -118,7 +117,7 @@ export default async function decorate(block) {
         )
         .join("");
 
-      noResultsMessage.style.display = "none";
+      document.querySelector(".no-results-message").style.display = "none";
       loadMoreButton.style.display =
         displayedArticles < filteredArticles.length ? "block" : "none";
     }
@@ -196,9 +195,6 @@ export default async function decorate(block) {
   }
 
   function toggleYear(year) {
-    // Reset the search input and articles list when a year is clicked
-    searchField.value = "";
-    articles = [...originalArticles];
     selectedYear = year;
     selectedMonth = null;
     displayedArticles = articlesPerLoad;
@@ -211,14 +207,16 @@ export default async function decorate(block) {
       const monthList = item.querySelector(".month-list");
 
       if (isClickedYear) {
+        // Only toggle the display of monthList when the year button is clicked
         const isVisible = monthList.style.display === "block";
         monthList.style.display = isVisible ? "none" : "block";
         if (!isVisible) {
-          renderMonths(monthList, year);
+          renderMonths(monthList, year); // Only render months if the list is being expanded
         } else {
           monthList.innerHTML = "";
         }
       } else {
+        // Collapse other year month lists
         item.querySelector(".month-list").style.display = "none";
         item.querySelector(".month-list").innerHTML = "";
       }
@@ -269,12 +267,6 @@ export default async function decorate(block) {
     articles = filteredArticles;
     displayedArticles = articlesPerLoad;
     renderArticles();
-
-    if (filteredArticles.length === 0) {
-      noResultsMessage.style.display = "block";
-    } else {
-      noResultsMessage.style.display = "none";
-    }
   }
 
   function handleLoadMore() {
@@ -282,8 +274,11 @@ export default async function decorate(block) {
     renderArticles();
   }
 
+  // Initial render
+  renderYearFilter();
+  renderArticles();
+
+  // Event listeners
   searchButton.addEventListener("click", handleSearch);
   loadMoreButton.addEventListener("click", handleLoadMore);
-
-  renderYearFilter();
 }
