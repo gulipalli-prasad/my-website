@@ -1,92 +1,67 @@
 export default function decorate(block) {
-  const [
-    formHeadingEl,
-    cityLabelEl,
-    carModelEl,
-    selectTextEl,
-    manualImageEl,
-    manualTextEl,
-    automaticImageEl,
-    automaticTextEl,
-    testdriveTextEl,
-    showroomImageEl,
-    showroomTextEl,
-    doorstepImageEl,
-    doorstepTextEl,
-    selectDateEl,
-    advanceTextEl,
-    nameTextEl,
-    emailEl,
-    mobileEl,
-    otpEl,
-    agreeEl,
-    submitEl,
-    anotherTestdriveEl,
-    conformTextEl,
-  ] = block.children;
+  const [bookingDetailsTab, userDetailsTab] = block.children;
 
-  const formHeading = formHeadingEl?.textContent?.trim() || "";
-  const cityLabel = cityLabelEl?.textContent?.trim() || "";
-  const carModel = carModelEl?.textContent?.trim() || "";
+  // Add click event listener to the tabs
 
-  const selectText = selectTextEl?.textContent?.trim() || "";
-  const manualImageElement = manualImageEl.querySelector("img");
-  const manualImage = manualImageElement?.getAttribute("src")?.trim() || "";
-  const manualText = manualTextEl?.textContent?.trim() || "";
-  const automaticImageElement = automaticImageEl.querySelector("img");
-  const automaticImage =
-    automaticImageElement?.getAttribute("src")?.trim() || "";
-  const automaticText = automaticTextEl?.textContent?.trim() || "";
+  addTabClickEventListeners(bookingDetailsTab, userDetailsTab);
 
-  const testdriveText = testdriveTextEl?.textContent?.trim() || "";
-  const showroomImageElement = showroomImageEl.querySelector("img");
-  const showroomImage = showroomImageElement?.getAttribute("src")?.trim() || "";
-  const showroomText = showroomTextEl?.textContent?.trim() || "";
-  const doorstepImageElement = doorstepImageEl.querySelector("img");
-  const doorstepImage = doorstepImageElement?.getAttribute("src")?.trim() || "";
-  const doorstepText = doorstepTextEl?.textContent?.trim() || "";
+  // Initial state: show the Booking Details tab
 
-  const selectDate = selectDateEl?.textContent?.trim() || "";
-  const advanceText = advanceTextEl?.textContent?.trim() || "";
+  bookingDetailsTab.classList.add("active");
 
-  const nameText = nameTextEl?.textContent?.trim() || "";
-  const email = emailEl?.textContent?.trim() || "";
-  const mobile = mobileEl?.textContent?.trim() || "";
-  const otp = otpEl?.textContent?.trim() || "";
-  const agree = agreeEl?.textContent?.trim() || "";
-  const submit = submitEl?.textContent?.trim() || "";
-  const anotherTestdrive = anotherTestdriveEl?.textContent?.trim() || "";
-  const conformText = conformTextEl?.textContent?.trim() || "";
+  userDetailsTab.classList.remove("active");
 
   const bookdriveHtml = `
-    <div>
-      <h1>${formHeading}</h1>
-      <p>${cityLabel}</p>
-      <p>${carModel}</p>
-      <h6>${selectText}</h6>
-      <img src="${manualImage}" alt="Manual" />
-      <p>${manualText}</p>
-      <img src="${automaticImage}" alt="Automatic" />
-      <p>${automaticText}</p>
-      <h6>${testdriveText}</h6>
-      <img src="${showroomImage}" alt="Showroom" />
-      <p>${showroomText}</p>
-      <img src="${doorstepImage}" alt="Doorstep" />
-      <p>${doorstepText}</p>
-      <p>${selectDate}</p>
-      <p>${advanceText}</p>
-    </div> 
-    <div>
-      <p>${nameText}</p>
-      <p>${email}</p>
-      <p>${mobile}</p>
-      <p>${otp}</p>
-      <p>${agree}</p>
-      <p>${anotherTestdrive}</p>
-      <p>${conformText}</p>
-      <a href="#">${submit}</a>
+
+    <div class="tabs">
+
+      <div class="tab-header">
+
+        <div class="tab-item">Booking Details</div>
+
+        <div class="tab-item">User Details</div>
+
+      </div>
+
+      <div class="tab-content">
+
+        ${bookingDetailsTab.innerHTML}
+
+      </div>
+
     </div>
+
   `;
 
   block.innerHTML = bookdriveHtml;
+}
+
+function addTabClickEventListeners(bookingDetailsTab, userDetailsTab) {
+  const tabItems = block.querySelectorAll(".tab-item");
+
+  tabItems.forEach((tabItem, index) => {
+    tabItem.addEventListener("click", () => {
+      toggleActiveTab(tabItems, index);
+
+      if (index === 0) {
+        bookingDetailsTab.classList.add("active");
+
+        userDetailsTab.classList.remove("active");
+      } else {
+        bookingDetailsTab.classList.remove("active");
+
+        userDetailsTab.classList.add("active");
+      }
+    });
+  });
+}
+
+function toggleActiveTab(tabItems, activeIndex) {
+  tabItems.forEach((tabItem, index) => {
+    if (index === activeIndex) {
+      tabItem.classList.add("active");
+    } else {
+      tabItem.classList.remove("active");
+    }
+  });
 }
