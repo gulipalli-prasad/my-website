@@ -301,53 +301,113 @@
     "id": "bookdrive",
     "fields": [
       {
-        "component": "reference",
-        "valueType": "string",
-        "name": "image",
-        "label": "Image",
-        "multi": false
-      },
-      {
         "component": "text",
         "valueType": "string",
-        "name": "altText",
-        "label": "Alt Text",
-        "value": ""
-      },
-      {
-        "component": "text",
-        "valueType": "string",
-        "name": "pretitle",
-        "label": "Pretitle",
-        "value": ""
-      },
-      {
-        "component": "text",
-        "valueType": "string",
-        "name": "title",
-        "label": "Title",
-        "value": ""
-      },
-      {
-        "component": "richtext",
-        "name": "description",
+        "name": "formHeading",
         "value": "",
-        "label": "Description",
-        "valueType": "string"
+        "label": "Form Heading"
       },
       {
         "component": "text",
         "valueType": "string",
-        "name": "primaryCtaText",
-        "label": "Primary CTA Text",
-        "value": ""
+        "name": "cityLabel",
+        "value": "",
+        "label": "City Label"
       },
       {
-        "component": "aem-content",
+        "component": "text",
         "valueType": "string",
-        "name": "primaryCtaLink",
-        "label": "Primary CTA Link",
-        "value": ""
+        "name": "carModel",
+        "value": "",
+        "label": "Car Model"
+      },
+      {
+        "component": "container",
+        "label": "Select Transmisson",
+        "name": "selectTransmisson",
+        "valueType": "string",
+        "collapsible": true,
+        "fields": [
+          {
+            "component": "reference",
+            "valueType": "string",
+            "name": "manulaImage",
+            "value": "",
+            "label": "Manual Image"
+          },
+          {
+            "component": "text",
+            "valueType": "string",
+            "name": "manualText",
+            "value": "",
+            "label": "Manual Text"
+          },
+          {
+            "component": "reference",
+            "valueType": "string",
+            "name": "automaticImage",
+            "value": "",
+            "label": "Automatic Image"
+          },
+          {
+            "component": "text",
+            "valueType": "string",
+            "name": "automaticText",
+            "value": "",
+            "label": "Automatic Text"
+          }
+        ]
+      },
+      {
+        "component": "container",
+        "label": "Test Drive",
+        "name": "testDrive",
+        "valueType": "string",
+        "collapsible": true,
+        "fields": [
+          {
+            "component": "reference",
+            "valueType": "string",
+            "name": "showroomImage",
+            "value": "",
+            "label": "Showroom Image"
+          },
+          {
+            "component": "text",
+            "valueType": "string",
+            "name": "showroomText",
+            "value": "",
+            "label": "Showroom Text"
+          },
+          {
+            "component": "reference",
+            "valueType": "string",
+            "name": "doorstepImage",
+            "value": "",
+            "label": "Doorstep Image"
+          },
+          {
+            "component": "text",
+            "valueType": "string",
+            "name": "doorstepText",
+            "value": "",
+            "label": "Doorstep Text"
+          }
+        ]
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "selectdateText",
+        "value": "",
+        "label": "Selectdate Text"
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "advanceText",
+        "value": "",
+        "label": "Advance Text"
       }
     ]
   }
