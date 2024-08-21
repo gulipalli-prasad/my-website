@@ -299,202 +299,109 @@
   },
   {
     "id": "bookdrive",
+
     "fields": [
       {
-        "component": "tab",
+        "component": "accordion",
+
         "label": "Booking Details",
-        "name": "bookingDetails"
-      },
-      {
-        "component": "text",
-        "valueType": "string",
-        "name": "formHeading",
-        "value": "",
-        "label": "Form Heading"
-      },
-      {
-        "component": "text",
-        "valueType": "string",
-        "name": "cityLabel",
-        "value": "",
-        "label": "City Label"
-      },
-      {
-        "component": "text",
-        "valueType": "string",
-        "name": "carModel",
-        "value": "",
-        "label": "Car Model"
-      },
-      {
-        "component": "container",
-        "label": "Select Transmisson",
-        "name": "selectTransmisson",
-        "valueType": "string",
+
+        "name": "bookingDetails",
+
+        "icon": "dropdown-arrow",
+
         "collapsible": true,
+
+        "expanded": true,
+
         "fields": [
           {
             "component": "text",
+
             "valueType": "string",
-            "name": "selectText",
+
+            "name": "formHeading",
+
             "value": "",
-            "label": "Select Text"
+
+            "label": "Form Heading"
           },
-          {
-            "component": "reference",
-            "valueType": "string",
-            "name": "manulaImage",
-            "value": "",
-            "label": "Manual Image"
-          },
+
           {
             "component": "text",
+
             "valueType": "string",
-            "name": "manualText",
+
+            "name": "cityLabel",
+
             "value": "",
-            "label": "Manual Text"
+
+            "label": "City Label"
           },
-          {
-            "component": "reference",
-            "valueType": "string",
-            "name": "automaticImage",
-            "value": "",
-            "label": "Automatic Image"
-          },
+
           {
             "component": "text",
+
             "valueType": "string",
-            "name": "automaticText",
+
+            "name": "carModel",
+
             "value": "",
-            "label": "Automatic Text"
+
+            "label": "Car Model"
           }
         ]
       },
+
       {
-        "component": "container",
-        "label": "Test Drive",
-        "name": "testDrive",
-        "valueType": "string",
-        "collapsible": true,
-        "fields": [
-          {
-            "component": "text",
-            "valueType": "string",
-            "name": "testdriveText",
-            "value": "",
-            "label": "Testdrive Tsxt"
-          },
-          {
-            "component": "reference",
-            "valueType": "string",
-            "name": "showroomImage",
-            "value": "",
-            "label": "Showroom Image"
-          },
-          {
-            "component": "text",
-            "valueType": "string",
-            "name": "showroomText",
-            "value": "",
-            "label": "Showroom Text"
-          },
-          {
-            "component": "reference",
-            "valueType": "string",
-            "name": "doorstepImage",
-            "value": "",
-            "label": "Doorstep Image"
-          },
-          {
-            "component": "text",
-            "valueType": "string",
-            "name": "doorstepText",
-            "value": "",
-            "label": "Doorstep Text"
-          }
-        ]
-      },
-      {
-        "component": "text",
-        "valueType": "string",
-        "name": "selectdateText",
-        "value": "",
-        "label": "Selectdate Text"
-      },
-      {
-        "component": "text",
-        "valueType": "string",
-        "name": "advanceText",
-        "value": "",
-        "label": "Advance Text"
-      },
-      {
-        "component": "tab",
+        "component": "accordion",
         "label": "User Details",
-        "name": "userDetails"
-      },
-      {
-        "component": "text",
-        "valueType": "string",
-        "name": "nameText",
-        "value": "",
-        "label": "Name Text"
-      },
-      {
-        "component": "text",
-        "valueType": "string",
-        "name": "email",
-        "value": "",
-        "label": "Email"
-      },
-      {
-        "component": "text",
-        "valueType": "string",
-        "name": "mobile",
-        "value": "",
-        "label": "Mobile"
-      },
-      {
-        "component": "text",
-        "valueType": "string",
-        "name": "otp",
-        "value": "",
-        "label": "OTP"
-      },
-      {
-        "component": "text",
-        "valueType": "string",
-        "name": "agree",
-        "value": "",
-        "label": "Agree"
-      },
-      {
-        "component": "text",
-        "valueType": "string",
-        "name": "confirm",
-        "value": "",
-        "label": "Confirm"
-      },
-      {
-        "component": "text",
-        "valueType": "string",
-        "name": "carModel",
-        "value": "",
-        "label": "Car Model"
-      },
-      {
-        "component": "text",
-        "valueType": "string",
-        "name": "anotherTestdrive",
-        "value": "",
-        "label": "Another Testdrive"
-      },
-      {
-        "component": "text",
-        "valueType": "string",
-        "name": "buttonText",
-        "value": "",
-        "label": "Button Text"
+
+        "name": "userDetails",
+
+        "icon": "dropdown-arrow",
+
+        "collapsible": true,
+
+        "expanded": false,
+
+        "fields": [
+          {
+            "component": "text",
+
+            "valueType": "string",
+
+            "name": "nameText",
+
+            "value": "",
+
+            "label": "Name Text"
+          },
+
+          {
+            "component": "text",
+
+            "valueType": "string",
+
+            "name": "email",
+
+            "value": "",
+
+            "label": "Email"
+          },
+
+          {
+            "component": "text",
+
+            "valueType": "string",
+
+            "name": "mobile",
+
+            "value": "",
+
+            "label": "Mobile"
+          }
+        ]
       }
     ]
   }
