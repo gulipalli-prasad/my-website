@@ -81,7 +81,7 @@ export default function decorate(block) {
       <p>${otp}</p>
       <p>${agree}</p>
       <p>${anotherTestdrive}</p>
-      <button>${buttonText}</button>
+      <a href="#">${buttonText}</a>
     </div>
   `;
 
