@@ -303,27 +303,24 @@
       {
         "component": "tab",
         "label": "Booking Details",
-        "name": "bookingDetails"
+        "name": "tab1"
       },
       {
         "component": "text",
         "valueType": "string",
         "name": "formHeading",
-        "value": "",
         "label": "Form Heading"
       },
       {
-        "component": "text-input",
+        "component": "text",
         "valueType": "string",
         "name": "cityLabel",
-        "value": "",
         "label": "City Label"
       },
       {
         "component": "text",
         "valueType": "string",
         "name": "carModel",
-        "value": "",
         "label": "Car Model"
       },
       {
@@ -336,36 +333,31 @@
           {
             "component": "text",
             "valueType": "string",
-            "name": "selectText",
-            "value": "",
-            "label": "Select Text"
+            "name": "transmissionText",
+            "label": "Transmission Text"
           },
           {
             "component": "reference",
             "valueType": "string",
             "name": "manualImage",
-            "value": "",
             "label": "Manual Image"
           },
           {
             "component": "text",
             "valueType": "string",
             "name": "manualText",
-            "value": "",
             "label": "Manual Text"
           },
           {
             "component": "reference",
             "valueType": "string",
             "name": "automaticImage",
-            "value": "",
             "label": "Automatic Image"
           },
           {
             "component": "text",
             "valueType": "string",
             "name": "automaticText",
-            "value": "",
             "label": "Automatic Text"
           }
         ]
@@ -381,35 +373,30 @@
             "component": "text",
             "valueType": "string",
             "name": "testdriveText",
-            "value": "",
             "label": "Testdrive Text"
           },
           {
             "component": "reference",
             "valueType": "string",
             "name": "showroomImage",
-            "value": "",
             "label": "Showroom Image"
           },
           {
             "component": "text",
             "valueType": "string",
             "name": "showroomText",
-            "value": "",
             "label": "Showroom Text"
           },
           {
             "component": "reference",
             "valueType": "string",
             "name": "doorstepImage",
-            "value": "",
             "label": "Doorstep Image"
           },
           {
             "component": "text",
             "valueType": "string",
             "name": "doorstepText",
-            "value": "",
             "label": "Doorstep Text"
           }
         ]
@@ -417,76 +404,65 @@
       {
         "component": "text",
         "valueType": "string",
-        "name": "selectdateText",
-        "value": "",
-        "label": "Selectdate Text"
+        "name": "selectedDate",
+        "label": "Selected Date"
       },
       {
         "component": "text",
-        "valueType": "string",
         "name": "advanceText",
-        "value": "",
         "label": "Advance Text"
       },
       {
         "component": "tab",
         "label": "User Details",
-        "name": "userDetails"
+        "name": "tab2"
       },
       {
         "component": "text",
         "valueType": "string",
         "name": "nameText",
-        "value": "",
         "label": "Name Text"
       },
       {
         "component": "text",
         "valueType": "string",
         "name": "email",
-        "value": "",
         "label": "Email"
       },
       {
         "component": "text",
         "valueType": "string",
         "name": "mobile",
-        "value": "",
         "label": "Mobile"
       },
       {
         "component": "text",
         "valueType": "string",
         "name": "otp",
-        "value": "",
         "label": "OTP"
       },
       {
         "component": "text",
         "valueType": "string",
         "name": "agree",
-        "value": "",
         "label": "Agree"
       },
       {
         "component": "text",
         "valueType": "string",
-        "name": "conformtext",
-        "value": "",
+        "name": "conformText",
         "label": "Conform Text"
       },
       {
         "component": "text",
         "valueType": "string",
         "name": "anotherTestdrive",
-        "value": "",
         "label": "Another Testdrive"
       },
       {
         "component": "text",
         "valueType": "string",
         "name": "submit",
-        "value": "",
         "label": "Submit"
       }
     ]
