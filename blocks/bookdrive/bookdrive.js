@@ -63,31 +63,19 @@ export default function decorate(block) {
       <h1>${formHeading}</h1>
       <p>${cityLabel}</p>
       <p>${carModel}</p>
-    </div>
-    
-    <div> 
       <h6>${selectText}</h6>
-      <ul>
-        <li><img src="${manualImage}" alt="Manual" /></li>
-        <li><p>${manualText}</p></li>
-      </ul>
-      <ul>
-        <li><img src="${automaticImage}" alt="Automatic" /></li>
-        <li><p>${automaticText}</p></li>
-      </ul>
+      <img src="${manualImage}" alt="Manual" />
+      <p>${manualText}</p>
+      <img src="${automaticImage}" alt="Automatic" />
+      <p>${automaticText}</p>
       <h6>${testdriveText}</h6>
-      <ul>
-        <li><img src="${showroomImage}" alt="Showroom" /></li>
-        <li><p>${showroomText}</p></li>
-      </ul>
-      <ul>
-        <li><img src="${doorstepImage}" alt="Doorstep" /></li>
-        <li><p>${doorstepText}</p></li>
-      </ul>
-    </div> 
+      <img src="${showroomImage}" alt="Showroom" />
+      <p>${showroomText}</p>
+      <img src="${doorstepImage}" alt="Doorstep" />
+      <p>${doorstepText}</p>
       <p>${selectDate}</p>
       <p>${advanceText}</p>
-    
+    </div> 
     <div>
       <p>${nameText}</p>
       <p>${email}</p>
