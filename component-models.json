@@ -488,6 +488,13 @@
         "name": "anotherTestdrive",
         "value": "",
         "label": "Another Testdrive"
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "buttonText",
+        "value": "",
+        "label": "Button Text"
       }
     ]
   }
