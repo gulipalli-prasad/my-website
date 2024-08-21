@@ -1,31 +1,34 @@
-.tabs {
+.booking-details-wrapper,
+.user-details-wrapper {
   border: 1px solid #ccc;
+
+  border-radius: 4px;
+
+  margin-bottom: 10px;
 }
 
-.tab-header {
-  display: flex;
-
+.booking-details-header,
+.user-details-header {
   background-color: #f1f1f1;
-}
 
-.tab-item {
-  padding: 10px 20px;
+  padding: 10px;
 
   cursor: pointer;
 }
 
-.tab-item.active {
-  background-color: #ccc;
+.booking-details-header.collapsed,
+.user-details-header.collapsed {
+  background-color: #e1e1e1;
 }
 
-.tab-content {
-  padding: 20px;
-}
+.booking-details-content,
+.user-details-content {
+  padding: 10px;
 
-.tab-pane {
   display: none;
 }
 
-.tab-pane.active {
-  display: block;
+.booking-details-wrapper.collapsed .booking-details-content,
+.user-details-wrapper.collapsed .user-details-content {
+  display: none;
 }

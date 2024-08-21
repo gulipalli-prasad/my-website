@@ -5,87 +5,83 @@ export default function decorate(block) {
 
   const bookdriveHtml = `
 
-    <div class="tabs">
+    <div class="booking-details-wrapper">
 
-      <div class="tab-header">
+      <div class="booking-details-header">Booking Details</div>
 
-        <div class="tab-item">Booking Details</div>
+      <div class="booking-details-content">
 
-        <div class="tab-item">User Details</div>
+        <h2>${fields.formHeading.value}</h2>
 
-      </div>
+        <div class="form-group">
 
-      <div class="tab-content">
+          <label>${fields.cityLabel.value}</label>
 
-        <div class="tab-pane">
-
-          <h2>${fields.formHeading.value}</h2>
-
-          <div class="form-group">
-
-            <label>${fields.cityLabel.value}</label>
-
-            <input type="text" value="${fields.carModel.value}" readonly />
-
-          </div>
-
-          <div class="form-group">
-
-            <span>${fields.selectdateText.value}</span>
-
-            <span>${fields.advanceText.value}</span>
-
-          </div>
+          <input type="text" value="${fields.carModel.value}" readonly />
 
         </div>
 
-        <div class="tab-pane">
+        <div class="form-group">
 
-          <h2>${fields.nameText.value}</h2>
+          <span>${fields.selectdateText.value}</span>
 
-          <div class="form-group">
+          <span>${fields.advanceText.value}</span>
 
-            <label>${fields.email.value}</label>
+        </div>
 
-            <input type="email" />
+      </div>
 
-          </div>
+    </div>
 
-          <div class="form-group">
+    <div class="user-details-wrapper">
 
-            <label>${fields.mobile.value}</label>
+      <div class="user-details-header">User Details</div>
 
-            <input type="tel" />
+      <div class="user-details-content">
 
-          </div>
+        <h2>${fields.nameText.value}</h2>
 
-          <div class="form-group">
+        <div class="form-group">
 
-            <label>${fields.otp.value}</label>
+          <label>${fields.email.value}</label>
 
-            <input type="text" />
+          <input type="email" />
 
-          </div>
+        </div>
 
-          <div class="form-group">
+        <div class="form-group">
 
-            <span>${fields.agree.value}</span>
+          <label>${fields.mobile.value}</label>
 
-          </div>
+          <input type="tel" />
 
-          <div class="form-group">
+        </div>
 
-            <span>${fields.conformText.value}</span>
+        <div class="form-group">
 
-            <a href="#">${fields.submit.value}</a>
+          <label>${fields.otp.value}</label>
 
-          </div>
+          <input type="text" />
 
-          <div class="form-group">
+        </div>
 
-            <span>${fields.anotherTestdrive.value}</span>
+        <div class="form-group">
 
-          </div>
+          <span>${fields.agree.value}</span>
+
+        </div>
+
+        <div class="form-group">
+
+          <span>${fields.conformText.value}</span>
+
+          <a href="#">${fields.submit.value}</a>
+
+        </div>
+
+        <div class="form-group">
+
+          <span>${fields.anotherTestdrive.value}</span>
 
         </div>
 
@@ -97,33 +93,33 @@ export default function decorate(block) {
 
   block.innerHTML = bookdriveHtml;
 
-  // Add event listeners for the tabs
+  // Add event listeners for the collapsible sections
 
-  addTabClickEventListeners(block);
+  addCollapsibleEventListeners(block);
 }
 
-function addTabClickEventListeners(block) {
-  const tabItems = block.querySelectorAll(".tab-item");
+function addCollapsibleEventListeners(block) {
+  const bookingDetailsHeader = block.querySelector(".booking-details-header");
 
-  const tabPanes = block.querySelectorAll(".tab-pane");
+  const bookingDetailsContent = block.querySelector(".booking-details-content");
 
-  tabItems.forEach((tabItem, index) => {
-    tabItem.addEventListener("click", () => {
-      toggleActiveTab(tabItems, tabPanes, index);
-    });
+  const userDetailsHeader = block.querySelector(".user-details-header");
+
+  const userDetailsContent = block.querySelector(".user-details-content");
+
+  bookingDetailsHeader.addEventListener("click", () => {
+    toggleCollapsible(bookingDetailsHeader, bookingDetailsContent);
+  });
+
+  userDetailsHeader.addEventListener("click", () => {
+    toggleCollapsible(userDetailsHeader, userDetailsContent);
   });
 }
 
-function toggleActiveTab(tabItems, tabPanes, activeIndex) {
-  tabItems.forEach((tabItem, index) => {
-    if (index === activeIndex) {
-      tabItem.classList.add("active");
+function toggleCollapsible(header, content) {
+  header.classList.toggle("collapsed");
 
-      tabPanes[index].classList.add("active");
-    } else {
-      tabItem.classList.remove("active");
-
-      tabPanes[index].classList.remove("active");
-    }
-  });
+  content.style.display = header.classList.contains("collapsed")
+    ? "none"
+    : "block";
 }
