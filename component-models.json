@@ -302,7 +302,7 @@
 
     "fields": [
       {
-        "component": "field",
+        "component": "fieldset",
         "name": "userDetails",
         "label": "User Details",
         "fields": [
