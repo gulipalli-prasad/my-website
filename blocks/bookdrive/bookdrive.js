@@ -4,7 +4,7 @@ export default function decorate(block) {
     cityLabelEl,
     carModelEl,
     selectTextEl,
-    manulaImageEl,
+    manualImageEl,
     manualTextEl,
     automaticImageEl,
     automaticTextEl,
@@ -28,10 +28,21 @@ export default function decorate(block) {
   const formHeading = formHeadingEl?.textContent?.trim() || "";
   const cityLabel = cityLabelEl?.textContent?.trim() || "";
   const carModel = carModelEl?.textContent?.trim() || "";
-  const selectTransmisson = selectTransmissonEl?.textContent?.trim() || "";
+  const selectText = selectTextEl?.textContent?.trim() || "";
+
+  const manualImageElement = manualImageEl.querySelector("img");
+  const manualImage = manualImageElement?.getAttribute("src")?.trim() || "";
+  const automaticImageElement = automaticImageEl.querySelector("img");
+  const automaticImage =
+    automaticImageElement?.getAttribute("src")?.trim() || "";
+  const showroomImageElement = showroomImageEl.querySelector("img");
+  const showroomImage = showroomImageElement?.getAttribute("src")?.trim() || "";
+  const doorstepImageElement = doorstepImageEl.querySelector("img");
+  const doorstepImage = doorstepImageElement?.getAttribute("src")?.trim() || "";
+
   const manualText = manualTextEl?.textContent?.trim() || "";
   const automaticText = automaticTextEl?.textContent?.trim() || "";
-  const testDrive = testDriveEl?.textContent?.trim() || "";
+  const testdriveText = testdriveTextEl?.textContent?.trim() || "";
   const showroomText = showroomTextEl?.textContent?.trim() || "";
   const doorstepText = doorstepTextEl?.textContent?.trim() || "";
   const selectDate = selectDateEl?.textContent?.trim() || "";
@@ -46,26 +57,35 @@ export default function decorate(block) {
   const buttonText = buttonTextEl?.textContent?.trim() || "";
 
   const bookdriveHtml = `
-
     <div>
       <h1>${formHeading}</h1>
       <p>${cityLabel}</p>
       <p>${carModel}</p>
-     <div> 
-        <h6>Transmission<h6>
-        <ul>
-          <li><img src="#" alt="image}" /></li>
-          <li><p>${automaticText}</p></li>
-        </ul>
-        <p>Test Drive at:</p>
-        <ul>
-          <li><img src="#" alt="image}" /></li>
-          <li<p>${automaticText}</p></li>
-        </ul>
-     </div> 
-      <p>Select Date: ${selectDate}</p>
-      <p>Advance Text: ${advanceText}</p>
     </div>
+    
+    <div> 
+      <h6>${selectText}</h6>
+      <ul>
+        <li><img src="${manualImage}" alt="Manual" /></li>
+        <li><p>${manualText}</p></li>
+      </ul>
+      <ul>
+        <li><img src="${automaticImage}" alt="Automatic" /></li>
+        <li><p>${automaticText}</p></li>
+      </ul>
+      <h6>${testdriveText}</h6>
+      <ul>
+        <li><img src="${showroomImage}" alt="Showroom" /></li>
+        <li><p>${showroomText}</p></li>
+      </ul>
+      <ul>
+        <li><img src="${doorstepImage}" alt="Doorstep" /></li>
+        <li><p>${doorstepText}</p></li>
+      </ul>
+    </div> 
+      <p>${selectDate}</p>
+      <p>${advanceText}</p>
+    
     <div>
       <p>${nameText}</p>
       <p>${email}</p>
