@@ -422,9 +422,9 @@
       {
         "component": "text",
         "valueType": "string",
-        "name": "name",
+        "name": "nameText",
         "value": "",
-        "label": "Name"
+        "label": "Name Text"
       },
       {
         "component": "text",
