@@ -20,7 +20,6 @@ export default function decorate(block) {
     mobileEl,
     otpEl,
     agreeEl,
-    confirmTextEl,
     anotherTestdriveEl,
     buttonTextEl,
   ] = block.children;
@@ -54,7 +53,6 @@ export default function decorate(block) {
   const mobile = mobileEl?.textContent?.trim() || "";
   const otp = otpEl?.textContent?.trim() || "";
   const agree = agreeEl?.textContent?.trim() || "";
-  const confirmText = confirmTextEl?.textContent?.trim() || "";
   const anotherTestdrive = anotherTestdriveEl?.textContent?.trim() || "";
   const buttonText = buttonTextEl?.textContent?.trim() || "";
 
@@ -82,7 +80,6 @@ export default function decorate(block) {
       <p>${mobile}</p>
       <p>${otp}</p>
       <p>${agree}</p>
-      <p>${confirmText}</p>
       <p>${anotherTestdrive}</p>
       <button>${buttonText}</button>
     </div>
