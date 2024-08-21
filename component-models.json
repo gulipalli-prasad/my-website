@@ -471,7 +471,7 @@
       {
         "component": "text",
         "valueType": "string",
-        "name": "conformText",
+        "name": "conformtext",
         "value": "",
         "label": "Conform Text"
       },
