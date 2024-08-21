@@ -302,7 +302,7 @@
 
     "fields": [
       {
-        "component": "section",
+        "component": "fieldset",
         "name": "userDetails",
         "label": "User Details",
         "fields": [
@@ -338,7 +338,7 @@
       },
 
       {
-        "component": "section",
+        "component": "fieldset",
         "name": "bookingDetails",
         "label": "Booking Details",
         "fields": [
