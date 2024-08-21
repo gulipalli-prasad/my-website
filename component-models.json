@@ -298,11 +298,11 @@
     ]
   },
   {
-    "id": "article",
+    "id": "bookdrive",
 
     "fields": [
       {
-        "component": "tab2",
+        "component": "section",
         "name": "userDetails",
         "label": "User Details",
         "fields": [
@@ -338,7 +338,7 @@
       },
 
       {
-        "component": "tab1",
+        "component": "section",
         "name": "bookingDetails",
         "label": "Booking Details",
         "fields": [
