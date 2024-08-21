@@ -303,70 +303,70 @@
       {
         "component": "tab",
         "label": "Booking Details",
-        "name": "bookingDetails"
+        "name": "col1"
       },
       {
         "component": "text",
         "valueType": "string",
         "name": "formHeading",
-        "value": "",
-        "label": "Form Heading"
-      },
-      {
-        "component": "text-input",
-        "valueType": "string",
-        "name": "cityLabel",
-        "value": "",
-        "label": "City Label"
+        "label": "Form Heading",
+        "multi": false
       },
       {
         "component": "text",
         "valueType": "string",
-        "name": "carModel",
-        "value": "",
-        "label": "Car Model"
+        "name": "cityLabel",
+        "label": "City Label",
+        "multi": false
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "carModelLabel",
+        "label": "Car Model Label",
+        "multi": false
       },
       {
         "component": "container",
-        "label": "Select Transmisson",
-        "name": "selectTransmisson",
+        "label": "Transmission",
+        "name": "transmission",
         "valueType": "string",
         "collapsible": true,
         "fields": [
           {
             "component": "text",
             "valueType": "string",
-            "name": "selectText",
-            "value": "",
-            "label": "Select Text"
-          },
-          {
-            "component": "reference",
-            "valueType": "string",
-            "name": "manualImage",
-            "value": "",
-            "label": "Manual Image"
+            "name": "transmissionText",
+            "label": "Transmission TEXT",
+            "multi": false
           },
           {
             "component": "text",
             "valueType": "string",
-            "name": "manualText",
-            "value": "",
-            "label": "Manual Text"
+            "name": "Manual",
+            "label": "Manual",
+            "multi": false
           },
           {
             "component": "reference",
             "valueType": "string",
-            "name": "automaticImage",
-            "value": "",
-            "label": "Automatic Image"
+            "name": "manualI",
+            "label": "Manual I",
+            "multi": false
           },
           {
             "component": "text",
             "valueType": "string",
-            "name": "automaticText",
-            "value": "",
-            "label": "Automatic Text"
+            "name": "automatic",
+            "label": "Automatic",
+            "multi": false
+          },
+          {
+            "component": "reference",
+            "valueType": "string",
+            "name": "automatic I",
+            "label": "TAutomatic I",
+            "multi": false
           }
         ]
       },
@@ -380,114 +380,119 @@
           {
             "component": "text",
             "valueType": "string",
-            "name": "testdriveText",
-            "value": "",
-            "label": "Testdrive Text"
-          },
-          {
-            "component": "reference",
-            "valueType": "string",
-            "name": "showroomImage",
-            "value": "",
-            "label": "Showroom Image"
+            "name": "testDriveText",
+            "label": "Test Drive TEXT",
+            "multi": false
           },
           {
             "component": "text",
             "valueType": "string",
-            "name": "showroomText",
-            "value": "",
-            "label": "Showroom Text"
+            "name": "showroom",
+            "label": "Showroom",
+            "multi": false
           },
           {
             "component": "reference",
             "valueType": "string",
-            "name": "doorstepImage",
-            "value": "",
-            "label": "Doorstep Image"
+            "name": "Showroom I",
+            "label": "Showroom I",
+            "multi": false
           },
           {
             "component": "text",
             "valueType": "string",
-            "name": "doorstepText",
-            "value": "",
-            "label": "Doorstep Text"
+            "name": "doorStep",
+            "label": "DoorStep Label",
+            "multi": false
+          },
+          {
+            "component": "reference",
+            "valueType": "string",
+            "name": "doorStep I",
+            "label": "DoorStep I",
+            "multi": false
           }
         ]
       },
       {
         "component": "text",
-        "valueType": "string",
-        "name": "selectdateText",
-        "value": "",
-        "label": "Selectdate Text"
+        "name": "date",
+        "label": "Date",
+        "valueType": "string"
       },
       {
         "component": "text",
         "valueType": "string",
-        "name": "advanceText",
-        "value": "",
-        "label": "Advance Text"
+        "name": "selectedDate",
+        "label": "Selected Date",
+        "multi": false
+      },
+      {
+        "component": "text",
+        "name": "advance",
+        "label": "Advance",
+        "multi": false
       },
       {
         "component": "tab",
         "label": "User Details",
-        "name": "userDetails"
+        "name": "col2"
       },
       {
         "component": "text",
         "valueType": "string",
         "name": "nameText",
-        "value": "",
-        "label": "Name Text"
+        "label": "Name Text",
+        "multi": false
       },
       {
         "component": "text",
         "valueType": "string",
         "name": "email",
-        "value": "",
-        "label": "Email"
+        "label": "Email",
+        "multi": false
       },
       {
         "component": "text",
         "valueType": "string",
         "name": "mobile",
-        "value": "",
-        "label": "Mobile"
+        "label": "Mobile",
+        "multi": false
       },
       {
         "component": "text",
         "valueType": "string",
         "name": "otp",
-        "value": "",
-        "label": "OTP"
+        "label": "OTP",
+        "multi": false
       },
       {
         "component": "text",
         "valueType": "string",
         "name": "agree",
-        "value": "",
-        "label": "Agree"
+        "label": "Agree",
+        "multi": false
       },
       {
         "component": "text",
         "valueType": "string",
-        "name": "conformText",
-        "value": "",
-        "label": "Conform Text"
+        "name": "confirmText",
+        "label": "Confirm Text",
+        "multi": false
       },
       {
         "component": "text",
         "valueType": "string",
-        "name": "anotherTestdrive",
-        "value": "",
-        "label": "Another Testdrive"
+        "name": "aTestdrive",
+        "label": "A Testdrive",
+        "multi": false
       },
       {
         "component": "text",
         "valueType": "string",
         "name": "submit",
-        "value": "",
-        "label": "Submit"
+        "label": "Submit",
+        "multi": false
       }
     ]
   }

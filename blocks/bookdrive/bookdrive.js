@@ -1,125 +1,93 @@
-export default function decorate(block) {
-  const { fields } = JSON.parse(block.textContent);
+// export default function decorate(block) {
+//   const [
+//     formHeadingEl,
+//     cityLabelEl,
+//     carModelEl,
+//     selectTextEl,
+//     manualImageEl,
+//     manualTextEl,
+//     automaticImageEl,
+//     automaticTextEl,
+//     testdriveTextEl,
+//     showroomImageEl,
+//     showroomTextEl,
+//     doorstepImageEl,
+//     doorstepTextEl,
+//     selectdateTextEl,
+//     advanceTextEl,
+//     nameTextEl,
+//     emailEl,
+//     mobileEl,
+//     otpEl,
+//     agreeEl,
+//     conformTextEl,
+//     anotherTestdriveEl,
+//     submitEl
+//   ] = block.children;
 
-  // Create the HTML structure
+//   const formHeading = formHeadingEl?.textContent?.trim() || "";
+//   const cityLabel = cityLabelEl?.textContent?.trim() || "";
+//   const carModel = carModelEl?.textContent?.trim() || "";
 
-  const bookdriveHtml = `
+//   const selectText = selectTextEl?.textContent?.trim() || "";
+//   const manualImageElement = manualImageEl.querySelector("img");
+//   const manualImage = manualImageElement?.getAttribute("src")?.trim() || "";
+//   const manualText = manualTextEl?.textContent?.trim() || "";
+//   const automaticImageElement = automaticImageEl.querySelector("img");
+//   const automaticImage =
+//     automaticImageElement?.getAttribute("src")?.trim() || "";
+//   const automaticText = automaticTextEl?.textContent?.trim() || "";
 
-    <div class="booking-details-wrapper">
+//   const testdriveText = testdriveTextEl?.textContent?.trim() || "";
+//   const showroomImageElement = showroomImageEl.querySelector("img");
+//   const showroomImage = showroomImageElement?.getAttribute("src")?.trim() || "";
+//   const showroomText = showroomTextEl?.textContent?.trim() || "";
+//   const doorstepImageElement = doorstepImageEl.querySelector("img");
+//   const doorstepImage = doorstepImageElement?.getAttribute("src")?.trim() || "";
+//   const doorstepText = doorstepTextEl?.textContent?.trim() || "";
 
-      <div class="booking-details-header">Booking Details</div>
+//   const selectDate = selectDateEl?.textContent?.trim() || "";
+//   const advanceText = advanceTextEl?.textContent?.trim() || "";
 
-      <div class="booking-details-content">
+//   const nameText = nameTextEl?.textContent?.trim() || "";
+//   const email = emailEl?.textContent?.trim() || "";
+//   const mobile = mobileEl?.textContent?.trim() || "";
+//   const otp = otpEl?.textContent?.trim() || "";
+//   const agree = agreeEl?.textContent?.trim() || "";
+//   const submit = submitEl?.textContent?.trim() || "";
+//   const anotherTestdrive = anotherTestdriveEl?.textContent?.trim() || "";
+//   const conformText = conformTextEl?.textContent?.trim() || "";
 
-        <h2>${fields.formHeading.value}</h2>
+//   const bookdriveHtml = `
+//       <h1>Please Enter Your Details</h1>
+//       <h6>Select City</h6>
+//       <h6>Car Model</h6>
+//       <h3>Select Transmission</h3>
+//       <div>
+//         <img src="path-to-manual-image" alt="Manual Transmission">
+//         <h2>Manual</h2>
+//       </div>
+//       <div>
+//         <img src="path-to-automatic-image" alt="Automatic Transmission">
+//         <h2>Automatic</h2>
+//       </div>
+//       <h3>Test Drive</h3>
+//       <div>
+//         <img src="path-to-showroom-image" alt="Showroom">
+//         <h2>Showroom</h2>
+//       </div>
+//       <div>
+//         <img src="path-to-doorstep-image" alt="Doorstep">
+//         <h2>Doorstep</h2>
+//       </div>
+//       <h6>Select Date</h6>
+//       <p>Date and slot can be booked 12 hours in advance.</p>
+//       <h3>name</h3>
+//       <h3>email</h3>
+//       <h3>mobile</h3>
+//       <h3>otp</h3>
+//       <button>Submit</button>
+//   `;
 
-        <div class="form-group">
-
-          <label>${fields.cityLabel.value}</label>
-
-          <input type="text" value="${fields.carModel.value}" readonly />
-
-        </div>
-
-        <div class="form-group">
-
-          <span>${fields.selectdateText.value}</span>
-
-          <span>${fields.advanceText.value}</span>
-
-        </div>
-
-      </div>
-
-    </div>
-
-    <div class="user-details-wrapper">
-
-      <div class="user-details-header">User Details</div>
-
-      <div class="user-details-content">
-
-        <h2>${fields.nameText.value}</h2>
-
-        <div class="form-group">
-
-          <label>${fields.email.value}</label>
-
-          <input type="email" />
-
-        </div>
-
-        <div class="form-group">
-
-          <label>${fields.mobile.value}</label>
-
-          <input type="tel" />
-
-        </div>
-
-        <div class="form-group">
-
-          <label>${fields.otp.value}</label>
-
-          <input type="text" />
-
-        </div>
-
-        <div class="form-group">
-
-          <span>${fields.agree.value}</span>
-
-        </div>
-
-        <div class="form-group">
-
-          <span>${fields.conformText.value}</span>
-
-          <a href="#">${fields.submit.value}</a>
-
-        </div>
-
-        <div class="form-group">
-
-          <span>${fields.anotherTestdrive.value}</span>
-
-        </div>
-
-      </div>
-
-    </div>
-
-  `;
-
-  block.innerHTML = bookdriveHtml;
-
-  // Add event listeners for the collapsible sections
-
-  addCollapsibleEventListeners(block);
-}
-
-function addCollapsibleEventListeners(block) {
-  const bookingDetailsHeader = block.querySelector(".booking-details-header");
-
-  const bookingDetailsContent = block.querySelector(".booking-details-content");
-
-  const userDetailsHeader = block.querySelector(".user-details-header");
-
-  const userDetailsContent = block.querySelector(".user-details-content");
-
-  bookingDetailsHeader.addEventListener("click", () => {
-    toggleCollapsible(bookingDetailsHeader, bookingDetailsContent);
-  });
-
-  userDetailsHeader.addEventListener("click", () => {
-    toggleCollapsible(userDetailsHeader, userDetailsContent);
-  });
-}
-
-function toggleCollapsible(header, content) {
-  header.classList.toggle("collapsed");
-
-  content.style.display = header.classList.contains("collapsed")
-    ? "none"
-    : "block";
-}
+//   block.innerHTML = bookdriveHtml;
+// }
