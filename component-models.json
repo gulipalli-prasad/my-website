@@ -302,7 +302,7 @@
 
     "fields": [
       {
-        "component": "fieldset",
+        "component": "accordion",
         "name": "userDetails",
         "label": "User Details",
         "fields": [
@@ -338,7 +338,7 @@
       },
 
       {
-        "component": "fieldset",
+        "component": "accordion",
         "name": "bookingDetails",
         "label": "Booking Details",
         "fields": [
