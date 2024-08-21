@@ -334,6 +334,13 @@
         "collapsible": true,
         "fields": [
           {
+            "component": "text",
+            "valueType": "string",
+            "name": "selectText",
+            "value": "",
+            "label": "Select Text"
+          },
+          {
             "component": "reference",
             "valueType": "string",
             "name": "manulaImage",
@@ -370,6 +377,13 @@
         "valueType": "string",
         "collapsible": true,
         "fields": [
+          {
+            "component": "text",
+            "valueType": "string",
+            "name": "testdriveText",
+            "value": "",
+            "label": "Testdrive Tsxt"
+          },
           {
             "component": "reference",
             "valueType": "string",
