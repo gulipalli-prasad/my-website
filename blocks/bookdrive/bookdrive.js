@@ -1,15 +1,7 @@
 export default function decorate(block) {
-  const [bookingDetailsTab, userDetailsTab] = block.children;
+  const { fields } = JSON.parse(block.textContent);
 
-  // Add click event listener to the tabs
-
-  addTabClickEventListeners(bookingDetailsTab, userDetailsTab);
-
-  // Initial state: show the Booking Details tab
-
-  bookingDetailsTab.classList.add("active");
-
-  userDetailsTab.classList.remove("active");
+  // Create the HTML structure
 
   const bookdriveHtml = `
 
@@ -25,7 +17,77 @@ export default function decorate(block) {
 
       <div class="tab-content">
 
-        ${bookingDetailsTab.innerHTML}
+        <div class="tab-pane">
+
+          <h2>${fields.formHeading.value}</h2>
+
+          <div class="form-group">
+
+            <label>${fields.cityLabel.value}</label>
+
+            <input type="text" value="${fields.carModel.value}" readonly />
+
+          </div>
+
+          <div class="form-group">
+
+            <span>${fields.selectdateText.value}</span>
+
+            <span>${fields.advanceText.value}</span>
+
+          </div>
+
+        </div>
+
+        <div class="tab-pane">
+
+          <h2>${fields.nameText.value}</h2>
+
+          <div class="form-group">
+
+            <label>${fields.email.value}</label>
+
+            <input type="email" />
+
+          </div>
+
+          <div class="form-group">
+
+            <label>${fields.mobile.value}</label>
+
+            <input type="tel" />
+
+          </div>
+
+          <div class="form-group">
+
+            <label>${fields.otp.value}</label>
+
+            <input type="text" />
+
+          </div>
+
+          <div class="form-group">
+
+            <span>${fields.agree.value}</span>
+
+          </div>
+
+          <div class="form-group">
+
+            <span>${fields.conformText.value}</span>
+
+            <a href="#">${fields.submit.value}</a>
+
+          </div>
+
+          <div class="form-group">
+
+            <span>${fields.anotherTestdrive.value}</span>
+
+          </div>
+
+        </div>
 
       </div>
 
@@ -34,34 +96,34 @@ export default function decorate(block) {
   `;
 
   block.innerHTML = bookdriveHtml;
+
+  // Add event listeners for the tabs
+
+  addTabClickEventListeners(block);
 }
 
-function addTabClickEventListeners(bookingDetailsTab, userDetailsTab) {
+function addTabClickEventListeners(block) {
   const tabItems = block.querySelectorAll(".tab-item");
+
+  const tabPanes = block.querySelectorAll(".tab-pane");
 
   tabItems.forEach((tabItem, index) => {
     tabItem.addEventListener("click", () => {
-      toggleActiveTab(tabItems, index);
-
-      if (index === 0) {
-        bookingDetailsTab.classList.add("active");
-
-        userDetailsTab.classList.remove("active");
-      } else {
-        bookingDetailsTab.classList.remove("active");
-
-        userDetailsTab.classList.add("active");
-      }
+      toggleActiveTab(tabItems, tabPanes, index);
     });
   });
 }
 
-function toggleActiveTab(tabItems, activeIndex) {
+function toggleActiveTab(tabItems, tabPanes, activeIndex) {
   tabItems.forEach((tabItem, index) => {
     if (index === activeIndex) {
       tabItem.classList.add("active");
+
+      tabPanes[index].classList.add("active");
     } else {
       tabItem.classList.remove("active");
+
+      tabPanes[index].classList.remove("active");
     }
   });
 }

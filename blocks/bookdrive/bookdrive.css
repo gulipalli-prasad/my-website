@@ -1,0 +1,31 @@
+.tabs {
+  border: 1px solid #ccc;
+}
+
+.tab-header {
+  display: flex;
+
+  background-color: #f1f1f1;
+}
+
+.tab-item {
+  padding: 10px 20px;
+
+  cursor: pointer;
+}
+
+.tab-item.active {
+  background-color: #ccc;
+}
+
+.tab-content {
+  padding: 20px;
+}
+
+.tab-pane {
+  display: none;
+}
+
+.tab-pane.active {
+  display: block;
+}
