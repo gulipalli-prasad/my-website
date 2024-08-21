@@ -471,16 +471,9 @@
       {
         "component": "text",
         "valueType": "string",
-        "name": "confirm",
+        "name": "confirmText",
         "value": "",
-        "label": "Confirm"
-      },
-      {
-        "component": "text",
-        "valueType": "string",
-        "name": "carModel",
-        "value": "",
-        "label": "Car Model"
+        "label": "Confirm Text"
       },
       {
         "component": "text",
