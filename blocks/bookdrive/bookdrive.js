@@ -20,8 +20,9 @@ export default function decorate(block) {
     mobileEl,
     otpEl,
     agreeEl,
+    submitEl,
     anotherTestdriveEl,
-    buttonTextEl,
+    conformTextEl,
   ] = block.children;
 
   const formHeading = formHeadingEl?.textContent?.trim() || "";
@@ -53,8 +54,9 @@ export default function decorate(block) {
   const mobile = mobileEl?.textContent?.trim() || "";
   const otp = otpEl?.textContent?.trim() || "";
   const agree = agreeEl?.textContent?.trim() || "";
+  const submit = submitEl?.textContent?.trim() || "";
   const anotherTestdrive = anotherTestdriveEl?.textContent?.trim() || "";
-  const buttonText = buttonTextEl?.textContent?.trim() || "";
+  const conformText = conformTextEl?.textContent?.trim() || "";
 
   const bookdriveHtml = `
     <div>
@@ -80,8 +82,9 @@ export default function decorate(block) {
       <p>${mobile}</p>
       <p>${otp}</p>
       <p>${agree}</p>
+      <button>${submit}</button>
       <p>${anotherTestdrive}</p>
-      <a href="#">${buttonText}</a>
+      <p>${conformText}</p>
     </div>
   `;
 

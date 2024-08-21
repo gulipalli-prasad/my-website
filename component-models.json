@@ -382,7 +382,7 @@
             "valueType": "string",
             "name": "testdriveText",
             "value": "",
-            "label": "Testdrive Tsxt"
+            "label": "Testdrive Text"
           },
           {
             "component": "reference",
@@ -471,9 +471,9 @@
       {
         "component": "text",
         "valueType": "string",
-        "name": "confirmText",
+        "name": "conformText",
         "value": "",
-        "label": "Confirm Text"
+        "label": "Conform Text"
       },
       {
         "component": "text",
@@ -485,9 +485,9 @@
       {
         "component": "text",
         "valueType": "string",
-        "name": "buttonText",
+        "name": "submit",
         "value": "",
-        "label": "Button Text"
+        "label": "Submit"
       }
     ]
   }
