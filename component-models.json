@@ -302,104 +302,65 @@
 
     "fields": [
       {
-        "component": "section",
-
+        "component": "field",
         "name": "userDetails",
-
         "label": "User Details",
-
         "fields": [
           {
             "component": "text",
-
             "valueType": "string",
-
             "name": "nameLabel",
-
             "label": "Name Label",
-
             "value": "Name"
           },
-
           {
             "component": "text",
-
             "valueType": "string",
-
             "name": "emailLabel",
-
             "label": "Email Label",
-
             "value": "Email"
           },
-
           {
             "component": "text",
-
             "valueType": "string",
-
             "name": "mobileLabel",
-
             "label": "Mobile Label",
-
             "value": "Mobile"
           },
-
           {
             "component": "text",
-
             "valueType": "string",
-
             "name": "otpLabel",
-
             "label": "OTP Label",
-
             "value": "OTP"
           }
         ]
       },
 
       {
-        "component": "section",
-
+        "component": "fieldset",
         "name": "bookingDetails",
-
         "label": "Booking Details",
-
         "fields": [
           {
             "component": "text",
-
             "valueType": "string",
-
             "name": "formHeading",
-
             "label": "Form Heading",
-
             "value": "Please enter your details."
           },
-
           {
             "component": "text",
-
             "valueType": "string",
-
             "name": "cityLabel",
-
             "label": "City Label",
-
             "value": "Select City or Pincode"
           },
-
           {
             "component": "text",
-
             "valueType": "string",
-
             "name": "carModelLabel",
-
             "label": "Car Model Label",
-
             "value": "Car Model"
           }
         ]
