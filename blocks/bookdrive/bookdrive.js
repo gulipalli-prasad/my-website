@@ -82,9 +82,9 @@ export default function decorate(block) {
       <p>${mobile}</p>
       <p>${otp}</p>
       <p>${agree}</p>
-      <button>${submit}</button>
       <p>${anotherTestdrive}</p>
       <p>${conformText}</p>
+      <a href="#">${submit}</a>
     </div>
   `;
 
