@@ -20,7 +20,7 @@ export default function decorate(block) {
     mobileEl,
     otpEl,
     agreeEl,
-    confirmEl,
+    confirmTextEl,
     anotherTestdriveEl,
     buttonTextEl,
   ] = block.children;
@@ -28,31 +28,33 @@ export default function decorate(block) {
   const formHeading = formHeadingEl?.textContent?.trim() || "";
   const cityLabel = cityLabelEl?.textContent?.trim() || "";
   const carModel = carModelEl?.textContent?.trim() || "";
-  const selectText = selectTextEl?.textContent?.trim() || "";
 
+  const selectText = selectTextEl?.textContent?.trim() || "";
   const manualImageElement = manualImageEl.querySelector("img");
   const manualImage = manualImageElement?.getAttribute("src")?.trim() || "";
+  const manualText = manualTextEl?.textContent?.trim() || "";
   const automaticImageElement = automaticImageEl.querySelector("img");
   const automaticImage =
     automaticImageElement?.getAttribute("src")?.trim() || "";
+  const automaticText = automaticTextEl?.textContent?.trim() || "";
+
+  const testdriveText = testdriveTextEl?.textContent?.trim() || "";
   const showroomImageElement = showroomImageEl.querySelector("img");
   const showroomImage = showroomImageElement?.getAttribute("src")?.trim() || "";
+  const showroomText = showroomTextEl?.textContent?.trim() || "";
   const doorstepImageElement = doorstepImageEl.querySelector("img");
   const doorstepImage = doorstepImageElement?.getAttribute("src")?.trim() || "";
-
-  const manualText = manualTextEl?.textContent?.trim() || "";
-  const automaticText = automaticTextEl?.textContent?.trim() || "";
-  const testdriveText = testdriveTextEl?.textContent?.trim() || "";
-  const showroomText = showroomTextEl?.textContent?.trim() || "";
   const doorstepText = doorstepTextEl?.textContent?.trim() || "";
+
   const selectDate = selectDateEl?.textContent?.trim() || "";
   const advanceText = advanceTextEl?.textContent?.trim() || "";
+
   const nameText = nameTextEl?.textContent?.trim() || "";
   const email = emailEl?.textContent?.trim() || "";
   const mobile = mobileEl?.textContent?.trim() || "";
   const otp = otpEl?.textContent?.trim() || "";
   const agree = agreeEl?.textContent?.trim() || "";
-  const confirm = confirmEl?.textContent?.trim() || "";
+  const confirmText = confirmTextEl?.textContent?.trim() || "";
   const anotherTestdrive = anotherTestdriveEl?.textContent?.trim() || "";
   const buttonText = buttonTextEl?.textContent?.trim() || "";
 
@@ -92,7 +94,7 @@ export default function decorate(block) {
       <p>${mobile}</p>
       <p>${otp}</p>
       <p>${agree}</p>
-      <p>${confirm}</p>
+      <p>${confirmText}</p>
       <p>${anotherTestdrive}</p>
       <button>${buttonText}</button>
     </div>

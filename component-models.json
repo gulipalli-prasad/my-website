@@ -343,7 +343,7 @@
           {
             "component": "reference",
             "valueType": "string",
-            "name": "manulaImage",
+            "name": "manualImage",
             "value": "",
             "label": "Manual Image"
           },
