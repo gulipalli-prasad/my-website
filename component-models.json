@@ -306,7 +306,7 @@
         "name": "bookingDetails"
       },
       {
-        "component": "text",
+        "component": "text-input",
         "valueType": "string",
         "name": "formHeading",
         "value": "",
