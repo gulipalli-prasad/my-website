@@ -3,11 +3,15 @@ export default function decorate(block) {
     formHeadingEl,
     cityLabelEl,
     carModelEl,
-    selectTransmissonEl,
+    selectTextEl,
+    manulaImageEl,
     manualTextEl,
+    automaticImageEl,
     automaticTextEl,
-    testDriveEl,
+    testdriveTextEl,
+    showroomImageEl,
     showroomTextEl,
+    doorstepImageEl,
     doorstepTextEl,
     selectDateEl,
     advanceTextEl,
@@ -41,36 +45,38 @@ export default function decorate(block) {
   const anotherTestdrive = anotherTestdriveEl?.textContent?.trim() || "";
   const buttonText = buttonTextEl?.textContent?.trim() || "";
 
-  const teaserHtml = `
+  const bookdriveHtml = `
 
     <div>
       <h1>${formHeading}</h1>
       <p>${cityLabel}</p>
       <p>${carModel}</p>
      <div> 
-      <p>Transmission:</p>
-      <ul>
-        <li>Manual: ${manualText}</li>
-        <li>Automatic: ${automaticText}</li>
-      </ul>
+        <h6>Transmission<h6>
+        <ul>
+          <li><img src="#" alt="image}" /></li>
+          <li><p>${automaticText}</p></li>
+        </ul>
+        <p>Test Drive at:</p>
+        <ul>
+          <li><img src="#" alt="image}" /></li>
+          <li<p>${automaticText}</p></li>
+        </ul>
      </div> 
-      <p>Test Drive at:</p>
-      <ul>
-        <li>Showroom: ${showroomText}</li>
-        <li>Doorstep: ${doorstepText}</li>
-      </ul>
       <p>Select Date: ${selectDate}</p>
       <p>Advance Text: ${advanceText}</p>
-      <p>Name: ${nameText}</p>
-      <p>Email: ${email}</p>
-      <p>Mobile: ${mobile}</p>
-      <p>OTP: ${otp}</p>
-      <p>Agree: ${agree}</p>
-      <p>Confirm: ${confirm}</p>
-      <p>Another Test Drive: ${anotherTestdrive}</p>
+    </div>
+    <div>
+      <p>${nameText}</p>
+      <p>${email}</p>
+      <p>${mobile}</p>
+      <p>${otp}</p>
+      <p>${agree}</p>
+      <p>${confirm}</p>
+      <p>${anotherTestdrive}</p>
       <button>${buttonText}</button>
     </div>
   `;
 
-  block.innerHTML = teaserHtml;
+  block.innerHTML = bookdriveHtml;
 }
