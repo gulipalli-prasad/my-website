@@ -298,116 +298,65 @@
     ]
   },
   {
-    "id": "bookdrive",
-    "fields": [
+    "id": "bookingForm",
+    "components": [
       {
-        "component": "text",
+        "component": "accordion",
         "valueType": "string",
-        "name": "formHeading",
-        "value": "",
-        "label": "Form Heading"
-      },
-      {
-        "component": "text",
-        "valueType": "string",
-        "name": "cityLabel",
-        "value": "",
-        "label": "City Label"
-      },
-      {
-        "component": "text",
-        "valueType": "string",
-        "name": "carModel",
-        "value": "",
-        "label": "Car Model"
-      },
-      {
-        "component": "container",
-        "label": "Select Transmisson",
-        "name": "selectTransmisson",
-        "valueType": "string",
-        "collapsible": true,
-        "fields": [
+        "name": "bookingDetails",
+        "label": "Booking Details",
+        "items": [
           {
-            "component": "reference",
+            "component": "text",
             "valueType": "string",
-            "name": "manulaImage",
+            "name": "formHeading",
             "value": "",
-            "label": "Manual Image"
+            "label": "Form Heading"
           },
           {
             "component": "text",
             "valueType": "string",
-            "name": "manualText",
+            "name": "cityLabel",
             "value": "",
-            "label": "Manual Text"
-          },
-          {
-            "component": "reference",
-            "valueType": "string",
-            "name": "automaticImage",
-            "value": "",
-            "label": "Automatic Image"
+            "label": "City Label"
           },
           {
             "component": "text",
             "valueType": "string",
-            "name": "automaticText",
+            "name": "carModel",
             "value": "",
-            "label": "Automatic Text"
+            "label": "Car Model"
           }
         ]
       },
       {
-        "component": "container",
-        "label": "Test Drive",
-        "name": "testDrive",
+        "component": "accordion",
         "valueType": "string",
-        "collapsible": true,
-        "fields": [
+        "name": "personalDetails",
+        "label": "Personal Details",
+        "items": [
           {
-            "component": "reference",
+            "component": "text",
             "valueType": "string",
-            "name": "showroomImage",
+            "name": "name",
             "value": "",
-            "label": "Showroom Image"
+            "label": "Name"
           },
           {
             "component": "text",
             "valueType": "string",
-            "name": "showroomText",
+            "name": "email",
             "value": "",
-            "label": "Showroom Text"
-          },
-          {
-            "component": "reference",
-            "valueType": "string",
-            "name": "doorstepImage",
-            "value": "",
-            "label": "Doorstep Image"
+            "label": "Email"
           },
           {
             "component": "text",
             "valueType": "string",
-            "name": "doorstepText",
+            "name": "mobile",
             "value": "",
-            "label": "Doorstep Text"
+            "label": "Mobile"
           }
         ]
-      },
-      {
-        "component": "text",
-        "valueType": "string",
-        "name": "selectdateText",
-        "value": "",
-        "label": "Selectdate Text"
-      },
-      {
-        "component": "text",
-        "valueType": "string",
-        "name": "advanceText",
-        "value": "",
-        "label": "Advance Text"
       }
     ]
   }
