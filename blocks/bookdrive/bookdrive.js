@@ -1,37 +1,10 @@
 export default function decorate(block) {
-  const [
-    formHeadingEl,
-    cityLabelEl,
-    carModelEl,
-    selectTextEl,
-    manualImageEl,
-    manualTextEl,
-    automaticImageEl,
-    automaticTextEl,
-    testdriveTextEl,
-    showroomImageEl,
-    showroomTextEl,
-    doorstepImageEl,
-    doorstepTextEl,
-    selectdateTextEl,
-    advanceTextEl,
+  const [submitEl] = block.children;
 
-    nameTextEl,
-    emailEl,
-    mobileEl,
-    otpEl,
-    agreeEl,
-    conformtextEl,
-    anotherTestdriveEl,
-    submitEl,
-  ] = block.children;
-
-  // const imageElement = imageEl.querySelector("img");
-  // const image = imageElement?.getAttribute("src")?.trim() || "";
-  const formHeading = formHeadingEl?.textContent?.trim() || "";
+  const submit = submitEl?.textContent?.trim() || "";
 
   block.innerHTML = `
-    <h2>${formHeading}</h2>
+    <h1>Please Enter Your Details</h1>
     <h6>Select City</h6>
     <h6>Car Model</h6>
     <h3>Select Transmission</h3>
@@ -61,6 +34,6 @@ export default function decorate(block) {
     <p>I agree that by clicking the 'Submit' button below, I am explicitly soliciting a Call/SMS/Whatsapp from Maruti Suzuki India Ltd. or its partners on my 'Mobile'.</p>
     <p>I confirm that I have a valid driving license and will be producing the original before I take the test drive.</p>
     <h3>add another test drive</h3>
-    <button>Submit</button>
+    <button>${submit}</button>
   `;
 }
