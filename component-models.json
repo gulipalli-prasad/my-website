@@ -306,28 +306,25 @@
         "name": "bookingDetails"
       },
       {
-        "component": "text",
+        "component": "text-input",
         "valueType": "string",
         "name": "formHeading",
         "label": "Form Heading",
-        "value": "",
-        "multi": false
+        "value": ""
       },
       {
-        "component": "text",
+        "component": "text-input",
         "valueType": "string",
         "name": "cityLabel",
         "label": "City Label",
-        "value": "",
-        "multi": false
+        "value": ""
       },
       {
-        "component": "text",
+        "component": "text-input",
         "valueType": "string",
         "name": "carModel",
         "label": "Car Model",
-        "value": "",
-        "multi": false
+        "value": ""
       },
       {
         "component": "container",
@@ -337,44 +334,39 @@
         "collapsible": true,
         "fields": [
           {
-            "component": "text",
+            "component": "text-input",
             "valueType": "string",
             "name": "transmission",
             "label": "Transmission",
-            "value": "",
-            "multi": false
+            "value": ""
           },
           {
             "component": "reference",
             "valueType": "string",
             "name": "manualImage",
             "label": "Manual Image",
-            "value": "",
-            "multi": false
+            "value": ""
           },
           {
-            "component": "text",
+            "component": "text-input",
             "valueType": "string",
             "name": "manual",
             "label": "Manual",
-            "value": "",
-            "multi": false
+            "value": ""
           },
           {
             "component": "reference",
             "valueType": "string",
             "name": "automaticImage",
             "label": "Automatic Image",
-            "value": "",
-            "multi": false
+            "value": ""
           },
           {
-            "component": "text",
+            "component": "text-input",
             "valueType": "string",
             "name": "automatic",
             "label": "Automatic",
-            "value": "",
-            "multi": false
+            "value": ""
           }
         ]
       },
@@ -386,61 +378,54 @@
         "collapsible": true,
         "fields": [
           {
-            "component": "text",
+            "component": "text-input",
             "valueType": "string",
             "name": "testdriveTxt",
             "label": "Testdrive Text",
-            "value": "",
-            "multi": false
+            "value": ""
           },
           {
             "component": "reference",
             "valueType": "string",
             "name": "ShowroomImage",
             "label": "Showroom Image",
-            "value": "",
-            "multi": false
+            "value": ""
           },
           {
-            "component": "text",
+            "component": "text-input",
             "valueType": "string",
             "name": "showroom",
             "label": "Showroom Text",
-            "value": "",
-            "multi": false
+            "value": ""
           },
           {
             "component": "reference",
             "valueType": "string",
             "name": "doorstepImage",
             "label": "Doorstep Image",
-            "value": "",
-            "multi": false
+            "value": ""
           },
           {
-            "component": "text",
+            "component": "text-input",
             "valueType": "string",
             "name": "doorstep",
             "label": "Doorstep Text",
-            "value": "",
-            "multi": false
+            "value": ""
           }
         ]
       },
       {
-        "component": "text",
+        "component": "text-input",
         "valueType": "string",
         "name": "selectedDate",
         "label": "Selected Date",
-        "value": "",
-        "multi": false
+        "value": ""
       },
       {
-        "component": "text",
+        "component": "text-input",
         "name": "advance",
         "label": "Advance Text",
-        "value": "",
-        "multi": false
+        "value": ""
       },
       {
         "component": "tab",
@@ -448,67 +433,59 @@
         "name": "userDetails"
       },
       {
-        "component": "text",
+        "component": "text-input",
         "valueType": "string",
         "name": "nameContext",
         "label": "Name Context",
-        "value": "",
-        "multi": false
+        "value": ""
       },
       {
-        "component": "text",
+        "component": "text-input",
         "valueType": "string",
         "name": "email",
         "label": "Email",
-        "value": "",
-        "multi": false
+        "value": ""
       },
       {
-        "component": "text",
+        "component": "text-input",
         "valueType": "string",
         "name": "mobile",
         "label": "Mobile",
-        "value": "",
-        "multi": false
+        "value": ""
       },
       {
-        "component": "text",
+        "component": "text-input",
         "valueType": "string",
         "name": "otp",
         "label": "OTP",
-        "value": "",
-        "multi": false
+        "value": ""
       },
       {
-        "component": "text",
+        "component": "text-input",
         "valueType": "string",
         "name": "agree",
-        "label": "Agree",
-        "multi": false
+        "label": "Agree"
       },
       {
-        "component": "text",
+        "component": "text-input",
         "valueType": "string",
         "name": "conformText",
         "label": "Conform Text",
-        "value": "",
-        "multi": false
+        "value": ""
       },
       {
         "component": "text-input",
         "valueType": "string",
         "name": "anotherTestdrive",
         "label": "Another Testdrive",
-        "value": "",
-        "multi": false
+        "value": ""
       },
       {
-        "component": "text",
+        "component": "text-input",
         "valueType": "string",
         "name": "submit",
         "label": "Submit",
-        "value": "",
-        "multi": false
+        "value": ""
       }
     ]
   }
