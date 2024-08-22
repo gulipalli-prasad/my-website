@@ -1,116 +1,78 @@
 export default function decorate(block) {
+  // Find the tab container
+  const tabContainer = block.querySelector('[data-cmp-is="tabs"]');
+  if (!tabContainer) return;
+
   // Find the tab elements
-  const bookingDetailsTab = block.querySelector(
-    '[data-cmp-hook-tabs="tab"][aria-controls="bookingDetails"]'
-  );
-  const userDetailsTab = block.querySelector(
-    '[data-cmp-hook-tabs="tab"][aria-controls="userDetails"]'
-  );
+  const tabs = tabContainer.querySelectorAll('[data-cmp-hook-tabs="tab"]');
+  if (tabs.length !== 2) return;
 
-  // Find the content panels
-  const bookingDetailsPanel = block.querySelector("#bookingDetails");
-  const userDetailsPanel = block.querySelector("#userDetails");
+  // Create dropdown elements
+  const dropdownContainer = document.createElement("div");
+  dropdownContainer.className = "cmp-tabs-dropdown";
 
-  if (
-    !bookingDetailsTab ||
-    !userDetailsTab ||
-    !bookingDetailsPanel ||
-    !userDetailsPanel
-  ) {
-    console.error("Required elements not found");
-    return;
-  }
+  const dropdownButton = document.createElement("button");
+  dropdownButton.className = "cmp-tabs-dropdown__button";
+  dropdownButton.textContent = tabs[0].textContent;
 
-  // Create a wrapper for the dropdown
-  const dropdownWrapper = document.createElement("div");
-  dropdownWrapper.className = "tabs-dropdown";
-
-  // Create the dropdown toggle
-  const dropdownToggle = document.createElement("button");
-  dropdownToggle.className = "tabs-dropdown-toggle";
-  dropdownToggle.textContent = bookingDetailsTab.textContent;
-
-  // Create the dropdown content
   const dropdownContent = document.createElement("div");
-  dropdownContent.className = "tabs-dropdown-content";
-  dropdownContent.style.display = "none";
+  dropdownContent.className = "cmp-tabs-dropdown__content";
 
-  // Move the original tabs into the dropdown content
-  dropdownContent.appendChild(bookingDetailsTab);
-  dropdownContent.appendChild(userDetailsTab);
+  // Move tabs into dropdown content
+  tabs.forEach((tab) => {
+    const item = document.createElement("div");
+    item.className = "cmp-tabs-dropdown__item";
+    item.textContent = tab.textContent;
+    item.addEventListener("click", () => {
+      tab.click(); // Trigger the original tab click
+      dropdownButton.textContent = tab.textContent;
+      dropdownContent.style.display = "none";
+    });
+    dropdownContent.appendChild(item);
+  });
 
-  // Assemble the dropdown
-  dropdownWrapper.appendChild(dropdownToggle);
-  dropdownWrapper.appendChild(dropdownContent);
+  // Assemble dropdown
+  dropdownContainer.appendChild(dropdownButton);
+  dropdownContainer.appendChild(dropdownContent);
 
-  // Insert the dropdown before the first panel
-  bookingDetailsPanel.parentNode.insertBefore(
-    dropdownWrapper,
-    bookingDetailsPanel
-  );
+  // Insert dropdown before tab container
+  tabContainer.parentNode.insertBefore(dropdownContainer, tabContainer);
 
-  // Event listener for the dropdown toggle
-  dropdownToggle.addEventListener("click", () => {
+  // Hide original tabs
+  tabContainer.style.display = "none";
+
+  // Dropdown toggle functionality
+  dropdownButton.addEventListener("click", () => {
     dropdownContent.style.display =
       dropdownContent.style.display === "none" ? "block" : "none";
   });
 
-  // Event listeners for the tabs
-  [bookingDetailsTab, userDetailsTab].forEach((tab) => {
-    tab.addEventListener("click", (event) => {
-      event.preventDefault();
-      const targetId = tab.getAttribute("aria-controls");
-      const targetPanel = block.querySelector(`#${targetId}`);
-
-      // Hide all panels
-      [bookingDetailsPanel, userDetailsPanel].forEach(
-        (panel) => (panel.style.display = "none")
-      );
-
-      // Show the target panel
-      if (targetPanel) {
-        targetPanel.style.display = "block";
-      }
-
-      // Update the dropdown toggle text
-      dropdownToggle.textContent = tab.textContent;
-
-      // Close the dropdown
-      dropdownContent.style.display = "none";
-    });
-  });
-
-  // Show the Booking Details panel by default
-  bookingDetailsPanel.style.display = "block";
-  userDetailsPanel.style.display = "none";
-
-  // Add some basic styles
+  // Add styles
   const style = document.createElement("style");
   style.textContent = `
-    .tabs-dropdown {
+    .cmp-tabs-dropdown {
       position: relative;
       display: inline-block;
     }
-    .tabs-dropdown-toggle {
-      background-color: #f0f0f0;
+    .cmp-tabs-dropdown__button {
+      background-color: #f8f8f8;
+      border: 1px solid #ddd;
       padding: 10px;
-      border: 1px solid #ccc;
       cursor: pointer;
     }
-    .tabs-dropdown-content {
+    .cmp-tabs-dropdown__content {
+      display: none;
       position: absolute;
       background-color: #f9f9f9;
       min-width: 160px;
       box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
       z-index: 1;
     }
-    .tabs-dropdown-content [data-cmp-hook-tabs="tab"] {
-      color: black;
+    .cmp-tabs-dropdown__item {
       padding: 12px 16px;
-      text-decoration: none;
-      display: block;
+      cursor: pointer;
     }
-    .tabs-dropdown-content [data-cmp-hook-tabs="tab"]:hover {
+    .cmp-tabs-dropdown__item:hover {
       background-color: #f1f1f1;
     }
   `;
