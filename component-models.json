@@ -309,8 +309,9 @@
       {
         "component": "text",
         "valueType": "string",
-        "name": "formHeading",
-        "label": "Form Heading"
+        "name": "pretitle",
+        "label": "Pretitle",
+        "value": ""
       }
     ]
   }
