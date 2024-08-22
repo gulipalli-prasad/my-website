@@ -303,7 +303,7 @@
       {
         "component": "tab",
         "label": "Booking Details",
-        "name": "bookingDetails"
+        "name": "tab1"
       },
       {
         "component": "text-input",
@@ -430,7 +430,7 @@
       {
         "component": "tab",
         "label": "User Details",
-        "name": "userDetails"
+        "name": "tab2"
       },
       {
         "component": "text-input",
