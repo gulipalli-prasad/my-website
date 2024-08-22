@@ -1,95 +1,117 @@
 export default function decorate(block) {
-  // ... (keep the existing variable declarations)
+  // Find the tab elements
+  const bookingDetailsTab = block.querySelector(
+    '[data-cmp-hook-tabs="tab"][aria-controls="bookingDetails"]'
+  );
+  const userDetailsTab = block.querySelector(
+    '[data-cmp-hook-tabs="tab"][aria-controls="userDetails"]'
+  );
 
-  // Create the main container
-  const container = document.createElement("div");
-  container.className = "booking-form";
+  // Find the content panels
+  const bookingDetailsPanel = block.querySelector("#bookingDetails");
+  const userDetailsPanel = block.querySelector("#userDetails");
+
+  if (
+    !bookingDetailsTab ||
+    !userDetailsTab ||
+    !bookingDetailsPanel ||
+    !userDetailsPanel
+  ) {
+    console.error("Required elements not found");
+    return;
+  }
+
+  // Create a wrapper for the dropdown
+  const dropdownWrapper = document.createElement("div");
+  dropdownWrapper.className = "tabs-dropdown";
 
   // Create the dropdown toggle
-  const dropdownToggle = document.createElement("div");
-  dropdownToggle.className = "dropdown-toggle";
-  dropdownToggle.textContent = "Booking Details";
+  const dropdownToggle = document.createElement("button");
+  dropdownToggle.className = "tabs-dropdown-toggle";
+  dropdownToggle.textContent = bookingDetailsTab.textContent;
+
+  // Create the dropdown content
+  const dropdownContent = document.createElement("div");
+  dropdownContent.className = "tabs-dropdown-content";
+  dropdownContent.style.display = "none";
+
+  // Move the original tabs into the dropdown content
+  dropdownContent.appendChild(bookingDetailsTab);
+  dropdownContent.appendChild(userDetailsTab);
+
+  // Assemble the dropdown
+  dropdownWrapper.appendChild(dropdownToggle);
+  dropdownWrapper.appendChild(dropdownContent);
+
+  // Insert the dropdown before the first panel
+  bookingDetailsPanel.parentNode.insertBefore(
+    dropdownWrapper,
+    bookingDetailsPanel
+  );
+
+  // Event listener for the dropdown toggle
   dropdownToggle.addEventListener("click", () => {
-    bookingDetailsContent.style.display =
-      bookingDetailsContent.style.display === "none" ? "block" : "none";
-    dropdownToggle.classList.toggle("active");
+    dropdownContent.style.display =
+      dropdownContent.style.display === "none" ? "block" : "none";
   });
 
-  // Create the booking details content
-  const bookingDetailsContent = document.createElement("div");
-  bookingDetailsContent.className = "booking-details-content";
-  bookingDetailsContent.style.display = "none";
+  // Event listeners for the tabs
+  [bookingDetailsTab, userDetailsTab].forEach((tab) => {
+    tab.addEventListener("click", (event) => {
+      event.preventDefault();
+      const targetId = tab.getAttribute("aria-controls");
+      const targetPanel = block.querySelector(`#${targetId}`);
 
-  // Populate the booking details content
-  bookingDetailsContent.innerHTML = `
-    <h1>${formHeading}</h1>
-    <h6>${cityLabel}</h6>
-    <h6>${carModel}</h6>
-    <h3>${transmission}</h3>
-    <div>
-      <img src="${manualImage}" alt="Manual Transmission">
-      <h2>${manual}</h2>
-    </div>
-    <div>
-      <img src="${automaticImage}" alt="Automatic Transmission">
-      <h2>${automatic}</h2>
-    </div>
-    <h3>${testdriveText}</h3>
-    <div>
-      <img src="${showroomImage}" alt="Showroom">
-      <h2>${showroom}</h2>
-    </div>
-    <div>
-      <img src="${doorstepImage}" alt="Doorstep">
-      <h2>${doorstep}</h2>
-    </div>
-    <h6>${selectedDate}</h6>
-    <p>${advance}</p>
-  `;
+      // Hide all panels
+      [bookingDetailsPanel, userDetailsPanel].forEach(
+        (panel) => (panel.style.display = "none")
+      );
 
-  // Create the user details section
-  const userDetails = document.createElement("div");
-  userDetails.className = "user-details";
-  userDetails.innerHTML = `
-    <h3>${nameContext}</h3>
-    <h3>${email}</h3>
-    <h3>${mobile}</h3>
-    <h3>${otp}</h3>
-    <p>${agree}</p>
-    <p>${conformtext}</p>
-    <h3>${anotherTestdriveText}</h3>
-    <button>${submit}</button>
-  `;
+      // Show the target panel
+      if (targetPanel) {
+        targetPanel.style.display = "block";
+      }
 
-  // Assemble the components
-  container.appendChild(dropdownToggle);
-  container.appendChild(bookingDetailsContent);
-  container.appendChild(userDetails);
+      // Update the dropdown toggle text
+      dropdownToggle.textContent = tab.textContent;
 
-  // Replace the block's content with the new structure
-  block.innerHTML = "";
-  block.appendChild(container);
+      // Close the dropdown
+      dropdownContent.style.display = "none";
+    });
+  });
+
+  // Show the Booking Details panel by default
+  bookingDetailsPanel.style.display = "block";
+  userDetailsPanel.style.display = "none";
 
   // Add some basic styles
   const style = document.createElement("style");
   style.textContent = `
-    .booking-form {
-      font-family: Arial, sans-serif;
+    .tabs-dropdown {
+      position: relative;
+      display: inline-block;
     }
-    .dropdown-toggle {
+    .tabs-dropdown-toggle {
       background-color: #f0f0f0;
       padding: 10px;
+      border: 1px solid #ccc;
       cursor: pointer;
     }
-    .dropdown-toggle.active {
-      background-color: #e0e0e0;
+    .tabs-dropdown-content {
+      position: absolute;
+      background-color: #f9f9f9;
+      min-width: 160px;
+      box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+      z-index: 1;
     }
-    .booking-details-content {
-      padding: 10px;
-      border: 1px solid #ccc;
+    .tabs-dropdown-content [data-cmp-hook-tabs="tab"] {
+      color: black;
+      padding: 12px 16px;
+      text-decoration: none;
+      display: block;
     }
-    .user-details {
-      margin-top: 20px;
+    .tabs-dropdown-content [data-cmp-hook-tabs="tab"]:hover {
+      background-color: #f1f1f1;
     }
   `;
   document.head.appendChild(style);
