@@ -513,13 +513,13 @@
           {
             "component": "text-input",
             "label": "Simple Text 1",
-            "name": "text",
+            "name": "text11",
             "valueType": "string"
           },
           {
             "component": "text-input",
             "label": "Simple Text 2",
-            "name": "text2",
+            "name": "text22",
             "valueType": "string"
           }
         ]
