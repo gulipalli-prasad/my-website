@@ -337,8 +337,8 @@
           {
             "component": "text",
             "valueType": "string",
-            "name": "transmissionText",
-            "label": "Transmission Text",
+            "name": "transmission",
+            "label": "Transmission",
             "value": ""
           },
           {
@@ -351,8 +351,8 @@
           {
             "component": "text",
             "valueType": "string",
-            "name": "manualText",
-            "label": "Manual Text",
+            "name": "manual",
+            "label": "Manual",
             "value": ""
           },
           {
@@ -365,8 +365,8 @@
           {
             "component": "text",
             "valueType": "string",
-            "name": "automaticText",
-            "label": "Automatic Text",
+            "name": "automatic",
+            "label": "Automatic",
             "value": ""
           }
         ]
@@ -381,7 +381,7 @@
           {
             "component": "text",
             "valueType": "string",
-            "name": "testdriveText",
+            "name": "testdriveTxt",
             "label": "Testdrive Text",
             "value": ""
           },
@@ -395,7 +395,7 @@
           {
             "component": "text",
             "valueType": "string",
-            "name": "showroomText",
+            "name": "showroom",
             "label": "Showroom Text",
             "value": ""
           },
@@ -409,7 +409,7 @@
           {
             "component": "text",
             "valueType": "string",
-            "name": "doorstepText",
+            "name": "doorstep",
             "label": "Doorstep Text",
             "value": ""
           }
@@ -424,7 +424,7 @@
       },
       {
         "component": "text",
-        "name": "advanceText",
+        "name": "advance",
         "label": "Advance Text",
         "value": ""
       },
@@ -436,8 +436,8 @@
       {
         "component": "text",
         "valueType": "string",
-        "name": "nameText",
-        "label": "Name Text",
+        "name": "nameContext",
+        "label": "Name Context",
         "value": ""
       },
       {
