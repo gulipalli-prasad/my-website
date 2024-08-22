@@ -78,7 +78,7 @@ export default function decorate(block) {
       <h2>${doorstep}</h2>
     </div>
     <h6>${selectedDate}</h6>
-    <p>${advanceEl}</p>
+    <p>${advance}</p>
 </div>
 <div>
     <h3>${nameContext}</h3>
