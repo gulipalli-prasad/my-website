@@ -309,8 +309,183 @@
       {
         "component": "text",
         "valueType": "string",
-        "name": "pretitle",
-        "label": "Pretitle",
+        "name": "formHeading",
+        "label": "Form Heading",
+        "value": ""
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "cityLabel",
+        "label": "City Label",
+        "value": ""
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "carModel",
+        "label": "Car Model",
+        "value": ""
+      },
+      {
+        "component": "container",
+        "label": "Select Transmisson",
+        "name": "selectTransmisson",
+        "valueType": "string",
+        "collapsible": true,
+        "fields": [
+          {
+            "component": "text",
+            "valueType": "string",
+            "name": "transmission",
+            "label": "Transmission",
+            "value": ""
+          },
+          {
+            "component": "reference",
+            "valueType": "string",
+            "name": "manualImage",
+            "label": "Manual Image",
+            "value": ""
+          },
+          {
+            "component": "text",
+            "valueType": "string",
+            "name": "manual",
+            "label": "Manual",
+            "value": ""
+          },
+          {
+            "component": "reference",
+            "valueType": "string",
+            "name": "automaticImage",
+            "label": "Automatic Image",
+            "value": ""
+          },
+          {
+            "component": "text",
+            "valueType": "string",
+            "name": "automatic",
+            "label": "Automatic",
+            "value": ""
+          }
+        ]
+      },
+      {
+        "component": "container",
+        "label": "Test Drive",
+        "name": "testDrive",
+        "valueType": "string",
+        "collapsible": true,
+        "fields": [
+          {
+            "component": "text",
+            "valueType": "string",
+            "name": "testdriveTxt",
+            "label": "Testdrive Text",
+            "value": ""
+          },
+          {
+            "component": "reference",
+            "valueType": "string",
+            "name": "ShowroomImage",
+            "label": "Showroom Image",
+            "value": ""
+          },
+          {
+            "component": "text",
+            "valueType": "string",
+            "name": "showroom",
+            "label": "Showroom Text",
+            "value": ""
+          },
+          {
+            "component": "reference",
+            "valueType": "string",
+            "name": "doorstepImage",
+            "label": "Doorstep Image",
+            "value": ""
+          },
+          {
+            "component": "text",
+            "valueType": "string",
+            "name": "doorstep",
+            "label": "Doorstep Text",
+            "value": ""
+          }
+        ]
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "selectedDate",
+        "label": "Selected Date",
+        "value": ""
+      },
+      {
+        "component": "text",
+        "name": "advance",
+        "label": "Advance Text",
+        "value": ""
+      },
+      {
+        "component": "tab",
+        "label": "User Details",
+        "name": "userDetails"
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "nameContext",
+        "label": "Name Context",
+        "value": ""
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "email",
+        "label": "Email",
+        "value": ""
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "mobile",
+        "label": "Mobile",
+        "value": ""
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "otp",
+        "label": "OTP",
+        "value": ""
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "agree",
+        "label": "Agree"
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "conformText",
+        "label": "Conform Text",
+        "value": ""
+      },
+      {
+        "component": "text-input",
+        "valueType": "string",
+        "name": "anotherTestdrive",
+        "label": "Another Testdrive",
+        "value": ""
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "submit",
+        "label": "Submit",
         "value": ""
       }
     ]
