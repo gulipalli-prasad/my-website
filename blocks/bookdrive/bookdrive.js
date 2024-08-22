@@ -1,61 +1,27 @@
 export default function decorate(block) {
-  const [
-    formHeadingEl,
-    cityLabelEl,
-    carModelEl,
-    transmissionEl,
-    manualImageEl,
-    manualEl,
-    automaticImageEl,
-    automaticEl,
-    testdriveTextEl,
-    showroomImageEl,
-    showroomEl,
-    doorstepImageEl,
-    doorstepEl,
-    selectedDateEl,
-    advanceEl,
-    nameContextEl,
-    emailEl,
-    mobileEl,
-    otpEl,
-    agreeEl,
-    conformtextEl,
-    anotherTestdriveEl,
-    submitEl,
-  ] = block.children;
+  // ... (keep the existing variable declarations)
 
-  const formHeading = formHeadingEl?.textContent?.trim() || "";
-  const cityLabel = cityLabelEl?.textContent?.trim() || "";
-  const carModel = carModelEl?.textContent?.trim() || "";
-  const transmission = transmissionEl?.textContent?.trim() || "";
-  const manualImageElement = manualImageEl?.querySelector("img");
-  const manualImage = manualImageElement?.getAttribute("src")?.trim() || "";
-  const manual = manualEl?.textContent?.trim() || "Manual";
-  const automaticImageElement = automaticImageEl?.querySelector("img");
-  const automaticImage =
-    automaticImageElement?.getAttribute("src")?.trim() || "";
-  const automatic = automaticEl?.textContent?.trim() || "";
-  const testdriveText = testdriveTextEl?.textContent?.trim() || "";
-  const showroomImageElement = showroomImageEl?.querySelector("img");
-  const showroomImage = showroomImageElement?.getAttribute("src")?.trim() || "";
-  const showroom = showroomEl?.textContent?.trim() || "Showroom";
-  const doorstepImageElement = doorstepImageEl?.querySelector("img");
-  const doorstepImage = doorstepImageElement?.getAttribute("src")?.trim() || "";
-  const doorstep = doorstepEl?.textContent?.trim() || "";
-  const selectedDate = selectedDateEl?.textContent?.trim() || "";
-  const advance = advanceEl?.textContent?.trim() || "";
-  const nameContext = nameContextEl?.textContent?.trim() || "";
-  const email = emailEl?.textContent?.trim() || "";
-  const mobile = mobileEl?.textContent?.trim() || "";
-  const otp = otpEl?.textContent?.trim() || "";
-  const agree = agreeEl?.textContent?.trim() || "";
-  const conformtext = conformtextEl?.textContent?.trim() || "";
-  const anotherTestdriveText = anotherTestdriveEl?.textContent?.trim() || "";
-  const submit = submitEl?.textContent?.trim() || "";
+  // Create the main container
+  const container = document.createElement("div");
+  container.className = "booking-form";
 
-  block.innerHTML = `
-  <div>
+  // Create the dropdown toggle
+  const dropdownToggle = document.createElement("div");
+  dropdownToggle.className = "dropdown-toggle";
+  dropdownToggle.textContent = "Booking Details";
+  dropdownToggle.addEventListener("click", () => {
+    bookingDetailsContent.style.display =
+      bookingDetailsContent.style.display === "none" ? "block" : "none";
+    dropdownToggle.classList.toggle("active");
+  });
+
+  // Create the booking details content
+  const bookingDetailsContent = document.createElement("div");
+  bookingDetailsContent.className = "booking-details-content";
+  bookingDetailsContent.style.display = "none";
+
+  // Populate the booking details content
+  bookingDetailsContent.innerHTML = `
     <h1>${formHeading}</h1>
     <h6>${cityLabel}</h6>
     <h6>${carModel}</h6>
@@ -79,8 +45,12 @@ export default function decorate(block) {
     </div>
     <h6>${selectedDate}</h6>
     <p>${advance}</p>
-</div>
-<div>
+  `;
+
+  // Create the user details section
+  const userDetails = document.createElement("div");
+  userDetails.className = "user-details";
+  userDetails.innerHTML = `
     <h3>${nameContext}</h3>
     <h3>${email}</h3>
     <h3>${mobile}</h3>
@@ -89,7 +59,38 @@ export default function decorate(block) {
     <p>${conformtext}</p>
     <h3>${anotherTestdriveText}</h3>
     <button>${submit}</button>
-</div>
-
   `;
+
+  // Assemble the components
+  container.appendChild(dropdownToggle);
+  container.appendChild(bookingDetailsContent);
+  container.appendChild(userDetails);
+
+  // Replace the block's content with the new structure
+  block.innerHTML = "";
+  block.appendChild(container);
+
+  // Add some basic styles
+  const style = document.createElement("style");
+  style.textContent = `
+    .booking-form {
+      font-family: Arial, sans-serif;
+    }
+    .dropdown-toggle {
+      background-color: #f0f0f0;
+      padding: 10px;
+      cursor: pointer;
+    }
+    .dropdown-toggle.active {
+      background-color: #e0e0e0;
+    }
+    .booking-details-content {
+      padding: 10px;
+      border: 1px solid #ccc;
+    }
+    .user-details {
+      margin-top: 20px;
+    }
+  `;
+  document.head.appendChild(style);
 }
