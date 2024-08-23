@@ -198,7 +198,7 @@
         },
         {
           "title": "TestDrive",
-          "id": "testDrive",
+          "id": "test-drive",
           "plugins": {
             "xwalk": {
               "page": {
