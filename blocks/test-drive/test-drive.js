@@ -1,32 +1,18 @@
-// export default function decorate(block) {
-//   const [
-//     imageEl,
-//     altTextEl,
-//     pretitleEl,
-//     titleEl,
-//     descriptionEl,
-//     primaryCtaTextEl,
-//     primaryCtaLinkEl,
-//   ] = block.children;
+export default function decorate(block) {
+  const [text1El, text2El] = block.children;
 
-//   const imageElement = imageEl.querySelector("img");
-//   const image = imageElement?.getAttribute("src")?.trim() || "";
-//   const altText = altTextEl?.textContent?.trim() || "";
-//   const pretitle = pretitleEl?.textContent?.trim() || "";
-//   const title = titleEl?.textContent?.trim() || "";
-//   const description = descriptionEl?.textContent?.trim() || "";
-//   const primaryCtaText = primaryCtaTextEl?.textContent?.trim() || "";
-//   const primaryCtaLink = primaryCtaLinkEl?.querySelector("a")?.href || "#";
+  const text2 = text2El?.textContent?.trim() || "";
+  const text1 = text1El?.textContent?.trim() || "";
 
-//   const teaserHtml = `
-//     <div>
-//       <img src="${image}" alt="${altText}" />
-//       <h4>${pretitle}</h4>
-//       <h5>${title}</h5>
-//       <p>${description}</p>
-//       <a href="${primaryCtaLink}">${primaryCtaText}</a>
-//     </div>
-//   `;
+  console.log("my text 2 value is: " + text2);
+  console.log("my text 1 value is: " + text1);
 
-//   block.innerHTML = teaserHtml;
-// }
+  const teaserHtml = `
+    <div>
+      <h4>gulipalli</h4>
+      <h5>prasad</h5>
+    </div>
+  `;
+
+  block.innerHTML = teaserHtml;
+}
