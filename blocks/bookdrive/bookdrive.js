@@ -1,13 +1,10 @@
 export default function decorate(block) {
-  // Get all non-empty, trimmed text contents from block children
   const textNodes = Array.from(block.children)
     .map((el) => el.textContent?.trim() || "")
     .filter((text) => text.length > 0);
 
-  // Log the filtered text nodes to inspect what content is being captured
   console.log("Filtered Text Nodes:", textNodes);
 
-  // Assign each text node to its corresponding variable
   const [
     formHeading = "",
     cityLabel = "",
@@ -30,22 +27,19 @@ export default function decorate(block) {
     submit = "",
   ] = textNodes;
 
-  // Retrieve all image elements
   const images = Array.from(block.querySelectorAll("img"));
+  console.log("my images are: " + images);
 
-  // Assuming images are added in the order they should be assigned
   const manualImage = images[0]?.getAttribute("src")?.trim() || "";
   const automaticImage = images[1]?.getAttribute("src")?.trim() || "";
   const showroomImage = images[2]?.getAttribute("src")?.trim() || "";
   const doorstepImage = images[3]?.getAttribute("src")?.trim() || "";
 
-  // Log the captured images to verify
   console.log("Manual Image Src:", manualImage);
   console.log("Automatic Image Src:", automaticImage);
   console.log("Showroom Image Src:", showroomImage);
   console.log("Doorstep Image Src:", doorstepImage);
 
-  // Build the HTML structure using the captured content
   const bookHTML = `
     <h1 class="form-heading">${formHeading}</h1>
     <h6 class="city-label">${cityLabel}</h6>
@@ -78,6 +72,5 @@ export default function decorate(block) {
     <button class="submit-button">${submit}</button>
   `;
 
-  // Set the innerHTML of the block to the constructed HTML
   block.innerHTML = bookHTML;
 }
