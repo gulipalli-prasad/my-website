@@ -518,6 +518,11 @@
         "component": "aem-content",
         "name": "link",
         "label": "link"
+      },
+      {
+        "component": "text",
+        "name": "url",
+        "label": "Url"
       }
     ]
   }
