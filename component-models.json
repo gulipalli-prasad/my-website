@@ -345,7 +345,7 @@
             "valueType": "string",
             "name": "manualImage",
             "label": "Manual Image",
-            "value": ""
+            "multi": false
           },
           {
             "component": "text-input",
