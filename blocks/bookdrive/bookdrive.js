@@ -25,68 +25,42 @@ export default function decorate(block) {
     submitEl,
   ] = block.children;
 
-  const formHeading =
-    formHeadingEl?.querySelector(".form-heading")?.textContent?.trim() || "";
-  const cityLabel =
-    cityLabelEl?.querySelector(".city-label")?.textContent?.trim() || "";
-  const carModel =
-    carModelEl?.querySelector(".car-model")?.textContent?.trim() || "";
-  const transmission =
-    transmissionEl?.querySelector(".transmission-text")?.textContent?.trim() ||
-    "";
-  const manualImage =
-    manualImageEl
-      ?.querySelector(".manual-image")
-      ?.getAttribute("src")
-      ?.trim() || "";
-  const manual =
-    manualEl?.querySelector(".manual-text")?.textContent?.trim() || "Manual";
+  const formHeading = formHeadingEl?.textContent?.trim() || "";
+  const cityLabel = cityLabelEl?.textContent?.trim() || "";
+  const carModel = carModelEl?.textContent?.trim() || "";
+  const transmission = transmissionEl?.textContent?.trim() || "";
+
+  const manualImageElement = manualImageEl?.querySelector("img");
+  const manualImage = manualImageElement?.getAttribute("src")?.trim() || "";
+  const manualText = manualEl?.textContent?.trim() || "";
+
+  const automaticImageElement = automaticImageEl?.querySelector("img");
   const automaticImage =
-    automaticImageEl
-      ?.querySelector(".automatic-image")
-      ?.getAttribute("src")
-      ?.trim() || "";
-  const automatic =
-    automaticEl?.querySelector(".automatic-text")?.textContent?.trim() || "";
-  const testdriveTxt =
-    testdriveTxtEl?.querySelector(".testdrive-text")?.textContent?.trim() || "";
-  const showroomImage =
-    showroomImageEl
-      ?.querySelector(".showroom-image")
-      ?.getAttribute("src")
-      ?.trim() || "";
-  const showroom =
-    showroomEl?.querySelector(".showroom-text")?.textContent?.trim() ||
-    "Showroom";
-  const doorstepImage =
-    doorstepImageEl
-      ?.querySelector(".doorstep-image")
-      ?.getAttribute("src")
-      ?.trim() || "";
-  const doorstep =
-    doorstepEl?.querySelector(".doorstep-text")?.textContent?.trim() || "";
-  const selectedDate =
-    selectedDateEl?.querySelector(".selectdate-text")?.textContent?.trim() ||
-    "";
-  const advance =
-    advanceEl?.querySelector(".advance-text")?.textContent?.trim() || "";
-  const nameContext =
-    nameContextEl?.querySelector(".name-text")?.textContent?.trim() || "";
-  const emailText =
-    emailEl?.querySelector(".email-text")?.textContent?.trim() || "";
-  const mobileText =
-    mobileEl?.querySelector(".mobile-text")?.textContent?.trim() || "";
-  const otpText = otpEl?.querySelector(".otp-text")?.textContent?.trim() || "";
-  const agreeText =
-    agreeEl?.querySelector(".agree-text")?.textContent?.trim() || "";
-  const conformtext =
-    conformtextEl?.querySelector(".conform-text")?.textContent?.trim() || "";
-  const anotherTestdriveText =
-    anotherTestdriveEl
-      ?.querySelector(".another-testdrive-text")
-      ?.textContent?.trim() || "";
-  const submit =
-    submitEl?.querySelector(".submit-button")?.textContent?.trim() || "";
+    automaticImageElement?.getAttribute("src")?.trim() || "";
+  const automaticText = automaticEl?.textContent?.trim() || "";
+
+  const testdriveTxt = testdriveTxtEl?.textContent?.trim() || "";
+
+  const showroomImageElement = showroomImageEl?.querySelector("img");
+  const showroomImage = showroomImageElement?.getAttribute("src")?.trim() || "";
+  const showroomText = showroomEl?.textContent?.trim() || "";
+
+  const doorstepImageElement = doorstepImageEl?.querySelector("img");
+  const doorstepImage = doorstepImageElement?.getAttribute("src")?.trim() || "";
+  const doorstepText = doorstepEl?.textContent?.trim() || "";
+
+  const selectedDate = selectedDateEl?.textContent?.trim() || "";
+  const advanceText = advanceEl?.textContent?.trim() || "";
+
+  const nameText = nameContextEl?.textContent?.trim() || "";
+  const emailText = emailEl?.textContent?.trim() || "";
+  const mobileText = mobileEl?.textContent?.trim() || "";
+  const otpText = otpEl?.textContent?.trim() || "";
+
+  const agreeText = agreeEl?.textContent?.trim() || "";
+  const conformtext = conformtextEl?.textContent?.trim() || "";
+  const anotherTestdriveText = anotherTestdriveEl?.textContent?.trim() || "";
+  const submit = submitEl?.textContent?.trim() || "";
 
   const bookHTML = `
     <h1 class="form-heading">${formHeading}</h1>
@@ -95,24 +69,24 @@ export default function decorate(block) {
     <h3 class="transmission-text">${transmission}</h3>
     <div class="manual-transmission">
       <img class="manual-image" src="${manualImage}" alt="Manual Transmission">
-      <h2 class="manual-text">${manual}</h2>
+      <h2 class="manual-text">${manualText}</h2>
     </div>
     <div class="automatic-transmission">
       <img class="automatic-image" src="${automaticImage}" alt="Automatic Transmission">
-      <h2 class="automatic-text">${automatic}</h2>
+      <h2 class="automatic-text">${automaticText}</h2>
     </div>
     <h3 class="testdrive-text">${testdriveTxt}</h3>
     <div class="showroom">
       <img class="showroom-image" src="${showroomImage}" alt="Showroom">
-      <h2 class="showroom-text">${showroom}</h2>
+      <h2 class="showroom-text">${showroomText}</h2>
     </div>
     <div class="doorstep">
       <img class="doorstep-image" src="${doorstepImage}" alt="Doorstep">
-      <h2 class="doorstep-text">${doorstep}</h2>
+      <h2 class="doorstep-text">${doorstepText}</h2>
     </div>
     <h6 class="selectdate-text">${selectedDate}</h6>
-    <p class="advance-text">${advance}</p>
-    <h3 class="name-text">${nameContext}</h3>
+    <p class="advance-text">${advanceText}</p>
+    <h3 class="name-text">${nameText}</h3>
     <h3 class="email-text">${emailText}</h3>
     <h3 class="mobile-text">${mobileText}</h3>
     <h3 class="otp-text">${otpText}</h3>
