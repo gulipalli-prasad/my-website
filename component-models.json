@@ -513,6 +513,11 @@
         "label": "Text 2",
         "name": "text2",
         "valueType": "string"
+      },
+      {
+        "component": "aem-content",
+        "name": "link",
+        "label": "link"
       }
     ]
   }
