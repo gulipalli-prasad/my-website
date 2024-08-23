@@ -359,7 +359,7 @@
             "valueType": "string",
             "name": "automaticImage",
             "label": "Automatic Image",
-            "value": ""
+            "multi": false
           },
           {
             "component": "text-input",
@@ -389,7 +389,7 @@
             "valueType": "string",
             "name": "ShowroomImage",
             "label": "Showroom Image",
-            "value": ""
+            "multi": false
           },
           {
             "component": "text-input",
@@ -403,7 +403,7 @@
             "valueType": "string",
             "name": "doorstepImage",
             "label": "Doorstep Image",
-            "value": ""
+            "multi": false
           },
           {
             "component": "text-input",
