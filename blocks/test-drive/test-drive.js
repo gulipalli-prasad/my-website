@@ -4,6 +4,8 @@ export default function decorate(block) {
 
     const text1 = text1El?.textContent?.trim() || "";
     const text2 = text2El?.textContent?.trim() || "";
+    console.log("text 1 val is: " + text1);
+    console.log("text 1 val is: " + text2);
 
     return {
       text1,
