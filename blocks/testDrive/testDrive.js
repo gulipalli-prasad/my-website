@@ -10,7 +10,7 @@ export default function decorate(block) {
   // Log to see what texts are being captured
   console.log("Filtered Text Nodes:", textNodes);
 
-  const [text1 = "", text2 = "", text3 = "", text4 = ""] = textNodes;
+  const [text1 = "", text2 = "", link = "", url = ""] = textNodes;
 
   console.log("text 1 val is: " + text1);
   console.log("text 2 val is: " + text2);
@@ -36,7 +36,7 @@ export default function decorate(block) {
       </div>
 
       <div class="section-5">
-       <a href="${text3}">${text4}</a>
+       <a href="${link}">${url}</a>
        </div>
 
     </div>
