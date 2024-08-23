@@ -490,7 +490,7 @@
     ]
   },
   {
-    "id": "test-drive",
+    "id": "testDrive",
     "fields": [
       {
         "component": "tab",
