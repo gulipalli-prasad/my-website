@@ -45,21 +45,15 @@ export default function decorate(block) {
     <h6 class="city-label">${cityLabel}</h6>
     <h6 class="car-model">${carModel}</h6>
     <h3 class="transmission-text">${transmission}</h3>
-
     <img class="manual-image" src="${manualImage}" alt="Manual Transmission Image">
     <h3 class="manual-text">${manual}</h3>
-
     <img class="automatic-image" src="${automaticImage}" alt="Automatic Transmission Image">
     <h3 class="automatic-text">${automatic}</h3>
-
     <h3 class="testdrive-text">${testdriveTxt}</h3>
-
     <img class="showroom-image" src="${showroomImage}" alt="Showroom Image">
     <h3 class="showroom-text">${showroom}</h3>
-
     <img class="doorstep-image" src="${doorstepImage}" alt="Doorstep Image">
     <h3 class="doorstep-text">${doorstep}</h3>
-
     <h6 class="selectdate-text">${selectedDate}</h6>
     <p class="advance-text">${advance}</p>
     <h3 class="name-text">${nameContext}</h3>
