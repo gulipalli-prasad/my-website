@@ -1,47 +1,43 @@
 export default function decorate(block) {
-  // Log block children to inspect structure
   console.log("Block Children:", block.children);
 
-  // Filter out empty text nodes and trim the content of relevant elements
   const textNodes = Array.from(block.children)
     .map((el) => el.textContent?.trim() || "")
     .filter((text) => text.length > 0);
 
-  // Log to see what texts are being captured
   console.log("Filtered Text Nodes:", textNodes);
 
   const [text1 = "", text2 = "", link = "", url = ""] = textNodes;
 
+  let formattedLink = link;
+  if (link && !link.endsWith(".html")) {
+    formattedLink = `${link}.html`;
+  }
+
   console.log("text 1 val is: " + text1);
   console.log("text 2 val is: " + text2);
-
-  const images = Array.from(block.querySelectorAll("a"));
-  console.log("my links are: " + images);
+  console.log("link val is: " + formattedLink);
+  console.log("url val is: " + url);
 
   const testHtml = `
-    <div class="main-conatiner">
-      <div class="section-1">
-       <h3>${text1}</h3>
+    <div class="main-container" style="display: flex; flex-direction: column; align-items: center;">
+      <div class="section-1" style="text-align: center;">
+        <h3 style="margin: 0;">${text1}</h3>
       </div>
-
-      <div class="section-2">
-       <h3>${text2}</h3>
+      <div class="section-2" style="text-align: center;">
+        <h3 style="margin: 0;">${text2}</h3>
       </div>
-    </div>
-
-    <div class="section-3">
-       <h3>prasad</h3>
+      <div class="section-3" style="text-align: center;">
+        <h3 style="margin: 0;">prasad</h3>
       </div>
-    </div>
-
-     <div class="section-4">
-       <button>gg</button>
+      <div class="section-4" style="text-align: center;">
+        <button style="background-color: blue; color: white; border-radius: 10px; padding: 10px 20px;">gg</button>
       </div>
-
-      <div class="section-5">
-       <a href="${link}">${url}</a>
-       </div>
-
+      <div class="section-5" style="text-align: center;">
+        <a href="${formattedLink}" style="color: white; background-color: blue; padding: 10px 20px; border-radius: 10px; text-decoration: none; display: inline-block;">
+          ${url}
+        </a>
+      </div>
     </div>
   `;
 
