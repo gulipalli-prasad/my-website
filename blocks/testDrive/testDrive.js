@@ -15,6 +15,9 @@ export default function decorate(block) {
   console.log("text 1 val is: " + text1);
   console.log("text 2 val is: " + text2);
 
+  const images = Array.from(block.querySelectorAll("a"));
+  console.log("my links are: " + images);
+
   const testHtml = `
     <div class="main-conatiner">
       <div class="section-1">
