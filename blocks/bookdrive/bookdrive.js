@@ -63,7 +63,7 @@ export default function decorate(block) {
     <p class="agree-text">${agree}</p>
     <p class="conform-text">${conformtext}</p>
     <h3 class="another-testdrive-text">${anotherTestdriveText}</h3>
-    <button class="submit-button">${submit}</button>
+    <button class="submit-button" type="button" onclick="alert('Do you want to submit!')">${submit}</button>
   `;
 
   block.innerHTML = bookHTML;
