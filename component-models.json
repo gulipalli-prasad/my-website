@@ -516,13 +516,16 @@
       },
       {
         "component": "aem-content",
+        "valueType": "string",
         "name": "link",
-        "label": "link"
+        "label": "Link",
+        "value": ""
       },
       {
         "component": "text",
         "name": "url",
-        "label": "Url"
+        "label": "Url",
+        "valueType": "string"
       }
     ]
   }
