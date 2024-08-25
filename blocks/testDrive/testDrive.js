@@ -1,42 +1,34 @@
 export default function decorate(block) {
-  console.log("Block Children:", block.children);
+  // // Filter out empty text nodes and trim the content of relevant elements
+  // const textNodes = Array.from(block.children)
+  //   .map((el) => el.textContent?.trim() || "")
+  //   .filter((text) => text.length > 0);
 
-  const textNodes = Array.from(block.children)
-    .map((el) => el.textContent?.trim() || "")
-    .filter((text) => text.length > 0);
+  // // Log to see what texts are being captured
+  // console.log("Filtered Text Nodes:", textNodes);
 
-  console.log("Filtered Text Nodes:", textNodes);
+  // // Extract text and link information
+  // const [text1 = "", text2 = "", linkPath = "", url = ""] = textNodes;
 
-  const [text1 = "", text2 = "", link = "", url = ""] = textNodes;
+  // console.log("text 1 val is: " + text1);
+  // console.log("text 2 val is: " + text2);
 
-  let formattedLink = link;
-  if (link && !link.endsWith(".html")) {
-    formattedLink = `${link}.html`;
-  }
+  // // Ensure the link ends with .html
+  // let link = linkPath;
+  // // if (link && !link.endsWith(".html")) {
+  // //   link += ".html";
+  // // }
 
-  console.log("text 1 val is: " + text1);
-  console.log("text 2 val is: " + text2);
-  console.log("link val is: " + formattedLink);
-  console.log("url val is: " + url);
+  // console.log("link val is: " + link);
+  // console.log("url val is: " + url);
 
   const testHtml = `
-    <div class="main-container" style="display: flex; flex-direction: column; align-items: center;">
-      <div class="section-1" style="text-align: center;">
-        <h3 style="margin: 0;">${text1}</h3>
+    <div class="section-3">
+       <h3>GOOGLE</h3>
       </div>
-      <div class="section-2" style="text-align: center;">
-        <h3 style="margin: 0;">${text2}</h3>
-      </div>
-      <div class="section-3" style="text-align: center;">
-        <h3 style="margin: 0;">prasad</h3>
-      </div>
-      <div class="section-4" style="text-align: center;">
-        <button style="background-color: blue; color: white; border-radius: 10px; padding: 10px 20px;">gg</button>
-      </div>
-      <div class="section-5" style="text-align: center;">
-        <a href="${formattedLink}" style="color: white; background-color: blue; padding: 10px 20px; border-radius: 10px; text-decoration: none; display: inline-block;">
-          ${url}
-        </a>
+
+      <div class="section-5">
+       <a href="https://www.google.com/">URL</a>
       </div>
     </div>
   `;
