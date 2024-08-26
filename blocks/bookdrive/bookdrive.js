@@ -62,7 +62,7 @@ export default function decorate(block) {
     <h3 class="otp-text">${otp}</h3>
     <p class="agree-text">${agree}</p>
     <p class="conform-text">${conformtext}</p>
-    <h3 class="another-testdrive-text">${anotherTestdriveText}</h3>
+    <a href="#">${anotherTestdriveText}</a> </br>
     <button class="submit-button" type="button" onclick="alert('Do you want to submit!')">${submit}</button>
   `;
 
