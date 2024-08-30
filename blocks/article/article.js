@@ -56,6 +56,7 @@ export default async function decorate(block) {
         title: item.title,
         description: item.description?.plaintext || "",
         pdf: item.pdf?._path || "",
+        image: item.image?._path || "",
       }));
     articles = [...originalArticles];
   } catch (error) {
@@ -112,6 +113,7 @@ export default async function decorate(block) {
             <div class="article-item">
               <div class="article-date">${formatDate(article.date)}</div>
               <a href="#" class="article-title">${article.title}</a>
+              <img src="${article.image}" alt="Image" class="article-image" />
             </div>
           `
         )
